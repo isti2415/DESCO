@@ -10,23 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
    <children>
       <Label alignment="CENTER" layoutX="238.0" layoutY="13.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="17.0" />
          </font></Label>
-      <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
-         <children>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewTaskListOnClick" prefHeight="46.0" prefWidth="192.0" text="My Bills" />
-            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerInformationOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
-            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Energy Usage" />
-            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Service Request" />
-            <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Notifications" />
-            <Button mnemonicParsing="false" onAction="#submitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="File Complaint" />
-            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
-         </children>
-      </VBox>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="80.0" text="Customer">
          <font>
             <Font size="18.0" />
@@ -44,16 +33,16 @@
       </Label>
       <Label layoutX="240.0" layoutY="120.0" text="Name" />
       <Label layoutX="523.0" layoutY="120.0" text="Username" />
-      <TextField layoutX="278.0" layoutY="116.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField layoutX="600.0" layoutY="116.0" />
+      <TextField fx:id="customerNameTextField" layoutX="278.0" layoutY="116.0" prefHeight="25.0" prefWidth="212.0" />
+      <TextField fx:id="customerUsernameTextField" layoutX="600.0" layoutY="116.0" />
       <Label layoutX="238.0" layoutY="169.0" text="Date of Birth" />
-      <DatePicker layoutX="314.0" layoutY="165.0" />
+      <DatePicker fx:id="customerDOBdatepicker" layoutX="314.0" layoutY="165.0" />
       <Label layoutX="238.0" layoutY="389.0" text="Current Password" />
-      <TextField layoutX="345.0" layoutY="385.0" />
+      <TextField fx:id="currPassTextField" layoutX="345.0" layoutY="385.0" />
       <Label layoutX="238.0" layoutY="269.0" text="Email" />
       <Label layoutX="502.0" layoutY="269.0" text="Contact Number" />
-      <TextField layoutX="276.0" layoutY="265.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField layoutX="600.0" layoutY="265.0" />
+      <TextField fx:id="customerEmailTextField" layoutX="276.0" layoutY="265.0" prefHeight="25.0" prefWidth="212.0" />
+      <TextField fx:id="customerConNumTextField" layoutX="600.0" layoutY="265.0" />
       <Label layoutX="238.0" layoutY="226.0" text="Contact Information">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -65,7 +54,18 @@
          </font>
       </Label>
       <Label layoutX="511.0" layoutY="389.0" text="New Password" />
-      <TextField layoutX="600.0" layoutY="385.0" />
-      <Button layoutX="659.0" layoutY="442.0" mnemonicParsing="false" text="Save Changes" />
+      <TextField fx:id="newPassTextField" layoutX="600.0" layoutY="385.0" />
+      <Button layoutX="659.0" layoutY="442.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+      <VBox layoutX="19.0" layoutY="116.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewMyBillsOnClick" prefHeight="46.0" prefWidth="192.0" text="My Bills" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#vewEnergyUsageOnClick" prefHeight="46.0" prefWidth="211.0" text="Energy Usage" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#serviceRequestOnClick" prefHeight="47.0" prefWidth="210.0" text="Service Request" />
+            <Button mnemonicParsing="false" onAction="#checkNotificationsOnClick" prefHeight="46.0" prefWidth="209.0" text="Notifications" />
+            <Button mnemonicParsing="false" onAction="#fileComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="File Complaint" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
