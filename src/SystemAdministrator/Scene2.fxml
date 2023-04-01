@@ -42,7 +42,7 @@
       </Label>
       <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="14.0" layoutY="18.0">
          <image>
-            <Image url="@../desco.png" />
+            <Image url="@../images/desco.png" />
          </image>
       </ImageView>
    </children>

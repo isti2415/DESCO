@@ -1,19 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package desco;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import modelClass.User;
 
 /**
@@ -30,6 +35,9 @@ public class LoginController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -38,73 +46,118 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginOnClick(ActionEvent event) {
-        String userId = useridfield.getText();
-        String password = passwordfield.getText();
-
-        // try-with-resources to automatically close the stream
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.bin"))) {
-
-            // read the entire list of users from the file
-            List<User> Users = (List<User>) ois.readObject();
-
-            // loop through the users to find a matching user
-            for (User user : Users) {
-                if (user.getUserId().equals(userId) && user.getPassword().equals(password)) {
-                    // switch scene based on usertype
-                    switch (user.getUserType()) {
-                        case "Customer":
-                            // switch to customer scene
-                            break;
-                        case "Meter Reader":
-                            // switch to meter reader scene
-                            break;
-                        case "Billing Administrator":
-                            // switch to billing administrator scene
-                            break;
-                        case "Customer Service Representative":
-                            // switch to customer service representative scene
-                            break;
-                        case "Field Technician":
-                            // switch to field technician scene
-                            break;
-                        case "System Administrator":
-                            // switch to system administrator scene
-                            break;
-                        case "Manager":
-                            // switch to manager scene
-                            break;
-                        case "Human Resources":
-                            // switch to human resources scene
-                            break;
-                        default:
-                            // unrecognized user type
-                            break;
-                    }
-                    return;
-                }
+        String userID = useridfield.getText(); // get the entered user ID
+        String password = passwordfield.getText(); // get the entered password
+        User user = null;
+        List<User> userList = User.loadUsers();
+        for (User u : userList) {
+            if (u.getUserID().equals(userID) && u.getPassword().equals(password)) {
+                user = u;
+                break;
             }
-
-            // display error message if no matching user is found
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("Invalid user ID or Password");
-            alert.setContentText("Please enter a valid user ID and Password.");
-            alert.showAndWait();
-
-        } catch (FileNotFoundException ex) {
-            // display error message if the file is not found
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("File Not Found");
-            alert.setContentText("The user database file is missing.");
-            alert.showAndWait();
-        } catch (IOException | ClassNotFoundException ex) {
-            // display error message if there is an error reading the file
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("Error Reading user Database");
-            alert.setContentText("There was an error reading the user database file.");
-            alert.showAndWait();
+        }
+        if (user != null) {
+            // redirect to the appropriate dashboard based on user type
+            switch (user.getUserType()) {
+                case "Customer":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Customer/Scene1.fxml"));
+                        Parent root = loader.load();
+                        Customer.Scene1Controller customerScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Meter Reader":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MeterReader/Scene1.fxml"));
+                        Parent root = loader.load();
+                        MeterReader.Scene1Controller meterReaderScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Billing Administrator":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/BillingAdministrator/Scene1.fxml"));
+                        Parent root = loader.load();
+                        BillingAdministrator.Scene1Controller billingAdministratorScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Customer Service Representative":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CustomerServiceRepresentative/Scene1.fxml"));
+                        Parent root = loader.load();
+                        CustomerServiceRepresentative.Scene1Controller customerServiceRepresentativeScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Field Technician":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FieldTechnician/Scene1.fxml"));
+                        Parent root = loader.load();
+                        FieldTechnician.Scene1Controller fieldTechnicianScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "System Administrator":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SystemAdministrator/Scene1.fxml"));
+                        Parent root = loader.load();
+                        SystemAdministrator.Scene1Controller systemAdministratorScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Manager":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Manager/Scene1.fxml"));
+                        Parent root = loader.load();
+                        Manager.Scene1Controller managerScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                case "Human Resources":
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HumanResources/Scene1.fxml"));
+                        Parent root = loader.load();
+                        HumanResources.Scene1Controller humanResourcesScene1Controller = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid username or password.");
+            }
         }
     }
 }

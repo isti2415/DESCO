@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +13,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
    <children>
-      <VBox layoutX="18.0" layoutY="120.0" prefHeight="420.0" prefWidth="192.0" spacing="6.0">
+      <Label layoutX="231.0" layoutY="87.0" text="Date of Work" />
+      <DatePicker fx:id="dateOfWork" layoutX="316.0" layoutY="83.0" promptText="DD/MM/YYYY" />
+      <Button layoutX="628.0" layoutY="514.0" mnemonicParsing="false" onAction="#fileChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload File" />
+      <VBox layoutX="16.0" layoutY="120.0" prefHeight="420.0" prefWidth="192.0" spacing="6.0">
          <children>
             <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Task List" />
             <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerComplaintsOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Information" />
@@ -25,30 +29,24 @@
             <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
          </children>
       </VBox>
-      <TableView fx:id="taskListViewTable" layoutX="230.0" layoutY="82.0" prefHeight="420.0" prefWidth="552.0">
-         <columns>
-            <TableColumn fx:id="taskId" prefWidth="75.0" text="Task ID" />
-            <TableColumn fx:id="taskDescription" prefWidth="239.20001220703125" text="Task Description" />
-            <TableColumn fx:id="taskDate" prefWidth="96.79998779296875" text="Date" />
-            <TableColumn fx:id="taskStatus" prefWidth="138.39996337890625" text="Status" />
-         </columns>
-      </TableView>
-      <Button layoutX="629.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandMarkasDoneOnClick" prefHeight="26.0" prefWidth="153.0" text="Mark as Done" />
-      <Label alignment="CENTER" layoutX="205.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Task List" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="203.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Upload Data" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="82.0" text="Technician">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="82.0" text="Technician">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="14.0" layoutY="15.0">
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="12.0" layoutY="15.0">
          <image>
             <Image url="@../desco.png" />
          </image>
       </ImageView>
-      <Button layoutX="230.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandMarkasDoneOnClick" prefHeight="26.0" prefWidth="153.0" text="Update Task List" />
+      <Label layoutX="504.0" layoutY="87.0" text="Complain ID" />
+      <TextField layoutX="579.0" layoutY="83.0" prefHeight="25.0" prefWidth="208.0" />
+      <TextArea layoutX="231.0" layoutY="120.0" prefHeight="382.0" prefWidth="556.0" promptText="Note" />
+      <Button layoutX="458.0" layoutY="514.0" mnemonicParsing="false" onAction="#fileChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload Text" />
    </children>
 </AnchorPane>
