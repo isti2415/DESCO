@@ -8,54 +8,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milestone2.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CustomerServiceRepresentative.Scene4Controller">
    <children>
-      <VBox layoutX="6.0" layoutY="114.0" prefHeight="309.0" prefWidth="166.0" spacing="20.0">
+      <VBox layoutX="14.0" layoutY="110.0" prefHeight="309.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#ViewDashboardOnClick" prefHeight="46.0" prefWidth="166.0" text="Dashboard">
+            <Button mnemonicParsing="false" onAction="#ViewDashboardOnClick" prefHeight="46.0" prefWidth="201.0" text="Dashboard">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ViewPromotionsOnClick" prefHeight="46.0" prefWidth="166.0" text="Promotions">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ViewPromotionsOnClick" prefHeight="46.0" prefWidth="203.0" text="Promotions">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="75.0" mnemonicParsing="false" onAction="#ViewFeedBackManagerOnClick" prefHeight="46.0" prefWidth="166.0" text="Feedback to Manager">
+            <Button layoutX="10.0" layoutY="75.0" mnemonicParsing="false" onAction="#ViewFeedBackManagerOnClick" prefHeight="46.0" prefWidth="203.0" text="Feedback to Manager">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#ViewCompanyPolicyButtonsOnclick" prefHeight="46.0" prefWidth="166.0" text="Company Policy">
+            <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#ViewCompanyPolicyButtonsOnclick" prefHeight="46.0" prefWidth="201.0" text="Company Policy">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="288.0" mnemonicParsing="false" onAction="#logOutOnclick" prefHeight="46.0" prefWidth="166.0" text="Log Out">
+            <Button layoutX="10.0" layoutY="288.0" mnemonicParsing="false" onAction="#logOutOnclick" prefHeight="46.0" prefWidth="202.0" text="Log Out">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
          </children>
       </VBox>
-      <Label layoutX="342.0" layoutY="8.0" prefHeight="27.0" prefWidth="190.0" text="Company Policy" textAlignment="CENTER">
+      <Label layoutX="338.0" layoutY="22.0" prefHeight="27.0" prefWidth="304.0" text="Company Policy" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="37.0" fitWidth="150.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../desco.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="26.0" layoutY="68.0" prefHeight="27.0" prefWidth="119.0" text="Customer Service" textAlignment="CENTER">
+      <Label layoutX="55.0" layoutY="72.0" prefHeight="27.0" prefWidth="119.0" text="Customer Service" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="192.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="26.0" prefWidth="202.0" text="View Policies" />
-      <Label fx:id="policyViewTextLabel" layoutX="192.0" layoutY="109.0" prefHeight="310.0" prefWidth="470.0" />
-      <Button layoutX="192.0" layoutY="433.0" mnemonicParsing="false" onAction="#agreeButtonOnClick" prefHeight="26.0" prefWidth="202.0" text="Agree to Company Policies" />
+      <Label fx:id="policyViewTextLabel" layoutX="236.0" layoutY="109.0" prefHeight="310.0" prefWidth="426.0" />
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="14.0" layoutY="13.0">
+         <image>
+            <Image url="@../images/desco.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

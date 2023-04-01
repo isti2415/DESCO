@@ -10,31 +10,17 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
  *
  * @author Istiaqs-PC
  */
-public class Scene1Controller implements Initializable {
+public class Scene4Controller implements Initializable {
 
     @FXML
-    private TableView<?> ViewCustomerAccountTable;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewComplainIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerComplaintColumn;
-    @FXML
-    private TableColumn<?, ?> ViewDateColumn;
-    @FXML
-    private TableColumn<?, ?> viewFeedback;
-    @FXML
-    private TextField CustomerIDTextField;
+    private Label policyViewTextLabel;
 
     /**
      * Initializes the controller class.
@@ -65,7 +51,11 @@ public class Scene1Controller implements Initializable {
     }
 
     @FXML
-    private void markAsResolvedOnclick(ActionEvent event) {
+    private void viewPolicyOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void agreeButtonOnClick(ActionEvent event) {
     }
     
 }

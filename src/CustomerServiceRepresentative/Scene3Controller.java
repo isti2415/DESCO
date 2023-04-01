@@ -10,8 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
@@ -19,22 +18,12 @@ import javafx.scene.control.TextField;
  *
  * @author Istiaqs-PC
  */
-public class Scene1Controller implements Initializable {
+public class Scene3Controller implements Initializable {
 
     @FXML
-    private TableView<?> ViewCustomerAccountTable;
+    private TextField feedbackSubjectTextField;
     @FXML
-    private TableColumn<?, ?> ViewCustomerIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewComplainIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerComplaintColumn;
-    @FXML
-    private TableColumn<?, ?> ViewDateColumn;
-    @FXML
-    private TableColumn<?, ?> viewFeedback;
-    @FXML
-    private TextField CustomerIDTextField;
+    private TextArea feedbackEmailTextArea;
 
     /**
      * Initializes the controller class.
@@ -65,7 +54,11 @@ public class Scene1Controller implements Initializable {
     }
 
     @FXML
-    private void markAsResolvedOnclick(ActionEvent event) {
+    private void sendtoManagerfOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void attachFilesOnClick(ActionEvent event) {
     }
     
 }
