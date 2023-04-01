@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
+   <children>
+      <TableView fx:id="faultyEquipmentViewTable" layoutX="234.0" layoutY="87.0" prefHeight="410.0" prefWidth="552.0">
+         <columns>
+            <TableColumn fx:id="equipmentID" prefWidth="151.99993896484375" text="Equipment ID" />
+            <TableColumn fx:id="equipmentName" prefWidth="229.60000610351562" text="Equipment Name" />
+            <TableColumn fx:id="qtyOfEquipment" prefWidth="169.60003662109375" text="Quantity Remaining" />
+         </columns>
+      </TableView>
+      <Button layoutX="600.0" layoutY="504.0" mnemonicParsing="false" onAction="#selectEquipmentAndRequestRestockOnClick" prefHeight="26.0" prefWidth="186.0" text="Request Restock" />
+      <VBox layoutX="16.0" layoutY="120.0" prefHeight="420.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Task List" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerComplaintsOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Information" />
+            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Complaints" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Faulty Equipments" />
+            <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Check Inventory of Equipment" />
+            <Button mnemonicParsing="false" onAction="#viewUploadDataOnClick" prefHeight="46.0" prefWidth="211.0" text="Upload Data" />
+            <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Submit Work Reports" />
+            <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="203.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Inventory of Equipements" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="82.0" text="Technician">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="12.0" layoutY="15.0">
+         <image>
+            <Image url="@../desco.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
