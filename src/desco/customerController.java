@@ -15,8 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -29,8 +30,22 @@ import javafx.stage.Stage;
  *
  * @author Istiaqs-PC
  */
-public class customerServiceController implements Initializable {
+public class customerController implements Initializable {
 
+    @FXML
+    private Pane pane2;
+    @FXML
+    private ComboBox<?> billMonthComboBox;
+    @FXML
+    private ComboBox<?> billYearComboBox;
+    @FXML
+    private CheckBox autoPaymentCheckbox;
+    @FXML
+    private CheckBox paperlessbillCheckBox;
+    @FXML
+    private TextArea billTextField;
+    @FXML
+    private Pane pane1;
     @FXML
     private TextField profileNameTextField;
     @FXML
@@ -46,46 +61,43 @@ public class customerServiceController implements Initializable {
     @FXML
     private TextField newPassTextField;
     @FXML
-    private TextField CustomerIDTextField;
-    @FXML
-    private TableView<?> ViewCustomerAccountTable;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewComplainIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerComplaintColumn;
-    @FXML
-    private TableColumn<?, ?> ViewDateColumn;
-    @FXML
-    private TableColumn<?, ?> viewFeedback;
-    @FXML
-    private TextField subjectTextField;
-    @FXML
-    private TextArea emailTextArea;
-    @FXML
-    private TextField feedbackSubjectTextField;
-    @FXML
-    private TextArea feedbackEmailTextArea;
-    @FXML
-    private Label policyViewTextLabel;
-    @FXML
-    private Pane pane1;
-    @FXML
-    private Pane pane2;
-    @FXML
     private Pane pane3;
+    @FXML
+    private ComboBox<?> energyUseMonthCombobox;
+    @FXML
+    private ComboBox<?> energyUseYearCombobox;
+    @FXML
+    private TextArea viewTextArea;
     @FXML
     private Pane pane4;
     @FXML
+    private ComboBox<?> serviceTypeComboBox;
+    @FXML
+    private TextField detailsTextField;
+    @FXML
     private Pane pane5;
-    
+    @FXML
+    private TableView<?> notificationsTableViewOnClick;
+    @FXML
+    private TableColumn<?, ?> dateCol;
+    @FXML
+    private TableColumn<?, ?> subjectCol;
+    @FXML
+    private TableColumn<?, ?> detailsCol;
+    @FXML
+    private Pane pane6;
+    @FXML
+    private DatePicker complaintDatePicker;
+    @FXML
+    private TextArea complaintTextArea;
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
         pane3.setVisible(false);
         pane4.setVisible(false);
         pane5.setVisible(false);
+        pane6.setVisible(false);
 
         switch (paneNumber) {
             case 1:
@@ -102,14 +114,15 @@ public class customerServiceController implements Initializable {
                 break;
             case 5:
                 pane5.setVisible(true);
-                break;    
+                break;
+            case 6:
+                pane6.setVisible(true);
+                break;
         }
     }
 
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -122,27 +135,32 @@ public class customerServiceController implements Initializable {
     }
 
     @FXML
-    private void viewCustomerComplaintsOnClick(ActionEvent event) {
+    private void viewMyBillsOnClick(ActionEvent event) {
         switchPane(2);
     }
 
     @FXML
-    private void ViewPromotionsOnClick(ActionEvent event) {
+    private void viewEnergyUsageOnClick(ActionEvent event) {
         switchPane(3);
     }
 
     @FXML
-    private void ViewFeedBackManagerOnClick(ActionEvent event) {
+    private void viewServiceRequestOnClick(ActionEvent event) {
         switchPane(4);
     }
 
     @FXML
-    private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
+    private void viewNotificationsOnClick(ActionEvent event) {
         switchPane(5);
     }
 
     @FXML
-    private void logOutOnclick(ActionEvent event) {
+    private void fileComplaintOnClick(ActionEvent event) {
+        switchPane(6);
+    }
+
+    @FXML
+    private void logOutOnClick(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
             Parent root = loader.load();
@@ -156,24 +174,31 @@ public class customerServiceController implements Initializable {
     }
 
     @FXML
+    private void viewBillOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void makePaymentOnClick(ActionEvent event) {
+    }
+
+    @FXML
     private void saveChangesOnClick(ActionEvent event) {
     }
 
     @FXML
-    private void markAsResolvedOnclick(ActionEvent event) {
+    private void viewMontlyUsageOnClick(ActionEvent event) {
     }
 
     @FXML
-    private void sendtoAllCustomersOnClick(ActionEvent event) {
+    private void ViewYearlyUsageOnClick(ActionEvent event) {
     }
 
     @FXML
-    private void attachFilesOnClick(ActionEvent event) {
+    private void submitOnClick(ActionEvent event) {
     }
 
     @FXML
-    private void sendtoManagerfOnClick(ActionEvent event) {
+    private void submitComplaintButton(ActionEvent event) {
     }
-
 
 }

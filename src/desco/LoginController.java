@@ -61,9 +61,9 @@ public class LoginController implements Initializable {
             switch (user.getUserType()) {
                 case "Customer":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Customer/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("customer.fxml"));
                         Parent root = loader.load();
-                        Customer.Scene1Controller customerScene1Controller = loader.getController();
+                        customerController customerController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -97,9 +97,9 @@ public class LoginController implements Initializable {
                     break;
                 case "Customer Service Representative":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/customerServiceRep.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("customerServiceRep.fxml"));
                         Parent root = loader.load();
-                        desco.customerServiceController customerServiceRepController = loader.getController();
+                        customerServiceController customerServiceController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -109,9 +109,9 @@ public class LoginController implements Initializable {
                     break;
                 case "Field Technician":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FieldTechnician/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("technician.fxml"));
                         Parent root = loader.load();
-                        FieldTechnician.Scene1Controller fieldTechnicianScene1Controller = loader.getController();
+                        technicianController technicianController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -121,9 +121,9 @@ public class LoginController implements Initializable {
                     break;
                 case "System Administrator":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SystemAdministrator/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("sysAd.fxml"));
                         Parent root = loader.load();
-                        SystemAdministrator.Scene1Controller systemAdministratorScene1Controller = loader.getController();
+                        sysAdController systemAdController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -145,9 +145,9 @@ public class LoginController implements Initializable {
                     break;
                 case "Human Resources":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HumanResources/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("humanResource.fxml"));
                         Parent root = loader.load();
-                        HumanResources.Scene1Controller humanResourcesScene1Controller = loader.getController();
+                        humanResourceController humanResourceController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
