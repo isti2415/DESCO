@@ -10,23 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Customer.Scene4Controller">
    <children>
       <Label alignment="CENTER" layoutX="238.0" layoutY="13.0" prefHeight="46.0" prefWidth="572.0" text="Service Request" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="17.0" />
          </font></Label>
-      <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
-         <children>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewTaskListOnClick" prefHeight="46.0" prefWidth="192.0" text="My Bills" />
-            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerInformationOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
-            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Energy Usage" />
-            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Service Request" />
-            <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Notifications" />
-            <Button mnemonicParsing="false" onAction="#submitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="File Complaint" />
-            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
-         </children>
-      </VBox>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="80.0" text="Customer">
          <font>
             <Font size="18.0" />
@@ -37,10 +26,21 @@
             <Image url="@desco.png" />
          </image>
       </ImageView>
-      <ComboBox layoutX="481.0" layoutY="120.0" prefHeight="25.0" prefWidth="291.0" />
+      <ComboBox fx:id="serviceTypeComboBox" layoutX="481.0" layoutY="120.0" prefHeight="25.0" prefWidth="291.0" />
       <Label layoutX="238.0" layoutY="124.0" text="Please Choose the Service you want to avail:" />
-      <TextField layoutX="238.0" layoutY="277.0" prefHeight="206.0" prefWidth="533.0" />
+      <TextField fx:id="detailsTextField" layoutX="238.0" layoutY="277.0" prefHeight="206.0" prefWidth="533.0" />
       <Label layoutX="238.0" layoutY="246.0" text="Details about the service" />
-      <Button layoutX="671.0" layoutY="242.0" mnemonicParsing="false" text="Submit Request" />
+      <Button fx:id="submitOnClick" layoutX="671.0" layoutY="242.0" mnemonicParsing="false" text="Submit Request" />
+      <VBox layoutX="19.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewMyBillsOnClick" prefHeight="46.0" prefWidth="192.0" text="My Bills" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#vewEnergyUsageOnClick" prefHeight="46.0" prefWidth="211.0" text="Energy Usage" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#serviceRequestOnClick" prefHeight="47.0" prefWidth="210.0" text="Service Request" />
+            <Button mnemonicParsing="false" onAction="#checkNotificationsOnClick" prefHeight="46.0" prefWidth="209.0" text="Notifications" />
+            <Button mnemonicParsing="false" onAction="#fileComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="File Complaint" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
