@@ -40,8 +40,8 @@
       </ImageView>
       <ComboBox layoutX="240.0" layoutY="81.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
       <ComboBox layoutX="398.0" layoutY="81.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
-      <Button layoutX="534.0" layoutY="71.0" mnemonicParsing="false" text="View Bill" />
-      <Button layoutX="629.0" layoutY="71.0" mnemonicParsing="false" text="Make Payment" />
+      <Button layoutX="532.0" layoutY="81.0" mnemonicParsing="false" text="View Bill" />
+      <Button layoutX="627.0" layoutY="81.0" mnemonicParsing="false" text="Make Payment" />
       <View layoutX="240.0" layoutY="120.0" prefHeight="358.0" prefWidth="542.0" />
       <CheckBox layoutX="240.0" layoutY="486.0" mnemonicParsing="false" text="Pay Bill automatically each month" />
       <CheckBox layoutX="240.0" layoutY="510.0" mnemonicParsing="false" text="Join the initiative to save paper and choose paperless billng" />
