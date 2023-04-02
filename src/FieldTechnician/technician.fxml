@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="technicianController">
+   <children>
+      <VBox layoutX="18.0" layoutY="102.0" prefHeight="438.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#viewTaskListOnClick" prefHeight="47.0" prefWidth="192.0" text="Task List" />
+            <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerInfoOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Information" />
+            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Complaints" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Faulty Equipments" />
+            <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Check Inventory of Equipment" />
+            <Button mnemonicParsing="false" onAction="#viewUploadDataOnClick" prefHeight="46.0" prefWidth="211.0" text="Upload Data" />
+            <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Submit Work Reports" />
+            <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="69.0" text="Technician">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="14.0" layoutY="15.0">
+         <image>
+            <Image url="@../desco.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="scene1pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Button layoutX="415.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandMarkasDoneOnClick" prefHeight="26.0" prefWidth="153.0" text="Mark as Done" />
+            <Label alignment="CENTER" layoutY="14.0" prefHeight="46.0" prefWidth="583.0" text="Task List" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="16.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandUpdateOnClick" prefHeight="26.0" prefWidth="153.0" text="Update Task List" />
+            <TableView fx:id="taskListViewTable" layoutX="15.0" layoutY="81.0" prefHeight="420.0" prefWidth="552.0">
+               <columns>
+                  <TableColumn fx:id="taskId" prefWidth="75.0" text="Task ID" />
+                  <TableColumn fx:id="taskDescription" prefWidth="239.20001220703125" text="Task Description" />
+                  <TableColumn fx:id="taskDate" prefWidth="96.79998779296875" text="Date" />
+                  <TableColumn fx:id="taskStatus" prefWidth="138.39996337890625" text="Status" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="scene2pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="customerComplainListViewTable" layoutX="12.0" layoutY="82.0" prefHeight="458.0" prefWidth="557.0">
+               <columns>
+                  <TableColumn fx:id="complaintID" prefWidth="87.0" text="Complaint ID" />
+                  <TableColumn fx:id="customerID" prefWidth="110.66665649414062" text="Customer ID" />
+                  <TableColumn fx:id="customerAddress" prefWidth="131.33334350585938" text="Address" />
+                  <TableColumn fx:id="complainDate" minWidth="1.33331298828125" prefWidth="95.33331298828125" text="Date" />
+                  <TableColumn fx:id="contactInfo" prefWidth="129.0" text="Contact" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" layoutY="15.0" prefHeight="46.0" prefWidth="583.0" text="Customer Information" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="scene3pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="ComplainListViewTable" layoutX="16.0" layoutY="100.0" prefHeight="403.0" prefWidth="552.0">
+               <columns>
+                  <TableColumn fx:id="complaintID1" prefWidth="102.39996337890625" text="Complaint ID" />
+                  <TableColumn fx:id="complaintDescription" prefWidth="212.80001831054688" text="Complaint Description" />
+                  <TableColumn fx:id="complainDate1" prefWidth="96.79998779296875" text="Date" />
+                  <TableColumn fx:id="complainStatus" prefWidth="138.39996337890625" text="Status" />
+               </columns>
+            </TableView>
+            <Button layoutX="415.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectComplainandMarkasResolvedOnClick" prefHeight="26.0" prefWidth="153.0" text="Mark as Resolved" />
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="28.0" prefHeight="46.0" prefWidth="583.0" text="Complaints" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="scene4pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="faultyEquipmentViewTable" layoutX="11.0" layoutY="86.0" prefHeight="420.0" prefWidth="562.0">
+               <columns>
+                  <TableColumn fx:id="equipmentID" prefWidth="109.59991455078125" text="Equipment ID" />
+                  <TableColumn fx:id="complaintID2" prefWidth="145.60003662109375" text="Complaint ID" />
+                  <TableColumn fx:id="customerAddress1" prefWidth="182.39999389648438" text="Address" />
+                  <TableColumn fx:id="problemDescription" prefWidth="116.800048828125" text="Problem" />
+               </columns>
+            </TableView>
+            <Button layoutX="387.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectEquipmentAndMarkAsRepaired" prefHeight="26.0" prefWidth="186.0" text="Mark as Repaired" />
+            <Label alignment="CENTER" layoutX="-9.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Faulty Equipments" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="scene5pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="inventoryEquipmentViewTable" layoutX="13.0" layoutY="97.0" prefHeight="410.0" prefWidth="558.0">
+               <columns>
+                  <TableColumn fx:id="equipmentID1" prefWidth="151.99993896484375" text="Equipment ID" />
+                  <TableColumn fx:id="equipmentName" prefWidth="229.60000610351562" text="Equipment Name" />
+                  <TableColumn fx:id="qtyOfEquipment" prefWidth="169.60003662109375" text="Quantity Remaining" />
+               </columns>
+            </TableView>
+            <Button layoutX="379.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectEquipmentAndRequestRestockOnClick" prefHeight="26.0" prefWidth="186.0" text="Request Restock" />
+            <Label alignment="CENTER" layoutX="-18.0" layoutY="24.0" prefHeight="46.0" prefWidth="601.0" text="Inventory of Equipements" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="scene6pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="14.0" layoutY="101.0" text="Date of Work" />
+            <DatePicker fx:id="dateOfWork" layoutX="99.0" layoutY="97.0" promptText="DD/MM/YYYY" />
+            <Button layoutX="411.0" layoutY="515.0" mnemonicParsing="false" onAction="#fileChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload File" />
+            <Label alignment="CENTER" layoutY="28.0" prefHeight="46.0" prefWidth="577.0" text="Upload Data" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="101.0" text="Complain ID" />
+            <TextField fx:id="complainIDtextField" layoutX="362.0" layoutY="97.0" prefHeight="25.0" prefWidth="208.0" />
+            <TextArea fx:id="noteTextArea" layoutX="13.0" layoutY="147.0" prefHeight="347.0" prefWidth="556.0" promptText="Note" />
+            <Button layoutX="233.0" layoutY="515.0" mnemonicParsing="false" onAction="#textChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload Text" />
+         </children>
+      </Pane>
+      <Pane fx:id="scene7pane" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="51.0" layoutY="100.0" prefHeight="26.0" prefWidth="74.0" text="Date of Work" />
+            <DatePicker fx:id="dateOfWorkOfReport" layoutX="127.0" layoutY="100.0" promptText="DD/MM/YYYY" />
+            <TextField fx:id="getComplainID" layoutX="127.0" layoutY="137.0" prefHeight="26.0" prefWidth="175.0" promptText="Enter Complain ID" />
+            <Button layoutX="374.0" layoutY="100.0" mnemonicParsing="false" onAction="#ReportChooserOnClick" prefHeight="26.0" prefWidth="175.0" text="Choose Report File" />
+            <Button layoutX="374.0" layoutY="137.0" mnemonicParsing="false" onAction="#submitReportOnClick" prefHeight="26.0" prefWidth="175.0" text="Submit Report to Admin" />
+            <Label alignment="CENTER" layoutY="31.0" prefHeight="46.0" prefWidth="601.0" text="Submit Reports" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="137.0" prefHeight="26.0" prefWidth="74.0" text="Complain ID" />
+            <TextArea fx:id="noteTextArea1" layoutX="15.0" layoutY="191.0" prefHeight="347.0" prefWidth="555.0" text="Note..." />
+         </children>
+      </Pane>
+      <Pane fx:id="scene8pane" layoutX="220.0" layoutY="4.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="217.0" layoutY="24.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="policyViewTextLabel" layoutX="44.0" layoutY="87.0" prefHeight="389.0" prefWidth="504.0" />
+            <Button layoutX="41.0" layoutY="493.0" mnemonicParsing="false" onAction="#agreeButtonOnClick" prefHeight="26.0" prefWidth="202.0" text="Agree to Company Policies" />
+         </children>
+      </Pane>
+      <Pane fx:id="scene9Profilepane" layoutX="220.0" layoutY="4.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Label alignment="CENTER" layoutX="5.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="86.0" text="Personal Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="321.0" layoutY="121.0" text="Username" />
+            <TextField fx:id="profileNameTextField" layoutX="93.0" layoutY="117.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileUsernameTextField" layoutX="398.0" layoutY="117.0" />
+            <Label layoutX="36.0" layoutY="170.0" text="Date of Birth" />
+            <DatePicker fx:id="profileDOBdatepicker" layoutX="112.0" layoutY="166.0" />
+            <Label layoutX="36.0" layoutY="390.0" text="Current Password" />
+            <TextField fx:id="currPassTextField" layoutX="143.0" layoutY="386.0" />
+            <Label layoutX="36.0" layoutY="270.0" text="Email" />
+            <Label layoutX="300.0" layoutY="270.0" text="Contact Number" />
+            <TextField fx:id="profileEmailTextField" layoutX="74.0" layoutY="266.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="customerConNumTextField" layoutX="398.0" layoutY="266.0" />
+            <Label layoutX="36.0" layoutY="227.0" text="Contact Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="36.0" layoutY="336.0" text="Change Password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="309.0" layoutY="390.0" text="New Password" />
+            <TextField fx:id="newPassTextField" layoutX="398.0" layoutY="386.0" />
+            <Button layoutX="457.0" layoutY="443.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+            <Label layoutX="38.0" layoutY="121.0" text="Name" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
