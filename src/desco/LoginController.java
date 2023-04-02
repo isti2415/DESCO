@@ -97,9 +97,9 @@ public class LoginController implements Initializable {
                     break;
                 case "Customer Service Representative":
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CustomerServiceRepresentative/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/customerServiceRep.fxml"));
                         Parent root = loader.load();
-                        CustomerServiceRepresentative.Scene1Controller customerServiceRepresentativeScene1Controller = loader.getController();
+                        desco.customerServiceController customerServiceRepController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
