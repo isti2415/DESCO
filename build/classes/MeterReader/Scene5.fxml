@@ -9,24 +9,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.TechnicianDashboardController">
    <children>
       <Label alignment="CENTER" layoutX="238.0" layoutY="13.0" prefHeight="46.0" prefWidth="572.0" text="Safety Procedures" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="17.0" />
          </font></Label>
-      <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
-         <children>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewTaskListOnClick" prefHeight="46.0" prefWidth="192.0" text="Energy Usage" />
-            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerInformationOnClick" prefHeight="47.0" prefWidth="211.0" text="Inventory" />
-            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Reports" />
-            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Performance Target" />
-            <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Safety Procedures" />
-            <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Meter Records" />
-            <Button mnemonicParsing="false" onAction="#submitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Company Policy" />
-            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
-         </children>
-      </VBox>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="80.0" text="Meter Reader">
          <font>
             <Font size="18.0" />
@@ -37,6 +25,18 @@
             <Image url="@desco.png" />
          </image>
       </ImageView>
-      <ListView layoutX="228.0" layoutY="80.0" prefHeight="450.0" prefWidth="558.0" />
+      <ListView fx:id="safetyProceduresTextArea" layoutX="228.0" layoutY="80.0" prefHeight="450.0" prefWidth="558.0" />
+      <VBox layoutX="18.0" layoutY="116.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewEnergyUsageOnClick" prefHeight="46.0" prefWidth="192.0" text="Energy Usage" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewInventoryOnClick" prefHeight="47.0" prefWidth="211.0" text="Inventory" />
+            <Button mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="46.0" prefWidth="211.0" text="Reports" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#viewPerformaneTargetOnClick" prefHeight="47.0" prefWidth="210.0" text="Performance Target" />
+            <Button mnemonicParsing="false" onAction="#viewSafetyProceduresOnClick" prefHeight="46.0" prefWidth="209.0" text="Safety Procedures" />
+            <Button mnemonicParsing="false" onAction="#viewMeterReordsOnClick" prefHeight="46.0" prefWidth="211.0" text="Meter Records" />
+            <Button mnemonicParsing="false" onAction="#viewCompanyPolicyOnClick" prefHeight="47.0" prefWidth="211.0" text="Company Policy" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
