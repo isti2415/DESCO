@@ -97,7 +97,7 @@ public class LoginController implements Initializable {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("MeterReader.fxml"));
                         Parent root = loader.load();
-                        meterReaderController meterReaderController = loader.getController();
+                        MeterReaderController MeterReaderController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("BillingAdmin.fxml"));
                         Parent root = loader.load();
-                        billingAdminController billingAdministratorController = loader.getController();
+                        BillingAdminController BillingAdministratorController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
