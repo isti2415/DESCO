@@ -16,18 +16,24 @@ public class User implements Serializable {
     private static final String USER_FILE_NAME = "users.bin";
     private String userID;
     private String password;
+    private String userType;
     private String userName;
     private LocalDate userDoB;
     private String userEmail;
     private String userContact;
 
-    public User(String userID, String password, String userName, LocalDate userDoB, String userEmail, String userContact) {
+    public User(String userID, String password, String userType) {
         this.userID = userID;
         this.password = password;
-        this.userName = userName;
-        this.userDoB = userDoB;
-        this.userEmail = userEmail;
-        this.userContact = userContact;
+        this.userType = userType;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getUserID() {
@@ -80,10 +86,10 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "userID=" + userID + ", password=" + password + ", userName=" + userName + ", userDoB=" + userDoB + ", userEmail=" + userEmail + ", userContact=" + userContact + '}';
+        return "User{" + "userID=" + userID + ", password=" + password + ", userType=" + userType + ", userName=" + userName + ", userDoB=" + userDoB + ", userEmail=" + userEmail + ", userContact=" + userContact + '}';
     }
     
-    public void saveUser() {
+    private void saveUser() {
         try {
             // Load existing users from file
             List<User> existingUsers = loadUsers();

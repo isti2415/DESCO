@@ -8,6 +8,8 @@ package desco;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.User;
 
 /**
  * FXML Controller class
@@ -43,7 +46,7 @@ public class sysAdController implements Initializable {
     @FXML
     private TableColumn<?, ?> userTypeTableColumn;
     @FXML
-    private ComboBox<?> usertypeCombo;
+    private ComboBox<String> usertypeCombo;
     @FXML
     private TextField useridfield;
     @FXML
@@ -163,6 +166,17 @@ public class sysAdController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        ObservableList<String> userTypes = FXCollections.observableArrayList(
+                "Customer",
+                "Meter Reader",
+                "Billing Administrator",
+                "Customer Service Representative",
+                "Field Technician",
+                "System Administrator",
+                "Manager",
+                "Human Resources"
+        );
+        usertypeCombo.setItems(userTypes);
     }
 
     @FXML
@@ -226,6 +240,7 @@ public class sysAdController implements Initializable {
 
     @FXML
     private void addUserOnClick(ActionEvent event) {
+        User user = new User(useridfield.getText(), passwordfield.getText(), usertypeCombo.getValue());
     }
 
     @FXML

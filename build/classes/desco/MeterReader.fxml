@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="meterReaderController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="80.0" text="Meter Reader">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="28.0" layoutY="19.0">
+         <image>
+            <Image url="@desco.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="18.0" layoutY="121.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewEnergyUsageOnClick" prefHeight="46.0" prefWidth="192.0" text="Energy Usage" />
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewInventoryOnClick" prefHeight="47.0" prefWidth="211.0" text="Inventory" />
+            <Button mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="46.0" prefWidth="211.0" text="Reports" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#viewPerformaneTargetOnClick" prefHeight="47.0" prefWidth="210.0" text="Performance Target" />
+            <Button mnemonicParsing="false" onAction="#viewSafetyProceduresOnClick" prefHeight="46.0" prefWidth="209.0" text="Safety Procedures" />
+            <Button mnemonicParsing="false" onAction="#viewMeterReordsOnClick" prefHeight="46.0" prefWidth="211.0" text="Meter Records" />
+            <Button mnemonicParsing="false" onAction="#viewCompanyPolicyOnClick" prefHeight="47.0" prefWidth="211.0" text="Company Policy" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
+      <Pane fx:id="pane1" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="33.0" prefHeight="46.0" prefWidth="594.0" text="Profile Settings" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="107.0" text="Personal Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="142.0" text="Name" />
+            <Label layoutX="315.0" layoutY="142.0" text="Username" />
+            <TextField fx:id="customerNameTextField" layoutX="70.0" layoutY="138.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="customerUsernameTextField" layoutX="392.0" layoutY="138.0" />
+            <Label layoutX="30.0" layoutY="191.0" text="Date of Birth" />
+            <DatePicker fx:id="customerDOBdatepicker" layoutX="106.0" layoutY="187.0" />
+            <Label layoutX="30.0" layoutY="411.0" text="Current Password" />
+            <TextField fx:id="currPassTextField" layoutX="137.0" layoutY="407.0" />
+            <Label layoutX="30.0" layoutY="291.0" text="Email" />
+            <Label layoutX="294.0" layoutY="291.0" text="Contact Number" />
+            <TextField fx:id="customerEmailTextField" layoutX="68.0" layoutY="287.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="customerConNumTextField" layoutX="392.0" layoutY="287.0" />
+            <Label layoutX="30.0" layoutY="248.0" text="Contact Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="357.0" text="Change Password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="303.0" layoutY="411.0" text="New Password" />
+            <TextField fx:id="newPassTextField" layoutX="392.0" layoutY="407.0" />
+            <Button layoutX="451.0" layoutY="464.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="28.0" layoutY="20.0" prefHeight="46.0" prefWidth="572.0" text="Energy Usage" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="92.0" text="Meter ID" />
+            <TextField fx:id="energyUseMeterIDTextField" layoutX="89.0" layoutY="88.0" />
+            <Label layoutX="27.0" layoutY="258.0" text="Date" />
+            <DatePicker fx:id="energyUsageDatePicker" layoutX="59.0" layoutY="254.0" prefHeight="25.0" prefWidth="192.0" />
+            <Button layoutX="265.0" layoutY="88.0" mnemonicParsing="false" onAction="#energyUseLoadInfoOnClick" prefHeight="25.0" prefWidth="133.0" text="Load Information" />
+            <Label layoutX="28.0" layoutY="170.0" text="Customer ID" />
+            <TextField fx:id="energyUseCusIDTextField" editable="false" layoutX="105.0" layoutY="166.0" prefHeight="25.0" prefWidth="133.0" />
+            <Label layoutX="268.0" layoutY="170.0" text="Previous Reading" />
+            <TextField fx:id="energyUsePrevReadingTextField" editable="false" layoutX="371.0" layoutY="166.0" prefHeight="25.0" prefWidth="192.0" />
+            <Label layoutX="26.0" layoutY="220.0" text="Current Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="128.0" text="Existing Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="264.0" layoutY="258.0" text="Current Reading" />
+            <TextField fx:id="energyUseCurrReadingTextField" layoutX="373.0" layoutY="254.0" prefHeight="25.0" prefWidth="192.0" />
+            <TextArea fx:id="energyUseNotesTextArea" layoutX="22.0" layoutY="317.0" prefHeight="163.0" prefWidth="551.0" promptText="Notes" />
+            <Button layoutX="430.0" layoutY="88.0" mnemonicParsing="false" onAction="#energyUseSaveChangesOnClick" prefHeight="25.0" prefWidth="133.0" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane3" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Inventory" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="inventoryTableView" layoutX="22.0" layoutY="88.0" prefHeight="414.0" prefWidth="547.0">
+               <columns>
+                  <TableColumn fx:id="equipmentCol" prefWidth="221.0" text="Equipment" />
+                  <TableColumn fx:id="modelCol" prefWidth="208.0" text="Model" />
+                  <TableColumn fx:id="qntCol" prefWidth="117.0" text="Quantity" />
+               </columns>
+            </TableView>
+            <Button layoutX="465.0" layoutY="515.0" mnemonicParsing="false" onAction="#requestRestockOnClick" text="Request Restock" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Report" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="40.0" layoutY="93.0" text="Meter ID" />
+            <TextField fx:id="reportMeterIDTextField" layoutX="101.0" layoutY="89.0" prefHeight="25.0" prefWidth="213.0" />
+            <Label layoutX="326.0" layoutY="93.0" text="Date" />
+            <DatePicker fx:id="reportDatePicker" layoutX="358.0" layoutY="89.0" prefHeight="25.0" prefWidth="192.0" />
+            <Label layoutX="40.0" layoutY="128.0" text="Report Type" />
+            <ComboBox fx:id="reportTypeComboBox" layoutX="121.0" layoutY="124.0" prefHeight="25.0" prefWidth="192.0" />
+            <Button layoutX="358.0" layoutY="124.0" mnemonicParsing="false" onAction="#reportOnClick" prefHeight="25.0" prefWidth="192.0" text="Report" />
+            <TextArea fx:id="reportNoteTextArea" layoutX="38.0" layoutY="174.0" prefHeight="356.0" prefWidth="514.0" promptText="Note" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="10.0" layoutY="22.0" prefHeight="46.0" prefWidth="572.0" text="Performance Target" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="performanceTableView" layoutX="22.0" layoutY="126.0" prefHeight="414.0" prefWidth="548.0">
+               <columns>
+                  <TableColumn fx:id="perDateCol" prefWidth="101.0" text="Date" />
+                  <TableColumn fx:id="perTitleCol" prefWidth="184.0" text="Title" />
+                  <TableColumn fx:id="perDescriptionCol" prefWidth="262.0" text="Descriptions" />
+               </columns>
+            </TableView>
+            <Button layoutX="22.0" layoutY="87.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="192.0" text="Update Targets" />
+            <Button layoutX="378.0" layoutY="87.0" mnemonicParsing="false" onAction="#markAsDoneOnClick" prefHeight="25.0" prefWidth="192.0" text="Mark as done" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane6" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Safety Procedures" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <ListView fx:id="safetyProceduresTextArea" layoutX="14.0" layoutY="81.0" prefHeight="450.0" prefWidth="564.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane7" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="22.0" layoutY="45.0" prefHeight="46.0" prefWidth="572.0" text="Meter Records" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="199.0" text="Meter ID" />
+            <TextField fx:id="meterIDTextField2" layoutX="101.0" layoutY="195.0" prefHeight="26.0" prefWidth="176.0" />
+            <Label layoutX="304.0" layoutY="200.0" text="Date" />
+            <DatePicker fx:id="recordsDatePicker" layoutX="359.0" layoutY="195.0" prefHeight="25.0" prefWidth="192.0" />
+            <Button layoutX="359.0" layoutY="442.0" mnemonicParsing="false" onAction="#saveChangesOnClick" prefHeight="25.0" prefWidth="192.0" text="Save Changes" />
+            <Label layoutX="22.0" layoutY="287.0" text="Customer ID" />
+            <TextField fx:id="cusIDTextField" layoutX="103.0" layoutY="283.0" prefHeight="25.0" prefWidth="87.0" />
+            <Label layoutX="208.0" layoutY="287.0" text="Customer Name" />
+            <TextField fx:id="cusNameTextField" layoutX="317.0" layoutY="283.0" prefHeight="25.0" prefWidth="234.0" />
+            <Label layoutX="23.0" layoutY="395.0" text="Customer Address" />
+            <TextField fx:id="cusAddressTextField" layoutX="147.0" layoutY="391.0" prefHeight="25.0" prefWidth="404.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane8" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label layoutX="225.0" layoutY="14.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" layoutX="22.0" layoutY="57.0" prefHeight="478.0" prefWidth="548.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

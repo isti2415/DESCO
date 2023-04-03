@@ -95,9 +95,9 @@ public class LoginController implements Initializable {
                     break;
                 case 2:
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MeterReader/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("MeterReader.fxml"));
                         Parent root = loader.load();
-                        MeterReader.Scene1Controller meterReaderScene1Controller = loader.getController();
+                        meterReaderController meterReaderController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -107,9 +107,9 @@ public class LoginController implements Initializable {
                     break;
                 case 3:
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/BillingAdministrator/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("BillingAdmin.fxml"));
                         Parent root = loader.load();
-                        BillingAdministrator.Scene1Controller billingAdministratorScene1Controller = loader.getController();
+                        billingAdminController billingAdministratorController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -155,9 +155,9 @@ public class LoginController implements Initializable {
                     break;
                 case 7:
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Manager/Scene1.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
                         Parent root = loader.load();
-                        Manager.Scene1Controller managerScene1Controller = loader.getController();
+                        ManagerController managerController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);

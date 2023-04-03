@@ -6,7 +6,6 @@
 package modelClass;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  *
@@ -14,5 +13,11 @@ import java.time.LocalDate;
  */
 
 public class Customer extends User implements Serializable{
+
+    public Customer(String userID, String password, String userType) {
+        super(userID, password, userType);
+    }
+   
+    
    
 }
