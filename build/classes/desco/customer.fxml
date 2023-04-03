@@ -68,9 +68,9 @@
                </font>
             </Label>
             <Label layoutX="41.0" layoutY="140.0" text="Name" />
-            <Label layoutX="324.0" layoutY="140.0" text="Username" />
+            <Label layoutX="324.0" layoutY="140.0" text="User ID" />
             <TextField fx:id="profileNameTextField" layoutX="79.0" layoutY="136.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="profileUsernameTextField" layoutX="401.0" layoutY="136.0" />
+            <TextField fx:id="profileUseridTextField" layoutX="401.0" layoutY="136.0" />
             <Label layoutX="39.0" layoutY="189.0" text="Date of Birth" />
             <DatePicker fx:id="profileDOBdatepicker" layoutX="115.0" layoutY="185.0" />
             <Label layoutX="39.0" layoutY="409.0" text="Current Password" />

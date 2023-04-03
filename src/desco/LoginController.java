@@ -58,8 +58,30 @@ public class LoginController implements Initializable {
         }
         if (user != null) {
             // redirect to the appropriate dashboard based on user type
-            switch (user.getUserType()) {
-                case "Customer":
+            int dashboardType = 0; // default value for invalid user IDs
+            int userid;
+            userid = Integer.parseInt(user.getUserID());
+            if (userid >= 1000 && userid < 2000) {
+                if (userid >= 1000 && userid < 2000) {
+                    dashboardType = 1; // set flag for users with userID between 1000 and 2000
+                } else if (userid >= 2000 && userid < 3000) {
+                    dashboardType = 2; // set flag for users with userID between 2000 and 3000
+                } else if (userid >= 3000 && userid < 4000) {
+                    dashboardType = 3; // set flag for users with userID between 3000 and 4000
+                } else if (userid >= 4000 && userid < 5000) {
+                    dashboardType = 4; // set flag for users with userID between 4000 and 5000
+                } else if (userid >= 5000 && userid < 6000) {
+                    dashboardType = 5; // set flag for users with userID between 5000 and 6000
+                } else if (userid >= 6000 && userid < 7000) {
+                    dashboardType = 6; // set flag for users with userID between 6000 and 7000
+                } else if (userid >= 7000 && userid < 8000) {
+                    dashboardType = 7; // set flag for users with userID between 7000 and 8000
+                } else if (userid >= 8000 && userid < 9000) {
+                    dashboardType = 8; // set flag for users with userID between 8000 and 9000
+                }
+            }
+            switch (dashboardType) {
+                case 1:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("customer.fxml"));
                         Parent root = loader.load();
@@ -71,7 +93,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Meter Reader":
+                case 2:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MeterReader/Scene1.fxml"));
                         Parent root = loader.load();
@@ -83,7 +105,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Billing Administrator":
+                case 3:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/BillingAdministrator/Scene1.fxml"));
                         Parent root = loader.load();
@@ -95,7 +117,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Customer Service Representative":
+                case 4:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("customerServiceRep.fxml"));
                         Parent root = loader.load();
@@ -107,7 +129,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Field Technician":
+                case 5:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("technician.fxml"));
                         Parent root = loader.load();
@@ -119,7 +141,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "System Administrator":
+                case 6:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("sysAd.fxml"));
                         Parent root = loader.load();
@@ -131,7 +153,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Manager":
+                case 7:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Manager/Scene1.fxml"));
                         Parent root = loader.load();
@@ -143,7 +165,7 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                     break;
-                case "Human Resources":
+                case 8:
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("humanResource.fxml"));
                         Parent root = loader.load();

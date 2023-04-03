@@ -34,15 +34,54 @@ import javafx.stage.Stage;
  */
 public class customerServiceController implements Initializable {
 
+    @FXML
     private Label policyViewTextLabel;
+    @FXML
     private Pane pane1;
+    @FXML
     private Pane pane2;
+    @FXML
     private Pane pane3;
+    @FXML
     private Pane pane4;
     @FXML
     private Pane pane5;
     @FXML
-    private TextArea policViewTextArea;
+    private TextField profileNameTextField;
+    @FXML
+    private TextField profileUsernameTextField;
+    @FXML
+    private DatePicker profileDOBdatepicker;
+    @FXML
+    private TextField currPassTextField;
+    @FXML
+    private TextField profileEmailTextField;
+    @FXML
+    private TextField profileConNumTextField;
+    @FXML
+    private TextField newPassTextField;
+    @FXML
+    private TextField CustomerIDTextField;
+    @FXML
+    private TableView<?> ViewCustomerAccountTable;
+    @FXML
+    private TableColumn<?, ?> ViewCustomerIDColumn;
+    @FXML
+    private TableColumn<?, ?> ViewComplainIDColumn;
+    @FXML
+    private TableColumn<?, ?> ViewCustomerComplaintColumn;
+    @FXML
+    private TableColumn<?, ?> ViewDateColumn;
+    @FXML
+    private TableColumn<?, ?> viewFeedback;
+    @FXML
+    private TextField subjectTextField;
+    @FXML
+    private TextArea emailTextArea;
+    @FXML
+    private TextField feedbackSubjectTextField;
+    @FXML
+    private TextArea feedbackEmailTextArea;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -114,14 +153,16 @@ public class customerServiceController implements Initializable {
                 while (scanner.hasNextLine()) {
                     policyText.append(scanner.nextLine());
                     policyText.append("\n");
-                }   // Set the text of the label to the policy text
+                }   // Set the text of the text area to the policy text
                 policyViewTextLabel.setText(policyText.toString());
+                policyViewTextLabel.setWrapText(true);
                 // Close the scanner
             }
         } catch (FileNotFoundException e) {
             // Handle the file not found exception
 
         }
+
     }
 
     @FXML
@@ -138,5 +179,24 @@ public class customerServiceController implements Initializable {
         }
     }
 
+    @FXML
+    private void saveChangesOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void markAsResolvedOnclick(ActionEvent event) {
+    }
+
+    @FXML
+    private void sendtoAllCustomersOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void attachFilesOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void sendtoManagerfOnClick(ActionEvent event) {
+    }
 
 }

@@ -49,8 +49,6 @@ public class customerController implements Initializable {
     @FXML
     private TextField profileNameTextField;
     @FXML
-    private TextField profileUsernameTextField;
-    @FXML
     private DatePicker profileDOBdatepicker;
     @FXML
     private TextField currPassTextField;
@@ -90,6 +88,8 @@ public class customerController implements Initializable {
     private DatePicker complaintDatePicker;
     @FXML
     private TextArea complaintTextArea;
+    @FXML
+    private TextField profileUseridTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
