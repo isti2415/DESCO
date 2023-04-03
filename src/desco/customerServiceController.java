@@ -5,9 +5,12 @@
  */
 package desco;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,55 +34,16 @@ import javafx.stage.Stage;
  */
 public class customerServiceController implements Initializable {
 
-    @FXML
-    private TextField profileNameTextField;
-    @FXML
-    private TextField profileUsernameTextField;
-    @FXML
-    private DatePicker profileDOBdatepicker;
-    @FXML
-    private TextField currPassTextField;
-    @FXML
-    private TextField profileEmailTextField;
-    @FXML
-    private TextField profileConNumTextField;
-    @FXML
-    private TextField newPassTextField;
-    @FXML
-    private TextField CustomerIDTextField;
-    @FXML
-    private TableView<?> ViewCustomerAccountTable;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewComplainIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewCustomerComplaintColumn;
-    @FXML
-    private TableColumn<?, ?> ViewDateColumn;
-    @FXML
-    private TableColumn<?, ?> viewFeedback;
-    @FXML
-    private TextField subjectTextField;
-    @FXML
-    private TextArea emailTextArea;
-    @FXML
-    private TextField feedbackSubjectTextField;
-    @FXML
-    private TextArea feedbackEmailTextArea;
-    @FXML
     private Label policyViewTextLabel;
-    @FXML
     private Pane pane1;
-    @FXML
     private Pane pane2;
-    @FXML
     private Pane pane3;
-    @FXML
     private Pane pane4;
     @FXML
     private Pane pane5;
-    
+    @FXML
+    private TextArea policViewTextArea;
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -102,12 +66,13 @@ public class customerServiceController implements Initializable {
                 break;
             case 5:
                 pane5.setVisible(true);
-                break;    
+                break;
         }
     }
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -139,6 +104,24 @@ public class customerServiceController implements Initializable {
     @FXML
     private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
         switchPane(5);
+        try {
+            // Open the companypolicy.txt file
+            File file = new File("companypolicy.txt");
+            // Read the contents of the file into a string
+            try (Scanner scanner = new Scanner(file)) {
+                // Read the contents of the file into a string
+                StringBuilder policyText = new StringBuilder();
+                while (scanner.hasNextLine()) {
+                    policyText.append(scanner.nextLine());
+                    policyText.append("\n");
+                }   // Set the text of the label to the policy text
+                policyViewTextLabel.setText(policyText.toString());
+                // Close the scanner
+            }
+        } catch (FileNotFoundException e) {
+            // Handle the file not found exception
+
+        }
     }
 
     @FXML
@@ -153,26 +136,6 @@ public class customerServiceController implements Initializable {
             stage.show();
         } catch (IOException ex) {
         }
-    }
-
-    @FXML
-    private void saveChangesOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void markAsResolvedOnclick(ActionEvent event) {
-    }
-
-    @FXML
-    private void sendtoAllCustomersOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void attachFilesOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void sendtoManagerfOnClick(ActionEvent event) {
     }
 
 
