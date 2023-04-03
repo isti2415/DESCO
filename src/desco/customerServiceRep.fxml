@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
    <children>
       <VBox layoutX="6.0" layoutY="114.0" prefHeight="309.0" prefWidth="166.0" spacing="20.0">
          <children>
@@ -60,122 +60,122 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Pane fx:id="pane1" layoutX="177.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="494.0">
+      <Pane fx:id="pane1" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
-            <Label alignment="CENTER" layoutX="-1.0" prefHeight="46.0" prefWidth="494.0" text="Profile Settings" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="8.0" prefHeight="46.0" prefWidth="628.0" text="Profile Settings" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="16.0" layoutY="99.0" text="Personal Information">
+            <Label layoutX="72.0" layoutY="133.0" text="Personal Information">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="16.0" layoutY="134.0" text="Name" />
-            <Label layoutX="263.0" layoutY="134.0" text="Username" />
-            <TextField fx:id="profileNameTextField" layoutX="54.0" layoutY="130.0" prefHeight="25.0" prefWidth="194.0" />
-            <TextField fx:id="profileUsernameTextField" layoutX="326.0" layoutY="130.0" />
-            <Label layoutX="14.0" layoutY="183.0" text="Date of Birth" />
-            <DatePicker fx:id="profileDOBdatepicker" layoutX="90.0" layoutY="179.0" />
-            <Label layoutX="14.0" layoutY="382.0" text="Current Password" />
-            <TextField fx:id="currPassTextField" layoutX="121.0" layoutY="378.0" />
-            <Label layoutX="14.0" layoutY="258.0" text="Email" />
-            <Label layoutX="12.0" layoutY="303.0" text="Contact Number" />
-            <TextField fx:id="profileEmailTextField" layoutX="52.0" layoutY="254.0" prefHeight="25.0" prefWidth="194.0" />
-            <TextField fx:id="profileConNumTextField" layoutX="110.0" layoutY="299.0" />
-            <Label layoutX="18.0" layoutY="224.0" text="Contact Information">
+            <Label layoutX="72.0" layoutY="168.0" text="Name" />
+            <Label layoutX="319.0" layoutY="168.0" text="Username" />
+            <TextField fx:id="profileNameTextField" layoutX="110.0" layoutY="164.0" prefHeight="25.0" prefWidth="194.0" />
+            <TextField fx:id="profileUsernameTextField" layoutX="382.0" layoutY="164.0" prefHeight="25.0" prefWidth="203.0" />
+            <Label layoutX="70.0" layoutY="217.0" text="Date of Birth" />
+            <DatePicker fx:id="profileDOBdatepicker" layoutX="146.0" layoutY="213.0" />
+            <Label layoutX="64.0" layoutY="382.0" text="Current Password" />
+            <TextField fx:id="currPassTextField" layoutX="171.0" layoutY="378.0" />
+            <Label layoutX="70.0" layoutY="292.0" text="Email" />
+            <Label layoutX="321.0" layoutY="292.0" text="Contact Number" />
+            <TextField fx:id="profileEmailTextField" layoutX="108.0" layoutY="288.0" prefHeight="25.0" prefWidth="194.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="419.0" layoutY="288.0" prefHeight="25.0" prefWidth="166.0" />
+            <Label layoutX="74.0" layoutY="258.0" text="Contact Information">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="349.0" text="Change Password">
+            <Label layoutX="66.0" layoutY="348.0" text="Change Password">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="21.0" layoutY="415.0" text="New Password" />
-            <TextField fx:id="newPassTextField" layoutX="121.0" layoutY="411.0" />
-            <Button layoutX="376.0" layoutY="424.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+            <Label layoutX="339.0" layoutY="382.0" text="New Password" />
+            <TextField fx:id="newPassTextField" layoutX="439.0" layoutY="378.0" />
+            <Button layoutX="432.0" layoutY="458.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="177.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="494.0">
+      <Pane fx:id="pane2" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
-            <Label layoutX="152.0" layoutY="13.0" prefHeight="27.0" prefWidth="190.0" text="Customer Complaints" textAlignment="CENTER">
+            <Label layoutX="217.0" layoutY="14.0" prefHeight="27.0" prefWidth="190.0" text="Customer Complaints" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="121.0" layoutY="70.0" prefHeight="26.0" prefWidth="68.0" text="Customer ID" />
-            <TextField fx:id="CustomerIDTextField" layoutX="219.0" layoutY="70.0" prefHeight="26.0" prefWidth="150.0" />
-            <Button layoutX="310.0" layoutY="448.0" mnemonicParsing="false" onAction="#markAsResolvedOnclick" prefHeight="19.0" prefWidth="166.0" text="Mark as Resolved">
+            <Label layoutX="188.0" layoutY="72.0" prefHeight="26.0" prefWidth="68.0" text="Customer ID" />
+            <TextField fx:id="CustomerIDTextField" layoutX="286.0" layoutY="72.0" prefHeight="26.0" prefWidth="150.0" />
+            <Button layoutX="434.0" layoutY="500.0" mnemonicParsing="false" onAction="#markAsResolvedOnclick" prefHeight="19.0" prefWidth="166.0" text="Mark as Resolved">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <TableView fx:id="ViewCustomerAccountTable" layoutX="10.0" layoutY="109.0" prefHeight="330.0" prefWidth="472.0">
+            <TableView fx:id="ViewCustomerAccountTable" layoutX="34.0" layoutY="125.0" prefHeight="350.0" prefWidth="555.0">
                <columns>
-                  <TableColumn fx:id="ViewCustomerIDColumn" prefWidth="78.4000244140625" text="CustomerID" />
-                  <TableColumn fx:id="ViewComplainIDColumn" prefWidth="91.99993896484375" text="ComplainID" />
-                  <TableColumn fx:id="ViewCustomerComplaintColumn" prefWidth="149.5999755859375" text="Customer Complaint" />
-                  <TableColumn fx:id="ViewDateColumn" minWidth="8.0" prefWidth="64.79998779296875" text="Date" />
-                  <TableColumn fx:id="viewFeedback" prefWidth="84.0" text="Feedback" />
+                  <TableColumn fx:id="ViewCustomerIDColumn" prefWidth="87.20001220703125" text="CustomerID" />
+                  <TableColumn fx:id="ViewComplainIDColumn" prefWidth="104.0" text="ComplainID" />
+                  <TableColumn fx:id="ViewCustomerComplaintColumn" prefWidth="162.4000244140625" text="Customer Complaint" />
+                  <TableColumn fx:id="ViewDateColumn" minWidth="8.0" prefWidth="77.60003662109375" text="Date" />
+                  <TableColumn fx:id="viewFeedback" prefWidth="124.79998779296875" text="Feedback" />
                </columns>
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="pane3" layoutX="177.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="494.0">
+      <Pane fx:id="pane3" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
-            <Label layoutX="197.0" layoutY="13.0" prefHeight="27.0" prefWidth="101.0" text="Promotions" textAlignment="CENTER">
+            <Label layoutX="269.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" text="Promotions" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="22.0" layoutY="65.0" prefHeight="26.0" prefWidth="41.0" text="Subject" />
-            <TextField fx:id="subjectTextField" layoutX="81.0" layoutY="65.0" prefHeight="26.0" prefWidth="391.0" promptText="Write Subject" />
-            <Button layoutX="290.0" layoutY="441.0" mnemonicParsing="false" onAction="#sendtoAllCustomersOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to all customers">
+            <Label layoutX="43.0" layoutY="65.0" prefHeight="26.0" prefWidth="41.0" text="Subject" />
+            <TextField fx:id="subjectTextField" layoutX="119.0" layoutY="65.0" prefHeight="26.0" prefWidth="473.0" promptText="Write Subject" />
+            <Button layoutX="412.0" layoutY="495.0" mnemonicParsing="false" onAction="#sendtoAllCustomersOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to all customers">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="14.0" layoutY="442.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files">
+            <Button layoutX="43.0" layoutY="496.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <TextArea fx:id="emailTextArea" layoutX="22.0" layoutY="115.0" prefHeight="291.0" prefWidth="450.0" promptText="Write Promotional Email" />
+            <TextArea fx:id="emailTextArea" layoutX="43.0" layoutY="118.0" prefHeight="358.0" prefWidth="552.0" promptText="Write Promotional Email" />
          </children>
       </Pane>
-      <Pane fx:id="pane4" layoutX="177.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="494.0">
+      <Pane fx:id="pane4" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
-            <Label layoutX="152.0" layoutY="23.0" prefHeight="27.0" prefWidth="190.0" text="Feedback to Manager" textAlignment="CENTER">
+            <Label layoutX="216.0" layoutY="26.0" prefHeight="27.0" prefWidth="190.0" text="Feedback to Manager" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Label layoutX="27.0" layoutY="75.0" prefHeight="26.0" prefWidth="41.0" text="Subject" />
-            <TextField fx:id="feedbackSubjectTextField" layoutX="81.0" layoutY="75.0" prefHeight="26.0" prefWidth="391.0" promptText="Write Feedback Subject" />
-            <Button layoutX="282.0" layoutY="431.0" mnemonicParsing="false" onAction="#sendtoManagerfOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to Manager">
+            <TextField fx:id="feedbackSubjectTextField" layoutX="94.0" layoutY="75.0" prefHeight="26.0" prefWidth="507.0" promptText="Write Feedback Subject" />
+            <Button layoutX="405.0" layoutY="493.0" mnemonicParsing="false" onAction="#sendtoManagerfOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to Manager">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="22.0" layoutY="431.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files">
+            <Button layoutX="27.0" layoutY="493.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <TextArea fx:id="feedbackEmailTextArea" layoutX="22.0" layoutY="127.0" prefHeight="291.0" prefWidth="450.0" promptText="Write Feedback Email" />
+            <TextArea fx:id="feedbackEmailTextArea" layoutX="27.0" layoutY="130.0" prefHeight="345.0" prefWidth="568.0" promptText="Write Feedback Email" />
          </children>
       </Pane>
-      <Pane fx:id="pane5" layoutX="177.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="494.0">
+      <Pane fx:id="pane5" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
-            <Label layoutX="182.0" layoutY="21.0" prefHeight="27.0" prefWidth="140.0" text="Company Policy" textAlignment="CENTER">
+            <Label layoutX="244.0" layoutY="33.0" prefHeight="27.0" prefWidth="140.0" text="Company Policy" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="policyViewTextLabel" layoutX="12.0" layoutY="114.0" prefHeight="310.0" prefWidth="470.0" />
+            <Label fx:id="policyViewTextLabel" layoutX="38.0" layoutY="72.0" prefHeight="442.0" prefWidth="555.0" />
          </children>
       </Pane>
    </children>
