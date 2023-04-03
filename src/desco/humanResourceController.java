@@ -5,6 +5,8 @@
  */
 package desco;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -140,7 +143,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane9;
     @FXML
-    private Label policyViewTextLabel;
+    private TextArea policyTextArea;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -238,6 +241,17 @@ public class humanResourceController implements Initializable {
     @FXML
     private void viewPolicyOnClick(ActionEvent event) {
         switchPane(9);
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
+            policyTextArea.setWrapText(true);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                policyTextArea.appendText(line + "\n");
+            }
+            bufferedReader.close();
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
+        }
     }
 
     @FXML

@@ -5,8 +5,10 @@
  */
 package desco;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +36,6 @@ import javafx.stage.Stage;
  */
 public class customerServiceController implements Initializable {
 
-    @FXML
     private Label policyViewTextLabel;
     @FXML
     private Pane pane1;
@@ -82,6 +83,8 @@ public class customerServiceController implements Initializable {
     private TextField feedbackSubjectTextField;
     @FXML
     private TextArea feedbackEmailTextArea;
+    @FXML
+    private TextArea policyTextArea;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -123,6 +126,17 @@ public class customerServiceController implements Initializable {
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
         switchPane(1);
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
+            policyTextArea.setWrapText(true);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                policyTextArea.appendText(line + "\n");
+            }
+            bufferedReader.close();
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
+        }
     }
 
     @FXML
