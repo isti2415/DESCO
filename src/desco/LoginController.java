@@ -154,16 +154,16 @@ public class LoginController implements Initializable {
                     }
                     break;
                 case 7:
-//                    try {
-//                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
-//                        Parent root = loader.load();
-//                        ManagerController ManagerController = loader.getController();
-//                        Scene scene = new Scene(root);
-//                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                        stage.setScene(scene);
-//                        stage.show();
-//                    } catch (IOException ex) {
-//                    }
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
+                        Parent root = loader.load();
+                        ManagerController ManagerController = loader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
                     break;
                 case 8:
                     try {

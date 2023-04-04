@@ -23,9 +23,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="28.0" layoutY="19.0">
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0">
          <image>
-            <Image url="@desco.png" />
+            <Image url="@../images/desco.png" />
          </image>
       </ImageView>
       <VBox layoutX="18.0" layoutY="121.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">

@@ -126,17 +126,6 @@ public class customerServiceController implements Initializable {
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
         switchPane(1);
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
-            policyTextArea.setWrapText(true);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                policyTextArea.appendText(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (IOException ex) {
-            System.out.println("Error reading file: " + ex.getMessage());
-        }
     }
 
     @FXML
@@ -158,25 +147,16 @@ public class customerServiceController implements Initializable {
     private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
         switchPane(5);
         try {
-            // Open the companypolicy.txt file
-            File file = new File("companypolicy.txt");
-            // Read the contents of the file into a string
-            try (Scanner scanner = new Scanner(file)) {
-                // Read the contents of the file into a string
-                StringBuilder policyText = new StringBuilder();
-                while (scanner.hasNextLine()) {
-                    policyText.append(scanner.nextLine());
-                    policyText.append("\n");
-                }   // Set the text of the text area to the policy text
-                policyViewTextLabel.setText(policyText.toString());
-                policyViewTextLabel.setWrapText(true);
-                // Close the scanner
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
+            policyTextArea.setWrapText(true);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                policyTextArea.appendText(line + "\n");
             }
-        } catch (FileNotFoundException e) {
-            // Handle the file not found exception
-
+            bufferedReader.close();
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
         }
-
     }
 
     @FXML

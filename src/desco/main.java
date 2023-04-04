@@ -19,7 +19,7 @@ public class main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("technician.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MeterReader.fxml"));
         
         Scene scene = new Scene(root);
         
