@@ -5,9 +5,6 @@
  */
 package desco;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,18 +16,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
  *
- * @author Istiaqs-PC
+ * @author Dell
  */
 public class ManagerController implements Initializable {
 
     @FXML
-    private AnchorPane pane1;
+    private Pane pane1;
     @FXML
     private TextField customerNameTextField;
     @FXML
@@ -117,7 +114,7 @@ public class ManagerController implements Initializable {
     }    
 
     @FXML
-    private void viewProfileOnClick(ActionEvent event) {
+    private void viewProfile(ActionEvent event) {
     }
 
     @FXML
@@ -146,18 +143,6 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void viewPolicyOnClick(ActionEvent event) {
-        
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
-            policyTextArea.setWrapText(true);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                policyTextArea.appendText(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (IOException ex) {
-            System.out.println("Error reading file: " + ex.getMessage());
-        }
     }
 
     @FXML

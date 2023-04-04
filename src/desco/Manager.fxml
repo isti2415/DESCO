@@ -15,32 +15,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="pane1" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ManagerController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
    <children>
-      <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="46.0" prefWidth="192.0" text="Performance &amp; Attendance" />
-            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Complaints" />
-            <Button mnemonicParsing="false" onAction="#viewContractsOnClick" prefHeight="46.0" prefWidth="211.0" text="Contracts &amp; Agreements" />
-            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkInvOnClick" prefHeight="47.0" prefWidth="210.0" text="Inventory" />
-            <Button mnemonicParsing="false" onAction="#viewTargetsOnClick" prefHeight="46.0" prefWidth="209.0" text="Set Targets &amp; Performance" />
-            <Button mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Real-time Reports" />
-            <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
-            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
-         </children>
-      </VBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="79.0" layoutY="80.0" text="Manager">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="62.0" text="Manager">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="28.0" layoutY="19.0">
+      <VBox layoutX="14.0" layoutY="105.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#viewProfile" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="47.0" prefWidth="211.0" text="Performance &amp; Attendance" />
+            <Button layoutX="10.0" layoutY="64.0" mnemonicParsing="false" onAction="#viewCustomerComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Complaints" />
+            <Button layoutX="10.0" layoutY="117.0" mnemonicParsing="false" onAction="#viewContractsOnClick" prefHeight="47.0" prefWidth="211.0" text="Contracts &amp; Agreements" />
+            <Button layoutX="10.0" layoutY="171.0" mnemonicParsing="false" onAction="#checkInvOnClick" prefHeight="47.0" prefWidth="211.0" text="Inventory" />
+            <Button layoutX="10.0" layoutY="224.0" mnemonicParsing="false" onAction="#viewTargetsOnClick" prefHeight="47.0" prefWidth="211.0" text="Set Targets &amp; Performance" />
+            <Button layoutX="10.0" layoutY="278.0" mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Real-time Reports" />
+            <Button layoutX="10.0" layoutY="332.0" mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="211.0" text="Company Policy" />
+            <Button layoutX="10.0" layoutY="379.0" mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="47.0" prefWidth="211.0" text="Log Out" />
+         </children>
+      </VBox>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@desco.png" />
+            <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane1" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+      <Pane fx:id="pane1" layoutX="220.0" layoutY="7.0" prefHeight="547.0" prefWidth="581.0">
          <children>
             <Label alignment="CENTER" layoutX="5.0" layoutY="7.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
                <font>

@@ -5,9 +5,6 @@
  */
 package desco;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -79,18 +76,6 @@ public class BillingAdminController implements Initializable {
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
-        
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
-            policyTextArea.setWrapText(true);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                policyTextArea.appendText(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (IOException ex) {
-            System.out.println("Error reading file: " + ex.getMessage());
-        }
     }
 
     @FXML

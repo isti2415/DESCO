@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("BillingAdmin.fxml"));
                         Parent root = loader.load();
-                        BillingAdminController BillingAdministratorController = loader.getController();
+                        BillingAdminController BillingAdminController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -145,7 +145,7 @@ public class LoginController implements Initializable {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("sysAd.fxml"));
                         Parent root = loader.load();
-                        sysAdController systemAdController = loader.getController();
+                        sysAdController sysAdController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.setScene(scene);
@@ -154,16 +154,16 @@ public class LoginController implements Initializable {
                     }
                     break;
                 case 7:
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
-                        Parent root = loader.load();
-                        ManagerController managerController = loader.getController();
-                        Scene scene = new Scene(root);
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException ex) {
-                    }
+//                    try {
+//                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
+//                        Parent root = loader.load();
+//                        ManagerController ManagerController = loader.getController();
+//                        Scene scene = new Scene(root);
+//                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                        stage.setScene(scene);
+//                        stage.show();
+//                    } catch (IOException ex) {
+//                    }
                     break;
                 case 8:
                     try {
