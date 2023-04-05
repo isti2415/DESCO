@@ -17,7 +17,5 @@ public class Customer extends User implements Serializable{
     public Customer(String userID, String password, String userType) {
         super(userID, password, userType);
     }
-   
     
-   
 }
