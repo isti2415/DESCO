@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerController">
+   <children>
+      <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
+         <children>
+            <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewMyBillsOnClick" prefHeight="46.0" prefWidth="192.0" text="My Bills" />
+            <Button mnemonicParsing="false" onAction="#viewEnergyUsageOnClick" prefHeight="46.0" prefWidth="211.0" text="Energy Usage" />
+            <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#viewServiceRequestOnClick" prefHeight="47.0" prefWidth="210.0" text="Service Request" />
+            <Button mnemonicParsing="false" onAction="#viewNotificationsOnClick" prefHeight="46.0" prefWidth="209.0" text="Notifications" />
+            <Button mnemonicParsing="false" onAction="#fileComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="File Complaint" />
+            <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
+         </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="80.0" text="Customer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="28.0" layoutY="19.0">
+         <image>
+            <Image url="@../images/desco.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="pane2" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <ComboBox fx:id="billMonthComboBox" layoutX="16.0" layoutY="62.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
+            <ComboBox fx:id="billYearComboBox" layoutX="170.0" layoutY="62.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
+            <Button layoutX="382.0" layoutY="62.0" mnemonicParsing="false" onAction="#viewBillOnClick" prefHeight="25.0" prefWidth="67.0" text="View Bill" />
+            <Button layoutX="471.0" layoutY="62.0" mnemonicParsing="false" onAction="#makePaymentOnClick" text="Make Payment" />
+            <CheckBox fx:id="autoPaymentCheckbox" layoutX="16.0" layoutY="492.0" mnemonicParsing="false" text="Pay Bill automatically each month" />
+            <CheckBox fx:id="paperlessbillCheckBox" layoutX="16.0" layoutY="516.0" mnemonicParsing="false" text="Join the initiative to save paper and choose paperless billng" />
+            <TextArea fx:id="billTextField" layoutX="14.0" layoutY="121.0" prefHeight="351.0" prefWidth="552.0" />
+            <Label alignment="CENTER" layoutX="4.0" prefHeight="46.0" prefWidth="572.0" text="My Bills" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane1" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="9.0" layoutY="29.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="105.0" text="Personal Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="140.0" text="Name" />
+            <Label layoutX="324.0" layoutY="140.0" text="User ID" />
+            <TextField fx:id="profileNameTextField" layoutX="79.0" layoutY="136.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileUseridTextField" layoutX="401.0" layoutY="136.0" />
+            <Label layoutX="39.0" layoutY="189.0" text="Date of Birth" />
+            <DatePicker fx:id="profileDOBdatepicker" layoutX="115.0" layoutY="185.0" />
+            <Label layoutX="39.0" layoutY="409.0" text="Current Password" />
+            <TextField fx:id="currPassTextField" layoutX="146.0" layoutY="405.0" />
+            <Label layoutX="39.0" layoutY="289.0" text="Email" />
+            <Label layoutX="303.0" layoutY="289.0" text="Contact Number" />
+            <TextField fx:id="profileEmailTextField" layoutX="77.0" layoutY="285.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="401.0" layoutY="285.0" />
+            <Label layoutX="39.0" layoutY="246.0" text="Contact Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="355.0" text="Change Password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="312.0" layoutY="409.0" text="New Password" />
+            <TextField fx:id="newPassTextField" layoutX="401.0" layoutY="405.0" />
+            <Button layoutX="460.0" layoutY="462.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane3" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="28.0" prefHeight="46.0" prefWidth="582.0" text="Energy Usage" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="energyUseMonthCombobox" layoutX="26.0" layoutY="97.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
+            <ComboBox fx:id="energyUseYearCombobox" layoutX="184.0" layoutY="97.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
+            <Button layoutX="318.0" layoutY="97.0" mnemonicParsing="false" onAction="#viewMontlyUsageOnClick" text="View Monthly Usage" />
+            <Button layoutX="455.0" layoutY="97.0" mnemonicParsing="false" onAction="#ViewYearlyUsageOnClick" text="View Yearly Usage" />
+            <TextArea fx:id="viewTextArea" layoutX="23.0" layoutY="136.0" prefHeight="404.0" prefWidth="544.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="10.0" layoutY="43.0" prefHeight="46.0" prefWidth="580.0" text="Service Request" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="serviceTypeComboBox" layoutX="272.0" layoutY="149.0" prefHeight="25.0" prefWidth="291.0" />
+            <Label layoutX="29.0" layoutY="153.0" text="Please Choose the Service you want to avail:" />
+            <TextField fx:id="detailsTextField" layoutX="29.0" layoutY="306.0" prefHeight="206.0" prefWidth="533.0" />
+            <Label layoutX="29.0" layoutY="275.0" text="Details about the service" />
+            <Button layoutX="462.0" layoutY="271.0" mnemonicParsing="false" onAction="#submitOnClick" text="Submit Request" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Notifications" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="notificationsTableViewOnClick" layoutX="18.0" layoutY="84.0" prefHeight="454.0" prefWidth="556.0">
+               <columns>
+                  <TableColumn fx:id="dateCol" prefWidth="91.0" text="Date" />
+                  <TableColumn fx:id="subjectCol" prefWidth="154.0" text="Subject" />
+                  <TableColumn fx:id="detailsCol" prefWidth="304.0" text="Details" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="pane6" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="15.0" prefHeight="46.0" prefWidth="572.0" text="File Complaint" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="complaintDatePicker" layoutX="47.0" layoutY="83.0" />
+            <Label layoutX="15.0" layoutY="87.0" text="Date" />
+            <Button layoutX="451.0" layoutY="83.0" mnemonicParsing="false" onAction="#submitComplaintButton" prefHeight="25.0" prefWidth="112.0" text="Submit Complaint" />
+            <Label layoutX="14.0" layoutY="122.0" text="Write Details about your complaint" />
+            <TextArea fx:id="complaintTextArea" layoutX="15.0" layoutY="146.0" prefHeight="394.0" prefWidth="548.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
