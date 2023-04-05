@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/LoginController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/modelClass/User.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/Manager.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/meterReaderController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/sysAdController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/main.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/sysAd.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/humanResource.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/MeterReader.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/BillingAdmin.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/customerServiceRep.fxml</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/NetBeansProjects/DESCO/src/desco/technician.fxml</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
