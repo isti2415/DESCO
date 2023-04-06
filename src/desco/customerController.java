@@ -69,7 +69,7 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane4;
     @FXML
-    private ComboBox<?> serviceTypeComboBox;
+    private ComboBox<String> serviceTypeComboBox;
     @FXML
     private TextField detailsTextField;
     @FXML

@@ -1,5 +1,6 @@
 package modelClass;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,7 +15,7 @@ import java.util.List;
 public class User implements Serializable {
 
     private static final String USER_FILE_NAME = "users.bin";
-    private String userID;
+    public String userID;
     private String password;
     private String userType;
     private String userName;
@@ -131,4 +132,17 @@ public class User implements Serializable {
         }
         return users;
     }
+
+    public static void deleteUser(User selectedUser) {
+        List<User> users = loadUsers();
+        users.removeIf(user -> user.getUserID().equals(selectedUser.getUserID()));
+        try (FileOutputStream fileOut = new FileOutputStream(USER_FILE_NAME, false);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(users);
+            System.out.println("User deleted from users.bin file");
+        } catch (IOException e) {
+            System.out.println("Error saving user to file");
+        }
+    }
+
 }

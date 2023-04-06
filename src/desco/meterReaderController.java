@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.Meter;
 
 /**
  * FXML Controller class
@@ -54,10 +57,6 @@ public class meterReaderController implements Initializable {
     private Pane pane2;
     @FXML
     private TextField energyUseMeterIDTextField;
-    @FXML
-    private DatePicker energyUsageDatePicker;
-    @FXML
-    private TextField energyUseCusIDTextField;
     @FXML
     private TextField energyUsePrevReadingTextField;
     @FXML
@@ -114,7 +113,11 @@ public class meterReaderController implements Initializable {
     private Pane pane8;
     @FXML
     private TextArea policyTextArea;
-    
+    @FXML
+    private ComboBox<String> usageMonthCombo;
+    @FXML
+    private ComboBox<String> usageYearCombo;
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -149,7 +152,7 @@ public class meterReaderController implements Initializable {
                 break;
             case 8:
                 pane8.setVisible(true);
-                break;    
+                break;
         }
     }
 
@@ -159,7 +162,17 @@ public class meterReaderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-    }    
+        // Initialize month combo box
+        ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        usageMonthCombo.setItems(monthList);
+
+        // Initialize year combo box
+        ObservableList<String> yearList = FXCollections.observableArrayList();
+        for (int i = 2022; i >= 2000; i--) {
+            yearList.add(Integer.toString(i));
+        }
+        usageYearCombo.setItems(yearList);
+    }
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
@@ -232,10 +245,35 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void energyUseLoadInfoOnClick(ActionEvent event) {
+        String meterID = energyUseMeterIDTextField.getText();
+        Meter meter = Meter.findMeter(meterID);
+        if (meter != null) {
+            energyUsePrevReadingTextField.setText(String.valueOf(meter.getLastReading()));
+        } else {
+            System.out.println("Meter not found.");
+        }
     }
 
     @FXML
     private void energyUseSaveChangesOnClick(ActionEvent event) {
+        String meterID = energyUseMeterIDTextField.getText();
+        Meter meter = Meter.findMeter(meterID);
+        if (meter != null) {
+            // Get the latest reading for the selected month and year
+            String year = (String) usageYearCombo.getValue();
+            String month = (String) usageMonthCombo.getValue();
+            float newReading = Float.parseFloat(energyUseCurrReadingTextField.getText());
+
+            meter.updateReading(year, month, newReading);
+
+            // Save the updated meter instance to the file
+            meter.saveMeter();
+
+            // Display a message to indicate that the changes were saved
+            System.out.println("Changes saved.");
+        } else {
+            System.out.println("Meter not found.");
+        }
     }
 
     @FXML
@@ -253,5 +291,5 @@ public class meterReaderController implements Initializable {
     @FXML
     private void markAsDoneOnClick(ActionEvent event) {
     }
-    
+
 }

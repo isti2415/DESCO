@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.Meter;
 import modelClass.User;
 
 /**
@@ -124,6 +125,10 @@ public class sysAdController implements Initializable {
     private TextArea policyTextArea;
     @FXML
     private TableColumn<User, String> nameTableColumn;
+    @FXML
+    private Label meterIDlabel;
+    @FXML
+    private TextField meterIDField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -169,11 +174,11 @@ public class sysAdController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     // initialize the user list
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
@@ -182,9 +187,11 @@ public class sysAdController implements Initializable {
         passwordTableColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         userTypeTableColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
-        
+
         // load the user list from the file and add it to the table view
         userListTableView.getItems().addAll(User.loadUsers());
+        meterIDlabel.setVisible(false);
+        meterIDField.setVisible(false);
     }
 
     @FXML
@@ -259,6 +266,9 @@ public class sysAdController implements Initializable {
 
     @FXML
     private void addUserOnClick(ActionEvent event) {
+        if (usertypeCombo.getValue() == "Customer") {
+            Meter meter = new Meter(meterIDField.getText(), useridfield.getText());
+        }
         User user = new User(useridfield.getText(), passwordfield.getText(), usertypeCombo.getValue());
         userListTableView.getItems().clear();
         userListTableView.getItems().addAll(User.loadUsers());
@@ -269,10 +279,15 @@ public class sysAdController implements Initializable {
         // get the selected user from the table
         User selectedUser = userListTableView.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
+            User.deleteUser(selectedUser);
             System.out.println("User deleted successfully.");
         } else {
             System.out.println("No user selected.");
         }
+        if (Integer.parseInt(selectedUser.getUserID()) < 2000) {
+            Meter.deleteMeter(selectedUser.getUserID());
+        }
+
         userListTableView.getItems().clear();
         userListTableView.getItems().addAll(User.loadUsers());
     }
@@ -285,6 +300,8 @@ public class sysAdController implements Initializable {
         switch (userType) {
             case "Customer":
                 startingID = 1000;
+                meterIDlabel.setVisible(true);
+                meterIDField.setVisible(true);
                 break;
             case "Meter Reader":
                 startingID = 2000;
@@ -323,6 +340,7 @@ public class sysAdController implements Initializable {
 
         int nextID = maxID + 1;
         useridfield.setText(Integer.toString(nextID));
+        meterIDField.setText(Integer.toString(nextID));
         passwordfield.setText("123");
     }
 

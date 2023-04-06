@@ -10,5 +10,4 @@ package Class;
  * @author Istiaqs-PC
  */
 public class usage {
-    
 }
