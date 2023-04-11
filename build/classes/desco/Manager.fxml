@@ -155,6 +155,27 @@
       </Pane>
       <Pane fx:id="pane6" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="4.0" prefHeight="46.0" prefWidth="571.0" text="Performance Target" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="performanceTableView" layoutX="16.0" layoutY="130.0" prefHeight="394.0" prefWidth="548.0">
+               <columns>
+                  <TableColumn fx:id="perDateCol" prefWidth="101.0" text="Date" />
+                  <TableColumn fx:id="perTitleCol" prefWidth="184.0" text="Title" />
+                  <TableColumn fx:id="perDescriptionCol" prefWidth="262.0" text="Descriptions" />
+               </columns>
+            </TableView>
+            <Button layoutX="372.0" layoutY="69.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="192.0" text="Update Targets" />
+            <Label layoutX="16.0" layoutY="93.0" text="Employee ID" />
+            <TextField fx:id="perfEmployeeIDTextField" layoutX="115.0" layoutY="89.0" prefHeight="25.0" prefWidth="150.0" />
+            <Label layoutX="16.0" layoutY="60.0" text="Employee Type" />
+            <ComboBox fx:id="perfEmployeeTypeComboBox" layoutX="114.0" layoutY="56.0" prefWidth="150.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane7" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
             <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Real-time Reports" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="17.0" />
@@ -172,7 +193,7 @@
             <Button layoutX="466.0" layoutY="96.0" mnemonicParsing="false" onAction="#updateOnClick" text="Request Update" />
          </children>
       </Pane>
-      <Pane fx:id="pane7" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+      <Pane fx:id="pane8" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
             <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Company Policy" textAlignment="CENTER">
                <font>
