@@ -28,6 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.Customer;
 import modelClass.Meter;
 
 /**
@@ -117,6 +118,8 @@ public class meterReaderController implements Initializable {
     private ComboBox<String> usageMonthCombo;
     @FXML
     private ComboBox<String> usageYearCombo;
+    @FXML
+    private TextField passwordField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -241,6 +244,8 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
+        Meter meter = new Meter(meterIDTextField2.getText());
+        Customer customer = new Customer(cusIDTextField.getText(),passwordField.getText(),meter,cusNameTextField.getText(),cusAddressTextField.getText());
     }
 
     @FXML

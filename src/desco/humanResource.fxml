@@ -143,28 +143,6 @@
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="pane7" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="577.0" text="Employee Onboarding" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="32.0" layoutY="85.0" text="Employee Department" />
-            <Label layoutX="358.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
-            <ComboBox fx:id="deptComboBox6" layoutX="159.0" layoutY="81.0" prefHeight="25.0" prefWidth="192.0" />
-            <TableView fx:id="employeeOnboardTable" layoutX="32.0" layoutY="158.0" prefHeight="376.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="infoColumn6" prefWidth="135.0" text="Information Type" />
-                  <TableColumn fx:id="detailsColumn6" prefWidth="384.0" text="Details" />
-               </columns>
-            </TableView>
-            <Label layoutX="32.0" layoutY="124.0" text="Employee Name" />
-            <Button layoutX="462.0" layoutY="120.0" mnemonicParsing="false" onAction="#saveS6OnClick" text="Save Changes" />
-            <TextField fx:id="idTextField6" layoutX="438.0" layoutY="81.0" prefHeight="25.0" prefWidth="119.0" />
-            <TextField fx:id="nameTextField6" layoutX="136.0" layoutY="120.0" prefHeight="25.0" prefWidth="299.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane8" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
          <children>
             <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Employee Offboarding" textAlignment="CENTER">
@@ -230,6 +208,30 @@
                </font>
             </Label>
             <Label fx:id="policyViewTextLabel" layoutX="24.0" layoutY="91.0" prefHeight="340.0" prefWidth="535.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane7" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="577.0" text="Employee Onboarding" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="85.0" text="Employee Department" />
+            <Label layoutX="37.0" layoutY="161.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
+            <ComboBox fx:id="deptComboBox6" layoutX="159.0" layoutY="81.0" prefHeight="25.0" prefWidth="291.0" />
+            <TableView fx:id="employeeOnboardTable" layoutX="32.0" layoutY="194.0" prefHeight="340.0" prefWidth="520.0">
+               <columns>
+                  <TableColumn fx:id="infoColumn6" prefWidth="135.0" text="Information Type" />
+                  <TableColumn fx:id="detailsColumn6" prefWidth="384.0" text="Details" />
+               </columns>
+            </TableView>
+            <Label layoutX="32.0" layoutY="124.0" text="Employee Name" />
+            <Button layoutX="462.0" layoutY="81.0" mnemonicParsing="false" onAction="#saveS6OnClick" text="Save Changes" />
+            <TextField fx:id="idTextField6" layoutX="117.0" layoutY="157.0" prefHeight="25.0" prefWidth="119.0" />
+            <TextField fx:id="nameTextField6" layoutX="136.0" layoutY="120.0" prefHeight="25.0" prefWidth="420.0" />
+            <Label layoutX="263.0" layoutY="161.0" prefHeight="17.0" prefWidth="67.0" text="Password" />
+            <TextField fx:id="passwordField1" layoutX="328.0" layoutY="157.0" prefHeight="25.0" prefWidth="227.0" />
          </children>
       </Pane>
    </children>

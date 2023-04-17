@@ -141,6 +141,8 @@ public class humanResourceController implements Initializable {
     private Pane pane9;
     @FXML
     private Label policyViewTextLabel;
+    @FXML
+    private TextField passwordField1;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);

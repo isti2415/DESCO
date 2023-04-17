@@ -35,7 +35,7 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="scene1" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+      <Pane fx:id="pane1" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label alignment="CENTER" layoutX="69.0" layoutY="14.0" prefHeight="46.0" prefWidth="486.0" text="Profile Settings" textAlignment="CENTER">
                <font>
@@ -74,7 +74,7 @@
             <Button layoutX="494.0" layoutY="495.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="scene2" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+      <Pane fx:id="pane2" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label layoutX="287.0" layoutY="33.0" prefHeight="27.0" prefWidth="48.0" text="Bills" textAlignment="CENTER">
                <font>
@@ -94,7 +94,7 @@
             <TextField layoutX="125.0" layoutY="495.0" />
          </children>
       </Pane>
-      <Pane fx:id="scene3" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+      <Pane fx:id="pane3" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label layoutX="241.0" layoutY="39.0" prefHeight="27.0" prefWidth="141.0" text="Billing Disputes" textAlignment="CENTER">
                <font>
@@ -111,7 +111,7 @@
             <Button layoutX="456.0" layoutY="471.0" mnemonicParsing="false" onAction="#GenerateNewBillButtononClick" prefHeight="40.0" prefWidth="131.0" text="Generate New Bill" />
          </children>
       </Pane>
-      <Pane fx:id="scene4" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+      <Pane fx:id="pane4" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label layoutX="241.0" layoutY="23.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
                <font>

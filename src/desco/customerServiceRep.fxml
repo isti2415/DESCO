@@ -175,7 +175,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="policyViewTextLabel" layoutX="38.0" layoutY="72.0" prefHeight="442.0" prefWidth="555.0" />
+            <TextArea fx:id="policyTextArea" layoutX="33.0" layoutY="68.0" prefHeight="458.0" prefWidth="562.0" />
          </children>
       </Pane>
    </children>

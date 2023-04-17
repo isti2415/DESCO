@@ -19,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import modelClass.Customer;
+import modelClass.Employee;
 import modelClass.User;
 
 /**
@@ -49,32 +51,33 @@ public class LoginController implements Initializable {
         String userID = useridfield.getText(); // get the entered user ID
         String password = passwordfield.getText(); // get the entered password
         User user = null;
-        List<User> userList = User.loadUsers();
+        List<User> userList = User.readUsers();
         for (User u : userList) {
-            if (u.getUserID().equals(userID) && u.getPassword().equals(password)) {
+            if (u.getId().equals(userID) && u.getPassword().equals(password)) {
                 user = u;
                 System.out.println("Login Successful");
                 break;
-            }
-            else{
+            } else {
                 System.out.println("Incorrect userID or password");
             }
         }
-        if (user != null) {
-            // redirect to the appropriate dashboard based on user type
-            switch (user.getUserType()) {
-                case "Customer":
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("customer.fxml"));
-                        Parent root = loader.load();
-                        customerController customerController = loader.getController();
-                        Scene scene = new Scene(root);
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException ex) {
-                    }
-                    break;
+        if (user instanceof Customer) {
+            // redirect to customer dashboard
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("customer.fxml"));
+                Parent root = loader.load();
+                customerController customerController = loader.getController();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+            }
+        } else if (user instanceof Employee) {
+            Employee employee = (Employee) user;
+            String userType = employee.getType();
+            // redirect to appropriate dashboard based on employee type
+            switch (userType) {
                 case "Meter Reader":
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("MeterReader.fxml"));

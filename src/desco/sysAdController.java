@@ -28,7 +28,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import modelClass.Meter;
 import modelClass.User;
 
 /**
@@ -48,15 +47,6 @@ public class sysAdController implements Initializable {
     private TableColumn<User, String> passwordTableColumn;
     @FXML
     private TableColumn<User, String> userTypeTableColumn;
-    @FXML
-    private ComboBox<String> usertypeCombo;
-    private final String[] userTypes = {"Customer", "Meter Reader", "Billing Administrator",
-        "Customer Service Representative", "Field Technician",
-        "System Administrator", "Manager", "Human Resources"};
-    @FXML
-    private TextField useridfield;
-    @FXML
-    private TextField passwordfield;
     @FXML
     private Pane pane3;
     @FXML
@@ -182,14 +172,13 @@ public class sysAdController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-        usertypeCombo.getItems().addAll(userTypes);
         userIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
         passwordTableColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         userTypeTableColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
 
         // load the user list from the file and add it to the table view
-        userListTableView.getItems().addAll(User.loadUsers());
+        userListTableView.getItems().addAll(User.readUsers());
         meterIDlabel.setVisible(false);
         meterIDField.setVisible(false);
     }
@@ -265,17 +254,7 @@ public class sysAdController implements Initializable {
     }
 
     @FXML
-    private void addUserOnClick(ActionEvent event) {
-        if (usertypeCombo.getValue() == "Customer") {
-            Meter meter = new Meter(meterIDField.getText(), useridfield.getText());
-        }
-        User user = new User(useridfield.getText(), passwordfield.getText(), usertypeCombo.getValue());
-        userListTableView.getItems().clear();
-        userListTableView.getItems().addAll(User.loadUsers());
-    }
-
-    @FXML
-    private void deleteUserOnClick(ActionEvent event) {
+    private void deleteUserOnClick(ActionEvent event) throws IOException {
         // get the selected user from the table
         User selectedUser = userListTableView.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
@@ -284,64 +263,8 @@ public class sysAdController implements Initializable {
         } else {
             System.out.println("No user selected.");
         }
-        if (Integer.parseInt(selectedUser.getUserID()) < 2000) {
-            Meter.deleteMeter(selectedUser.getUserID());
-        }
-
         userListTableView.getItems().clear();
-        userListTableView.getItems().addAll(User.loadUsers());
-    }
-
-    @FXML
-    private void generateIDOnAction(ActionEvent event) {
-        String userType = usertypeCombo.getValue();
-        int startingID = 0;
-
-        switch (userType) {
-            case "Customer":
-                startingID = 1000;
-                meterIDlabel.setVisible(true);
-                meterIDField.setVisible(true);
-                break;
-            case "Meter Reader":
-                startingID = 2000;
-                break;
-            case "Billing Administrator":
-                startingID = 3000;
-                break;
-            case "Customer Service Representative":
-                startingID = 4000;
-                break;
-            case "Field Technician":
-                startingID = 5000;
-                break;
-            case "System Administrator":
-                startingID = 6000;
-                break;
-            case "Manager":
-                startingID = 7000;
-                break;
-            case "Human Resources":
-                startingID = 8000;
-                break;
-            default:
-                break;
-        }
-
-        int maxID = startingID;
-        for (User user : User.loadUsers()) {
-            if (user.getUserType().equals(userType)) {
-                int userID = Integer.parseInt(user.getUserID());
-                if (userID > maxID) {
-                    maxID = userID;
-                }
-            }
-        }
-
-        int nextID = maxID + 1;
-        useridfield.setText(Integer.toString(nextID));
-        meterIDField.setText(Integer.toString(nextID));
-        passwordfield.setText("123");
+        userListTableView.getItems().addAll(User.readUsers());
     }
 
     @FXML
@@ -439,5 +362,10 @@ public class sysAdController implements Initializable {
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
     }
+
+    @FXML
+    private void resetPasswordOnClick(ActionEvent event) {
+    }
+
 
 }

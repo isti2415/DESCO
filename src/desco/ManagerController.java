@@ -112,6 +112,20 @@ public class ManagerController implements Initializable {
     private Pane pane7;
     @FXML
     private TextArea policyTextArea;
+    @FXML
+    private TableView<?> performanceTableView;
+    @FXML
+    private TableColumn<?, ?> perDateCol;
+    @FXML
+    private TableColumn<?, ?> perTitleCol;
+    @FXML
+    private TableColumn<?, ?> perDescriptionCol;
+    @FXML
+    private TextField perfEmployeeIDTextField;
+    @FXML
+    private ComboBox<?> perfEmployeeTypeComboBox;
+    @FXML
+    private Pane pane8;
     
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -121,6 +135,8 @@ public class ManagerController implements Initializable {
         pane5.setVisible(false);
         pane6.setVisible(false);
         pane7.setVisible(false);
+        pane8.setVisible(false);
+
         
 
         switch (paneNumber) {
@@ -145,6 +161,9 @@ public class ManagerController implements Initializable {
             case 7:
                 pane7.setVisible(true);
                 break;
+            case 8:
+                pane8.setVisible(true);
+                break;
         }
     }
 
@@ -156,7 +175,6 @@ public class ManagerController implements Initializable {
         switchPane(1);
     }    
 
-    @FXML
     private void viewProfile(ActionEvent event) {
         switchPane(1);
     }
@@ -183,17 +201,17 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void viewTargetsOnClick(ActionEvent event) {
-//        switchPane(6);
-    }
-
-    @FXML
-    private void viewReportsOnClick(ActionEvent event) {
         switchPane(6);
     }
 
     @FXML
-    private void viewPolicyOnClick(ActionEvent event) {
+    private void viewReportsOnClick(ActionEvent event) {
         switchPane(7);
+    }
+
+    @FXML
+    private void viewPolicyOnClick(ActionEvent event) {
+        switchPane(8);
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
             policyTextArea.setWrapText(true);
@@ -239,6 +257,14 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void updateOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void viewProfileOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void updateTargetOnClick(ActionEvent event) {
     }
     
 }

@@ -10,10 +10,8 @@ public class Meter implements Serializable {
     private String userID;
     private List<Reading> readings;
 
-    public Meter(String meterID, String userID) {
+    public Meter(String meterID) {
         this.meterID = meterID;
-        this.userID = userID;
-        this.readings = new ArrayList<>();
         saveMeter();
     }
 

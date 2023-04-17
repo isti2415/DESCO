@@ -5,8 +5,10 @@
  */
 package desco;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +36,6 @@ import javafx.stage.Stage;
  */
 public class customerServiceController implements Initializable {
 
-    @FXML
     private Label policyViewTextLabel;
     @FXML
     private Pane pane1;
@@ -82,6 +83,8 @@ public class customerServiceController implements Initializable {
     private TextField feedbackSubjectTextField;
     @FXML
     private TextArea feedbackEmailTextArea;
+    @FXML
+    private TextArea policyTextArea;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -144,25 +147,16 @@ public class customerServiceController implements Initializable {
     private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
         switchPane(5);
         try {
-            // Open the companypolicy.txt file
-            File file = new File("companypolicy.txt");
-            // Read the contents of the file into a string
-            try (Scanner scanner = new Scanner(file)) {
-                // Read the contents of the file into a string
-                StringBuilder policyText = new StringBuilder();
-                while (scanner.hasNextLine()) {
-                    policyText.append(scanner.nextLine());
-                    policyText.append("\n");
-                }   // Set the text of the text area to the policy text
-                policyViewTextLabel.setText(policyText.toString());
-                policyViewTextLabel.setWrapText(true);
-                // Close the scanner
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
+                policyTextArea.setWrapText(true);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    policyTextArea.appendText(line + "\n");
+                }
             }
-        } catch (FileNotFoundException e) {
-            // Handle the file not found exception
-
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
         }
-
     }
 
     @FXML
