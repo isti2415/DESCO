@@ -6,9 +6,13 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +34,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modelClass.Customer;
 import modelClass.Meter;
+import modelClass.Reading;
+import modelClass.User;
 
 /**
  * FXML Controller class
@@ -103,8 +109,6 @@ public class meterReaderController implements Initializable {
     @FXML
     private TextField meterIDTextField2;
     @FXML
-    private DatePicker recordsDatePicker;
-    @FXML
     private TextField cusIDTextField;
     @FXML
     private TextField cusNameTextField;
@@ -120,6 +124,10 @@ public class meterReaderController implements Initializable {
     private ComboBox<String> usageYearCombo;
     @FXML
     private TextField passwordField;
+    @FXML
+    private ComboBox<String> monthCombo;
+    @FXML
+    private ComboBox<String> yearCombo;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -168,13 +176,15 @@ public class meterReaderController implements Initializable {
         // Initialize month combo box
         ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         usageMonthCombo.setItems(monthList);
+        monthCombo.setItems(monthList);
 
         // Initialize year combo box
         ObservableList<String> yearList = FXCollections.observableArrayList();
-        for (int i = 2022; i >= 2000; i--) {
+        for (int i = 2023; i >= 2000; i--) {
             yearList.add(Integer.toString(i));
         }
         usageYearCombo.setItems(yearList);
+        yearCombo.setItems(yearList);
     }
 
     @FXML
@@ -229,72 +239,81 @@ public class meterReaderController implements Initializable {
     }
 
     @FXML
-    private void logOutOnClick(ActionEvent event) {
+    private void logOutOnClick(ActionEvent event) throws IOException {
+        User p = null;
+        p.logout(event);
+    }
+
+    @FXML
+    private void saveChangesOnClick(ActionEvent event) {
+        Meter meter = new Meter(meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
+        Customer customer = new Customer(cusIDTextField.getText(), passwordField.getText(), meter, cusNameTextField.getText(), cusAddressTextField.getText());
+    }
+
+    @FXML
+    private void energyUseLoadInfoOnClick(ActionEvent event) throws ClassNotFoundException {
+        String meterID = energyUseMeterIDTextField.getText();
+        LocalDate currentDate = LocalDate.now();
+        LocalDate previousMonth = currentDate.minusMonths(1);
+        int month = previousMonth.getMonthValue();
+        int year = previousMonth.getYear();
+        File f = null;
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
-            Parent root = loader.load();
-            desco.LoginController loginController = loader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            f = new File("readings.bin");
+            fis = new FileInputStream(f);
+            ois = new ObjectInputStream(fis);
+            Reading r;
+            try {
+                while (true) {
+                    r = (Reading) ois.readObject();
+                    if(r.getMeterID().equals(meterID) && r.getMonth()==month && r.getYear()==year){
+                       energyUsePrevReadingTextField.setText(Float.toString(r.getValue()));
+                    }
+                }
+            } catch (IOException ex) {
+            } finally {
+                try {
+                    if (ois != null) {
+                        ois.close();
+                    }
+                } catch (IOException ex) {
+                }
+            }
         } catch (IOException ex) {
         }
     }
 
     @FXML
-    private void saveChangesOnClick(ActionEvent event) {
-        Meter meter = new Meter(meterIDTextField2.getText());
-        Customer customer = new Customer(cusIDTextField.getText(),passwordField.getText(),meter,cusNameTextField.getText(),cusAddressTextField.getText());
-    }
-
-    @FXML
-    private void energyUseLoadInfoOnClick(ActionEvent event) {
+    private void energyUseSaveChangesOnClick(ActionEvent event
+    ) {
         String meterID = energyUseMeterIDTextField.getText();
-        Meter meter = Meter.findMeter(meterID);
-        if (meter != null) {
-            energyUsePrevReadingTextField.setText(String.valueOf(meter.getLastReading()));
-        } else {
-            System.out.println("Meter not found.");
-        }
+        String month = usageMonthCombo.getValue();
+        String year = usageYearCombo.getValue();
+        float value = Float.parseFloat(energyUseCurrReadingTextField.getText());
+        Reading r = new Reading(month,year,value,meterID);
+        
     }
 
     @FXML
-    private void energyUseSaveChangesOnClick(ActionEvent event) {
-        String meterID = energyUseMeterIDTextField.getText();
-        Meter meter = Meter.findMeter(meterID);
-        if (meter != null) {
-            // Get the latest reading for the selected month and year
-            String year = (String) usageYearCombo.getValue();
-            String month = (String) usageMonthCombo.getValue();
-            float newReading = Float.parseFloat(energyUseCurrReadingTextField.getText());
-
-            meter.updateReading(year, month, newReading);
-
-            // Save the updated meter instance to the file
-            meter.saveMeter();
-
-            // Display a message to indicate that the changes were saved
-            System.out.println("Changes saved.");
-        } else {
-            System.out.println("Meter not found.");
-        }
+    private void requestRestockOnClick(ActionEvent event
+    ) {
     }
 
     @FXML
-    private void requestRestockOnClick(ActionEvent event) {
+    private void reportOnClick(ActionEvent event
+    ) {
     }
 
     @FXML
-    private void reportOnClick(ActionEvent event) {
+    private void updateTargetOnClick(ActionEvent event
+    ) {
     }
 
     @FXML
-    private void updateTargetOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void markAsDoneOnClick(ActionEvent event) {
+    private void markAsDoneOnClick(ActionEvent event
+    ) {
     }
 
 }

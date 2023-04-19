@@ -1,14 +1,16 @@
 package modelClass;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import desco.LoginController;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class User implements Serializable {
 
@@ -39,48 +41,24 @@ public class User implements Serializable {
         }
     }
 
-    public static ArrayList<User> readUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        try {
-            FileInputStream fis = new FileInputStream(FILENAME);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            users = (ArrayList<User>) ois.readObject();
-            ois.close();
-            fis.close();
-            System.out.println("Users loaded successfully.");
-        } catch (IOException | ClassNotFoundException e) {
+    public boolean verificataion(String userid, String pass) {
+        if (id.equals(userid) && password.equals(pass)) {
+            return true;
         }
-        return users;
+        return false;
     }
 
-    public static void deleteUser(User user) throws FileNotFoundException, IOException {
-        // read the list of User objects from the binary file
-        List<User> userList = readUsers();
-
-        // find the index of the User object to delete
-        int index = userList.indexOf(user);
-
-        // if the User object was not found, print an error message and return
-        if (index == -1) {
-            System.out.println("User not found.");
-            return;
+    public void logout(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+            LoginController loginController = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
         }
-
-        // delete the User object at the specified index
-        User deletedUser = userList.remove(index);
-
-        // if the deleted User object was an instance of the Customer class,
-        // remove its associated Customer object as well
-        if (deletedUser instanceof Customer) {
-            Customer deletedCustomer = (Customer) deletedUser;
-            Customer.deleteCustomer(deletedCustomer);
-        } else {
-            Employee deletedEmployee = (Employee) deletedUser;
-            Employee.deleteEmployee(deletedEmployee);
-        }
-
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.bin"));
-        oos.writeObject(userList);
-        oos.close();
     }
 }

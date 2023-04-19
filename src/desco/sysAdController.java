@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.Customer;
 import modelClass.User;
 
 /**
@@ -178,7 +179,6 @@ public class sysAdController implements Initializable {
         userTypeTableColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
 
         // load the user list from the file and add it to the table view
-        userListTableView.getItems().addAll(User.readUsers());
         meterIDlabel.setVisible(false);
         meterIDField.setVisible(false);
     }
@@ -239,18 +239,9 @@ public class sysAdController implements Initializable {
         }
     }
 
-    @FXML
-    private void logOutOnClick(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
-            Parent root = loader.load();
-            desco.LoginController loginController = loader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-        }
+    private void logOutOnClick(ActionEvent event) throws IOException {
+        User p = null;
+        p.logout(event);
     }
 
     @FXML
@@ -258,13 +249,11 @@ public class sysAdController implements Initializable {
         // get the selected user from the table
         User selectedUser = userListTableView.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            User.deleteUser(selectedUser);
             System.out.println("User deleted successfully.");
         } else {
             System.out.println("No user selected.");
         }
         userListTableView.getItems().clear();
-        userListTableView.getItems().addAll(User.readUsers());
     }
 
     @FXML
@@ -366,6 +355,4 @@ public class sysAdController implements Initializable {
     @FXML
     private void resetPasswordOnClick(ActionEvent event) {
     }
-
-
 }

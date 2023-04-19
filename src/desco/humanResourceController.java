@@ -23,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelClass.User;
 
 /**
  * FXML Controller class
@@ -242,18 +243,9 @@ public class humanResourceController implements Initializable {
         switchPane(9);
     }
 
-    @FXML
-    private void logOutOnClick(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
-            Parent root = loader.load();
-            desco.LoginController loginController = loader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-        }
+    private void logOutOnClick(ActionEvent event) throws IOException {
+        User p = null;
+        p.logout(event);
     }
 
     @FXML

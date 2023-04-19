@@ -1,5 +1,8 @@
 package modelClass;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Reading implements Serializable {
@@ -7,23 +10,35 @@ public class Reading implements Serializable {
     private int month;
     private int year;
     private float value;
+    private String meterID;
+    private String FILENAME = "readings.bin";
 
-    public Reading(String month, String year, float value) {
+    public Reading(String month, String year, float value, String meterID) {
         this.month = convertMonth(month);
         this.year = convertYear(year);
         this.value = value;
+        this.meterID=meterID;
+        saveReadings();
     }
 
-    public String getMonth() {
-        return convertMonth(month);
+    public String getMeterID() {
+        return meterID;
+    }
+
+    public void setMeterID(String meterID) {
+        this.meterID = meterID;
+    }
+
+    public int getMonth() {
+        return month;
     }
 
     public void setMonth(String month) {
         this.month = convertMonth(month);
     }
 
-    public String getYear() {
-        return convertYear(year);
+    public int getYear() {
+        return year;
     }
 
     public void setYear(String year) {
@@ -37,8 +52,16 @@ public class Reading implements Serializable {
     public void setValue(float value) {
         this.value = value;
     }
+    
+    public void saveReadings() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            System.err.println("Error saving reading: " + e.getMessage());
+        }
+    }
 
-    public static int convertMonth(String month) {
+    public int convertMonth(String month) {
         switch (month.toLowerCase()) {
             case "january":
                 return 1;
@@ -69,7 +92,7 @@ public class Reading implements Serializable {
         }
     }
 
-    public static int convertYear(String year) {
+    public int convertYear(String year) {
         try {
             return Integer.parseInt(year);
         } catch (NumberFormatException e) {

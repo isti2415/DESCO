@@ -8,10 +8,12 @@ public class Meter implements Serializable {
 
     private String meterID;
     private String userID;
-    private List<Reading> readings;
+    private Reading readings;
+    private String FILENAME = "meters.bin";
 
-    public Meter(String meterID) {
+    public Meter(String meterID, String month, String year) {
         this.meterID = meterID;
+        readings = new Reading(month,year,0f,meterID);
         saveMeter();
     }
 
@@ -31,115 +33,21 @@ public class Meter implements Serializable {
         this.userID = userID;
     }
 
-    public List<Reading> getReadings() {
+    public Reading getReadings() {
         return readings;
     }
 
-    public void setReadings(List<Reading> readings) {
+    public void setReadings(Reading readings) {
         this.readings = readings;
     }
 
     public void saveMeter() {
-        List<Meter> meters = Meter.loadMeters();
-        if (meters == null) {
-            meters = new ArrayList<>();
-        }
-
-        // find the meter in the list and update its readings
-        boolean found = false;
-        for (Meter m : meters) {
-            if (m.getMeterID().equals(this.meterID)) {
-                m.setReadings(this.readings);
-                found = true;
-                break;
-            }
-        }
-
-        // if meter is not found, add it to the list
-        if (!found) {
-            meters.add(this);
-        }
-
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("meters.bin"))) {
-            outputStream.writeObject(meters);
-            System.out.println("Meter saved to file.");
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true));
+            oos.writeObject(this);
+            oos.close();
         } catch (IOException e) {
-            System.out.println("Error saving meter to file: " + e.getMessage());
-        }
-    }
-
-    public static List<Meter> loadMeters() {
-        List<Meter> meters = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("meters.bin"))) {
-            Object obj;
-            while ((obj = inputStream.readObject()) != null) {
-                if (obj instanceof Meter) {
-                    meters.add((Meter) obj);
-                }
-            }
-        } catch (EOFException e) {
-            // Reached end of file
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading meters from file: " + e.getMessage());
-        }
-        return meters;
-    }
-
-    public static Meter findMeter(String meterID) {
-        List<Meter> meters = loadMeters();
-        for (Meter meter : meters) {
-            if (meter.getMeterID().equals(meterID)) {
-                return meter;
-            }
-        }
-        return null;
-    }
-
-    public void updateReading(String month, String year, float value) {
-        for (Reading reading : readings) {
-            if ((reading.getMonth() == null ? month == null : reading.getMonth().equals(month)) && reading.getYear() == year) {
-                reading.setValue(value);
-                return;
-            }
-        }
-        readings.add(new Reading(month, year, value));
-    }
-
-    public float getLastReading() {
-        List<Reading> readings = this.getReadings();
-        if (readings.isEmpty()) {
-            return 0f;
-        }
-
-        Reading latestReading = readings.get(0);
-        for (Reading reading : readings) {
-            if (reading.isAfter(latestReading)) {
-                latestReading = reading;
-            }
-        }
-
-        return latestReading.getValue();
-    }
-
-    public static void deleteMeter(String meterID) {
-        List<Meter> meters = loadMeters();
-        boolean found = false;
-        for (Meter meter : meters) {
-            if (meter.getMeterID().equals(meterID)) {
-                meters.remove(meter);
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("meters.bin"))) {
-                outputStream.writeObject(meters);
-                System.out.println("Meter with ID " + meterID + " has been deleted.");
-            } catch (IOException e) {
-                System.out.println("Error deleting meter from file: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Meter with ID " + meterID + " was not found.");
+            e.printStackTrace();
         }
     }
 

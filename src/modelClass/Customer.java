@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +67,24 @@ public class Customer extends User {
             e.printStackTrace();
         }
     }
+    
+    public static List<Customer> readCustomers() {
+    List<Customer> customers = new ArrayList<>();
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
+        Object obj;
+        while ((obj = ois.readObject()) != null) {
+            if (obj instanceof Customer) {
+                Customer customer = (Customer) obj;
+                customers.add(customer);
+            }
+        }
+        System.out.println("Customers loaded successfully.");
+    } catch (IOException | ClassNotFoundException e) {
+        System.err.println("Error reading customers: " + e.getMessage());
+    }
+    return customers;
+}
+
 
     static void deleteCustomer(Customer customer) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
