@@ -6,23 +6,24 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
@@ -31,7 +32,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import modelClass.Customer;
 import modelClass.Meter;
 import modelClass.Reading;
@@ -240,7 +240,7 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException {
-        User p = null;
+        User p = new User();
         p.logout(event);
     }
 
@@ -253,36 +253,40 @@ public class meterReaderController implements Initializable {
     @FXML
     private void energyUseLoadInfoOnClick(ActionEvent event) throws ClassNotFoundException {
         String meterID = energyUseMeterIDTextField.getText();
-        LocalDate currentDate = LocalDate.now();
-        LocalDate previousMonth = currentDate.minusMonths(1);
-        int month = previousMonth.getMonthValue();
-        int year = previousMonth.getYear();
-        File f = null;
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        int latestYear = 0;
+        int latestMonth = 0;
+        float latestValue = 0.0f;
+
+        List<Reading> readings = new ArrayList<>();
         try {
-            f = new File("readings.bin");
-            fis = new FileInputStream(f);
-            ois = new ObjectInputStream(fis);
-            Reading r;
-            try {
-                while (true) {
-                    r = (Reading) ois.readObject();
-                    if(r.getMeterID().equals(meterID) && r.getMonth()==month && r.getYear()==year){
-                       energyUsePrevReadingTextField.setText(Float.toString(r.getValue()));
-                    }
-                }
-            } catch (IOException ex) {
-            } finally {
-                try {
-                    if (ois != null) {
-                        ois.close();
-                    }
-                } catch (IOException ex) {
-                }
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
+                readings = (List<Reading>) inputStream.readObject();
             }
-        } catch (IOException ex) {
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
         }
+        boolean found = true;
+        for (Reading r : readings) {
+            if (r.getMeterID().equals(meterID)) {
+                if (r.getYear() > latestYear || (r.getYear() == latestYear && r.getMonth() > latestMonth)) {
+                    latestYear = r.getYear();
+                    latestMonth = r.getMonth();
+                    latestValue = r.getValue();
+                    found = true;
+                }
+            } else {
+                found = false;
+            }
+        }
+        if (found == true) {
+            energyUsePrevReadingTextField.setText(Float.toString(latestValue));
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, "No valid readings found for the given meter ID.");
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
@@ -292,8 +296,7 @@ public class meterReaderController implements Initializable {
         String month = usageMonthCombo.getValue();
         String year = usageYearCombo.getValue();
         float value = Float.parseFloat(energyUseCurrReadingTextField.getText());
-        Reading r = new Reading(month,year,value,meterID);
-        
+        Reading r = new Reading(month, year, value, meterID);
     }
 
     @FXML

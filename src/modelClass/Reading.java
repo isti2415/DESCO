@@ -1,9 +1,14 @@
 package modelClass;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reading implements Serializable {
 
@@ -17,7 +22,7 @@ public class Reading implements Serializable {
         this.month = convertMonth(month);
         this.year = convertYear(year);
         this.value = value;
-        this.meterID=meterID;
+        this.meterID = meterID;
         saveReadings();
     }
 
@@ -52,13 +57,44 @@ public class Reading implements Serializable {
     public void setValue(float value) {
         this.value = value;
     }
-    
-    public void saveReadings() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true))) {
-            oos.writeObject(this);
-        } catch (IOException e) {
-            System.err.println("Error saving reading: " + e.getMessage());
+
+    private void saveReadings() {
+        List<Reading> readingList = Reading.loadReadings();
+        // Check if the user ID of the current user already exists in the list
+        boolean exists = false;
+        for (Reading reading : readingList) {
+            if (reading.getMeterID().equals(this.getMeterID()) && reading.getMonth() == this.getMonth() && reading.getYear() == this.getYear()) {
+                exists = true;
+                break;
+            }
         }
+        // If the user ID already exists, show an error message and do not save the user
+        if (exists) {
+            System.out.println("Reading already exists");
+        } else {
+            // Otherwise, add the user to the list and save the list to the file
+            readingList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("readings.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(readingList);
+                System.out.println("Reading saved to readings.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
+    private static List<Reading> loadReadings() {
+        List<Reading> readings = new ArrayList<>();
+        try {
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
+                readings = (List<Reading>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        return readings;
     }
 
     public int convertMonth(String month) {
@@ -134,7 +170,7 @@ public class Reading implements Serializable {
     public String convertYear(int year) {
         return String.valueOf(year);
     }
-    
+
     public boolean isAfter(Reading other) {
         if (this.year > other.year) {
             return true;

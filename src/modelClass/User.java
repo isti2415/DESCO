@@ -24,6 +24,10 @@ public class User implements Serializable {
         this.password = password;
         saveUser();
     }
+    
+    public User(){
+        
+    }
 
     public String getId() {
         return id;
@@ -51,7 +55,7 @@ public class User implements Serializable {
     public void logout(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader;
-            loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
             Parent root = loader.load();
             LoginController loginController = loader.getController();
             Scene scene = new Scene(root);
