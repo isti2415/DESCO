@@ -243,6 +243,7 @@ public class humanResourceController implements Initializable {
         switchPane(9);
     }
 
+    @FXML
     private void logOutOnClick(ActionEvent event) throws IOException {
         User p = null;
         p.logout(event);

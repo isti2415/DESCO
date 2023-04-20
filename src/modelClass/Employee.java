@@ -38,7 +38,7 @@ public class Employee extends User {
         return name;
     }
     
-    public void saveEmployee() {
+    private void saveEmployee() {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true));
             oos.writeObject(this);
