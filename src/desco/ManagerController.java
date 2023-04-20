@@ -222,7 +222,7 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException {
-        User p = null;
+        User p = new User();
         p.logout(event);
     }
 

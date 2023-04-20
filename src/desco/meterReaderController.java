@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -185,6 +186,7 @@ public class meterReaderController implements Initializable {
         }
         usageYearCombo.setItems(yearList);
         yearCombo.setItems(yearList);
+        customerMeterIDGen();
     }
 
     @FXML
@@ -287,6 +289,31 @@ public class meterReaderController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+
+    private void customerMeterIDGen() {
+        List<Customer> customers = new ArrayList<>();
+        String startID = "1001";
+        try {
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Customer>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        customers.sort(Comparator.comparing(Customer::getId, String.CASE_INSENSITIVE_ORDER));
+        for (Customer c : customers) {
+            if (startID.equals(c.getId())) {
+                int id = Integer.parseInt(startID);
+                id++;
+                startID = Integer.toString(id);
+            }
+        }
+        meterIDTextField2.setText(startID);
+        cusIDTextField.setText(startID);
+        
     }
 
     @FXML
