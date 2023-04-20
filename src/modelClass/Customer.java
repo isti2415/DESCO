@@ -6,10 +6,12 @@
 package modelClass;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class Customer extends User {
     private Meter meter;
     private String name;
     private String address;
+    private String email;
+    private String contact;
+    private LocalDate DoB;
 
     // Add any additional relevant information as needed
     public Customer(String id, String password, Meter meter, String name, String address) {
@@ -32,6 +37,30 @@ public class Customer extends User {
         this.name = name;
         this.address = address;
         saveCustomer();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public LocalDate getDoB() {
+        return DoB;
+    }
+
+    public void setDoB(LocalDate DoB) {
+        this.DoB = DoB;
     }
 
     public Meter getMeter() {
@@ -58,56 +87,42 @@ public class Customer extends User {
         this.address = address;
     }
 
-    public void saveCustomer() {
+    private void saveCustomer() {
+        List<Customer> customerList = Customer.loadCustomer();
+        // Check if the customer ID of the current customer already exists in the list
+        boolean exists = false;
+        for (Customer customer : customerList) {
+            if (customer.getId().equals(this.getId())) {
+                exists = true;
+                break;
+            }
+        }
+        // If the customer ID already exists, show an error message and do not save the customer
+        if (exists) {
+            System.out.println("Customer already exists");
+        } else {
+            // Otherwise, add the customer to the list and save the list to the file
+            customerList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("customers.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(customerList);
+                System.out.println("Customer saved to customers.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
+    private static List<Customer> loadCustomer() {
+        List<Customer> customers = new ArrayList<>();
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true));
-            oos.writeObject(this);
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static List<Customer> readCustomers() {
-    List<Customer> customers = new ArrayList<>();
-    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-        Object obj;
-        while ((obj = ois.readObject()) != null) {
-            if (obj instanceof Customer) {
-                Customer customer = (Customer) obj;
-                customers.add(customer);
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Customer>) inputStream.readObject();
             }
-        }
-        System.out.println("Customers loaded successfully.");
-    } catch (IOException | ClassNotFoundException e) {
-        System.err.println("Error reading customers: " + e.getMessage());
-    }
-    return customers;
-}
-
-
-    static void deleteCustomer(Customer customer) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-            List<User> userList = (List<User>) ois.readObject();
-            ois.close();
-
-            int index = -1;
-            for (int i = 0; i < userList.size(); i++) {
-                if (userList.get(i) instanceof Customer && userList.get(i).equals(customer)) {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index != -1) {
-                userList.remove(index);
-            }
-
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-                oos.writeObject(userList);
-                oos.close();
-            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
+        return customers;
     }
 }

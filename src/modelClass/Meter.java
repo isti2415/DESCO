@@ -50,14 +50,43 @@ public class Meter implements Serializable {
         this.readings = readings;
     }
 
-    public void saveMeter() {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true));
-            oos.writeObject(this);
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void saveMeter() {
+        List<Meter> meterList = Meter.loadMeter();
+        // Check if the meter ID of the current meter already exists in the list
+        boolean exists = false;
+        for (Meter meter : meterList) {
+            if (meter.getMeterID().equals(this.getMeterID())) {
+                exists = true;
+                break;
+            }
         }
+        // If the meter ID already exists, show an error message and do not save the meter
+        if (exists) {
+            System.out.println("Meter already exists");
+        } else {
+            // Otherwise, add the meter to the list and save the list to the file
+            meterList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("meters.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(meterList);
+                System.out.println("Meter saved to meters.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
+    private static List<Meter> loadMeter() {
+        List<Meter> meters = new ArrayList<>();
+        try {
+            try ( // Read the list of meters from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("meters.bin"))) {
+                meters = (List<Meter>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        return meters;
     }
 
 }

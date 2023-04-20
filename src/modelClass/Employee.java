@@ -6,10 +6,13 @@
 package modelClass;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +25,43 @@ public class Employee extends User {
     
     private String type;
     private String name;
+    private String address;
+    private String email;
+    private String contact;
+    private LocalDate DoB;
     // Add any additional relevant information as needed
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public LocalDate getDoB() {
+        return DoB;
+    }
+
+    public void setDoB(LocalDate DoB) {
+        this.DoB = DoB;
+    }
 
     public Employee(String id, String password, String type, String name) {
         super(id, password);
@@ -39,39 +78,41 @@ public class Employee extends User {
     }
     
     private void saveEmployee() {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true));
-            oos.writeObject(this);
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<Employee> employeeList = Employee.loadEmployee();
+        // Check if the employee ID of the current employee already exists in the list
+        boolean exists = false;
+        for (Employee employee : employeeList) {
+            if (employee.getId().equals(this.getId())) {
+                exists = true;
+                break;
+            }
+        }
+        // If the employee ID already exists, show an error message and do not save the employee
+        if (exists) {
+            System.out.println("Employee already exists");
+        } else {
+            // Otherwise, add the employee to the list and save the list to the file
+            employeeList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("employees.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(employeeList);
+                System.out.println("Employee saved to employees.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
         }
     }
 
-    static void deleteEmployee(Employee employee) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-            List<User> userList = (List<User>) ois.readObject();
-            ois.close();
-
-            int index = -1;
-            for (int i = 0; i < userList.size(); i++) {
-                if (userList.get(i) instanceof Employee && userList.get(i).equals(employee)) {
-                    index = i;
-                    break;
-                }
+    private static List<Employee> loadEmployee() {
+        List<Employee> employees = new ArrayList<>();
+        try {
+            try ( // Read the list of employees from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
+                employees = (List<Employee>) inputStream.readObject();
             }
-
-            if (index != -1) {
-                userList.remove(index);
-            }
-
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-                oos.writeObject(userList);
-                oos.close();
-            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
+        return employees;
     }
-
-    // Add any additional relevant methods as needed
 }

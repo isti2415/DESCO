@@ -1,10 +1,15 @@
 package modelClass;
 
 import desco.LoginController;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -37,12 +42,43 @@ public class User implements Serializable {
         return password;
     }
 
-    public void saveUser() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME, true))) {
-            oos.writeObject(this);
-        } catch (IOException e) {
-            System.err.println("Error saving user: " + e.getMessage());
+    private void saveUser() {
+        List<User> userList = User.loadUser();
+        // Check if the user ID of the current user already exists in the list
+        boolean exists = false;
+        for (User user : userList) {
+            if (user.getId().equals(this.getId())) {
+                exists = true;
+                break;
+            }
         }
+        // If the user ID already exists, show an error message and do not save the user
+        if (exists) {
+            System.out.println("User already exists");
+        } else {
+            // Otherwise, add the user to the list and save the list to the file
+            userList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("users.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(userList);
+                System.out.println("User saved to users.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
+    private static List<User> loadUser() {
+        List<User> users = new ArrayList<>();
+        try {
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
+                users = (List<User>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        return users;
     }
 
     public boolean verificataion(String userid, String pass) {
