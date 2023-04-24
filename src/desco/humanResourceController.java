@@ -197,6 +197,12 @@ public class humanResourceController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
     }
+    
+    private String getCurrUserID() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/desco/humanResource.fxml"));
+        String userID = (String) root.getUserData();
+        return userID;
+    }
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) {

@@ -72,6 +72,7 @@ public class LoginController implements Initializable {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/customer.fxml"));
                         Parent root = loader.load();
+                        root.setUserData(userID);
                         desco.customerController customerController = loader.getController();
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -88,6 +89,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeterReader.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 meterReaderController meterReaderController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -100,6 +102,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("BillingAdmin.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 billingAdminController billingAdminController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -112,6 +115,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("customerServiceRep.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 customerServiceController customerServiceController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -124,6 +128,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("technician.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 technicianController technicianController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -136,6 +141,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("sysAd.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 sysAdController sysAdController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -148,6 +154,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Manager.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 ManagerController managerController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -160,6 +167,7 @@ public class LoginController implements Initializable {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("humanResource.fxml"));
                                 Parent root = loader.load();
+                                root.setUserData(userID);
                                 humanResourceController humanResourcesController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
