@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +59,7 @@ public class customerServiceController implements Initializable {
     @FXML
     private TextField profileNameTextField;
     @FXML
-    private TextField profileUsernameTextField;
+    private TextField profileUserIDTextField;
     @FXML
     private DatePicker profileDOBdatepicker;
     @FXML
@@ -164,6 +166,19 @@ public class customerServiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        Employee curr;
+        try {
+            curr = getCurrUser();
+            profileNameTextField.setText(curr.getName());
+            profileUserIDTextField.setText(curr.getId());
+            profileDOBdatepicker.setValue(curr.getDoB());
+            profileEmailTextField.setText(curr.getEmail());
+            profileConNumTextField.setText(curr.getContact());
+        } catch (IOException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -225,6 +240,10 @@ public class customerServiceController implements Initializable {
 
     @FXML
     private void sendtoManagerfOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void logOutOnclick(ActionEvent event) {
     }
 
 }

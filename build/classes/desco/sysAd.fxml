@@ -189,7 +189,7 @@
             <Label layoutX="23.0" layoutY="296.0" text="Email" />
             <Label layoutX="287.0" layoutY="296.0" text="Contact Number" />
             <TextField fx:id="profileEmailTextField" layoutX="61.0" layoutY="292.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="customerConNumTextField" layoutX="385.0" layoutY="292.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="385.0" layoutY="292.0" />
             <Label layoutX="23.0" layoutY="253.0" text="Contact Information">
                <font>
                   <Font name="System Bold" size="12.0" />

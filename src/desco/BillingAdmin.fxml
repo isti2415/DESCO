@@ -49,17 +49,17 @@
                </font>
             </Label>
             <Label layoutX="42.0" layoutY="119.0" text="Name" />
-            <Label layoutX="314.0" layoutY="119.0" text="Username" />
-            <TextField fx:id="customerNameTextField" layoutX="79.0" layoutY="115.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="customerUsernameTextField" layoutX="388.0" layoutY="115.0" prefHeight="25.0" prefWidth="212.0" />
+            <Label layoutX="314.0" layoutY="119.0" text="User ID" />
+            <TextField fx:id="profileNameTextField" layoutX="79.0" layoutY="115.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileUserIDTextField" layoutX="388.0" layoutY="115.0" prefHeight="25.0" prefWidth="212.0" />
             <Label layoutX="35.0" layoutY="170.0" text="Date of Birth" />
-            <DatePicker fx:id="customerDOBdatepicker" layoutX="117.0" layoutY="166.0" prefHeight="25.0" prefWidth="195.0" />
+            <DatePicker fx:id="profileDOBdatepicker" layoutX="117.0" layoutY="166.0" prefHeight="25.0" prefWidth="195.0" />
             <Label layoutX="40.0" layoutY="438.0" text="Current Password" />
             <TextField fx:id="currPassTextField" layoutX="152.0" layoutY="434.0" prefHeight="25.0" prefWidth="135.0" />
             <Label layoutX="40.0" layoutY="277.0" text="Email" />
             <Label layoutX="35.0" layoutY="335.0" text="Contact Number" />
-            <TextField fx:id="customerEmailTextField" layoutX="114.0" layoutY="273.0" prefHeight="25.0" prefWidth="328.0" />
-            <TextField fx:id="customerConNumTextField" layoutX="137.0" layoutY="331.0" prefHeight="25.0" prefWidth="306.0" />
+            <TextField fx:id="profileEmailTextField" layoutX="114.0" layoutY="273.0" prefHeight="25.0" prefWidth="328.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="137.0" layoutY="331.0" prefHeight="25.0" prefWidth="306.0" />
             <Label layoutX="29.0" layoutY="226.0" text="Contact Information">
                <font>
                   <Font name="System Bold" size="12.0" />

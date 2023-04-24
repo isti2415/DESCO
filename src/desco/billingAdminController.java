@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,17 +39,15 @@ import modelClass.User;
 public class billingAdminController implements Initializable {
 
     @FXML
-    private TextField profileNameTextField;
+    private TextField profileUserIDTextField;
     @FXML
-    private TextField customerUsernameTextField;
-    @FXML
-    private DatePicker customerDOBdatepicker;
+    private DatePicker profileDOBdatepicker;
     @FXML
     private TextField currPassTextField;
     @FXML
-    private TextField customerEmailTextField;
+    private TextField profileEmailTextField;
     @FXML
-    private TextField customerConNumTextField;
+    private TextField profileConNumTextField;
     @FXML
     private TextField newPassTextField;
     @FXML
@@ -97,7 +97,7 @@ public class billingAdminController implements Initializable {
     @FXML
     private TableColumn<?, ?> ViewBillAmountDownloadColumn;
     @FXML
-    private TextField CustomerIDTestField;
+    private TextField profileNameTextField;
     
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -167,6 +167,19 @@ public class billingAdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        Employee curr;
+        try {
+            curr = getCurrUser();
+            profileNameTextField.setText(curr.getName());
+            profileUserIDTextField.setText(curr.getId());
+            profileDOBdatepicker.setValue(curr.getDoB());
+            profileEmailTextField.setText(curr.getEmail());
+            profileConNumTextField.setText(curr.getContact());
+        } catch (IOException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     @FXML

@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,7 +54,7 @@ public class meterReaderController implements Initializable {
     @FXML
     private TextField profileNameTextField;
     @FXML
-    private TextField profileUsernameTextField;
+    private TextField profileUserIDTextField;
     @FXML
     private DatePicker profileDOBdatepicker;
     @FXML
@@ -225,6 +227,20 @@ public class meterReaderController implements Initializable {
         usageYearCombo.setItems(yearList);
         yearCombo.setItems(yearList);
         customerMeterIDGen();
+        
+        Employee curr;
+        try {
+            curr = getCurrUser();
+            profileNameTextField.setText(curr.getName());
+            profileUserIDTextField.setText(curr.getId());
+            profileDOBdatepicker.setValue(curr.getDoB());
+            profileEmailTextField.setText(curr.getEmail());
+            profileConNumTextField.setText(curr.getContact());
+        } catch (IOException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

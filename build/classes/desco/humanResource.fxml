@@ -172,9 +172,9 @@
                </font>
             </Label>
             <Label layoutX="29.0" layoutY="124.0" text="Name" />
-            <Label layoutX="312.0" layoutY="124.0" text="Username" />
+            <Label layoutX="312.0" layoutY="124.0" text="User ID" />
             <TextField fx:id="profileNameTextField" layoutX="67.0" layoutY="120.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="profileUsernameTextField" layoutX="389.0" layoutY="120.0" />
+            <TextField fx:id="profileUserIDTextField" layoutX="389.0" layoutY="120.0" />
             <Label layoutX="27.0" layoutY="173.0" text="Date of Birth" />
             <DatePicker fx:id="profileDOBdatepicker" layoutX="103.0" layoutY="169.0" />
             <Label layoutX="27.0" layoutY="393.0" text="Current Password" />
@@ -182,7 +182,7 @@
             <Label layoutX="27.0" layoutY="273.0" text="Email" />
             <Label layoutX="291.0" layoutY="273.0" text="Contact Number" />
             <TextField fx:id="profileEmailTextField" layoutX="65.0" layoutY="269.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="customerConNumTextField" layoutX="389.0" layoutY="269.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="389.0" layoutY="269.0" />
             <Label layoutX="27.0" layoutY="230.0" text="Contact Information">
                <font>
                   <Font name="System Bold" size="12.0" />
