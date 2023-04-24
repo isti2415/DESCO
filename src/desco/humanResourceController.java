@@ -6,20 +6,20 @@
 package desco;
 
 import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -27,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.User;
 
@@ -149,8 +150,6 @@ public class humanResourceController implements Initializable {
     private TextField emailTextField6;
     @FXML
     private TextArea policyTextArea;
-    @FXML
-    private TextField addressTextField6;
 
     ObservableList<String> departments = FXCollections.observableArrayList(
             "Meter Reader", "Billing Administrator", "Customer Service Represantative",
@@ -198,6 +197,42 @@ public class humanResourceController implements Initializable {
                 break;
         }
     }
+    
+    private Employee getCurrUser() throws IOException, ClassNotFoundException {
+        // Read the current user ID from the session file
+        String userID = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
+            CurrUserID savedUser = (CurrUserID) in.readObject();
+            if (savedUser != null) {
+                userID = savedUser.getCurrUserID();
+            }
+            System.out.println(userID);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Look for a matching customer in the customers file
+        Employee currUser = null;
+        List<Employee> customers = new ArrayList<>();
+        try {
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Employee>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        for (Employee customer : customers) {
+            if (customer.getId().equals(userID)) {
+                currUser = customer;
+                break;
+            }
+        }
+
+        return currUser;
+    }
 
     /**
      * Initializes the controller class.
@@ -209,32 +244,6 @@ public class humanResourceController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
         deptComboBox6.setItems(departments);
-    }
-
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        Parent root = FXMLLoader.load(getClass().getResource("/desco/humanResource.fxml"));
-        String userID = (String) root.getUserData();
-
-        // Read serialized Employee objects from employees.bin file
-        FileInputStream fileIn = new FileInputStream("employees.bin");
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Employee currUser = null;
-        try {
-            while (true) {
-                Employee emp = (Employee) in.readObject();
-                if (emp.getId().equals(userID)) {
-                    currUser = emp;
-                    break;
-                }
-            }
-        } catch (EOFException e) {
-            // End of file reached
-        } finally {
-            in.close();
-            fileIn.close();
-        }
-
-        return currUser;
     }
 
     @FXML
@@ -332,7 +341,6 @@ public class humanResourceController implements Initializable {
         String type = deptComboBox6.getValue();
         String name = idTextField6.getText();
         Employee e = new Employee(id, pass, type, name);
-        e.setAddress(addressTextField6.getText());
         e.setEmail(emailTextField6.getText());
         e.setContact(numberField6.getText());
         e.setDoB(dobPicker6.getValue());

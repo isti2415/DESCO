@@ -33,7 +33,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import modelClass.CurrUserID;
 import modelClass.Customer;
+import modelClass.Employee;
 import modelClass.Meter;
 import modelClass.Reading;
 import modelClass.User;
@@ -48,17 +50,15 @@ public class meterReaderController implements Initializable {
     @FXML
     private Pane pane1;
     @FXML
-    private TextField customerNameTextField;
+    private TextField profileNameTextField;
     @FXML
-    private TextField customerUsernameTextField;
+    private TextField profileUsernameTextField;
     @FXML
-    private DatePicker customerDOBdatepicker;
+    private DatePicker profileDOBdatepicker;
     @FXML
-    private TextField currPassTextField;
+    private TextField profileEmailTextField;
     @FXML
-    private TextField customerEmailTextField;
-    @FXML
-    private TextField customerConNumTextField;
+    private TextField profileConNumTextField;
     @FXML
     private TextField newPassTextField;
     @FXML
@@ -129,6 +129,8 @@ public class meterReaderController implements Initializable {
     private ComboBox<String> monthCombo;
     @FXML
     private ComboBox<String> yearCombo;
+    @FXML
+    private TextField currPassTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -166,6 +168,42 @@ public class meterReaderController implements Initializable {
                 pane8.setVisible(true);
                 break;
         }
+    }
+    
+    private Employee getCurrUser() throws IOException, ClassNotFoundException {
+        // Read the current user ID from the session file
+        String userID = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
+            CurrUserID savedUser = (CurrUserID) in.readObject();
+            if (savedUser != null) {
+                userID = savedUser.getCurrUserID();
+            }
+            System.out.println(userID);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Look for a matching customer in the customers file
+        Employee currUser = null;
+        List<Employee> customers = new ArrayList<>();
+        try {
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Employee>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        for (Employee customer : customers) {
+            if (customer.getId().equals(userID)) {
+                currUser = customer;
+                break;
+            }
+        }
+
+        return currUser;
     }
 
     /**

@@ -25,20 +25,12 @@ public class Employee extends User {
     
     private String type;
     private String name;
-    private String address;
     private String email;
     private String contact;
     private LocalDate DoB;
     
     // Add any additional relevant information as needed
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getEmail() {
         return email;

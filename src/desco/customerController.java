@@ -13,6 +13,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -124,7 +126,7 @@ public class customerController implements Initializable {
         }
     }
 
-    public Customer getCurrUser() throws IOException, ClassNotFoundException {
+    private Customer getCurrUser() throws IOException, ClassNotFoundException {
         // Read the current user ID from the session file
         String userID = null;
         try {
@@ -166,14 +168,24 @@ public class customerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        Customer curr;
+        try {
+            curr = getCurrUser();
+            profileNameTextField.setText(curr.getName());
+            profileUseridTextField.setText(curr.getId());
+            profileDOBdatepicker.setValue(curr.getDoB());
+            profileEmailTextField.setText(curr.getEmail());
+            profileConNumTextField.setText(curr.getContact());
+        } catch (IOException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    private void viewProfileOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+    private void viewProfileOnClick(ActionEvent event) {
         switchPane(1);
-        Customer curr = getCurrUser();
-        profileNameTextField.setText(curr.getName());
-        profileUseridTextField.setText(curr.getId());
     }
 
     @FXML
