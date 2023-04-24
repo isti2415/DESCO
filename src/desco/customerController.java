@@ -5,14 +5,17 @@
  */
 package desco;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -21,6 +24,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import modelClass.CurrUserID;
+import modelClass.Customer;
 import modelClass.User;
 
 /**
@@ -119,6 +124,42 @@ public class customerController implements Initializable {
         }
     }
 
+    public Customer getCurrUser() throws IOException, ClassNotFoundException {
+        // Read the current user ID from the session file
+        String userID = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
+            CurrUserID savedUser = (CurrUserID) in.readObject();
+            if (savedUser != null) {
+                userID = savedUser.getCurrUserID();
+            }
+            System.out.println(userID);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Look for a matching customer in the customers file
+        Customer currUser = null;
+        List<Customer> customers = new ArrayList<>();
+        try {
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Customer>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        for (Customer customer : customers) {
+            if (customer.getId().equals(userID)) {
+                currUser = customer;
+                break;
+            }
+        }
+
+        return currUser;
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -126,16 +167,13 @@ public class customerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
     }
-    
-    private String getCurrUserID() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/desco/customer.fxml"));
-        String userID = (String) root.getUserData();
-        return userID;
-    }
 
     @FXML
-    private void viewProfileOnClick(ActionEvent event) {
+    private void viewProfileOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         switchPane(1);
+        Customer curr = getCurrUser();
+        profileNameTextField.setText(curr.getName());
+        profileUseridTextField.setText(curr.getId());
     }
 
     @FXML

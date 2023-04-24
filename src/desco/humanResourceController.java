@@ -6,26 +6,28 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import modelClass.Employee;
 import modelClass.User;
 
 /**
@@ -62,7 +64,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableColumn<?, ?> amountColumn3;
     @FXML
-    private ComboBox<?> deptComboBox3;
+    private ComboBox<String> deptComboBox3;
     @FXML
     private TextField idTextField3;
     @FXML
@@ -76,7 +78,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableColumn<?, ?> completionColumn4;
     @FXML
-    private ComboBox<?> deptComboBox4;
+    private ComboBox<String> deptComboBox4;
     @FXML
     private TextField idTextField4;
     @FXML
@@ -92,7 +94,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane7;
     @FXML
-    private ComboBox<?> deptComboBox6;
+    private ComboBox<String> deptComboBox6;
     @FXML
     private TextField idTextField6;
     @FXML
@@ -147,6 +149,13 @@ public class humanResourceController implements Initializable {
     private TextField emailTextField6;
     @FXML
     private TextArea policyTextArea;
+    @FXML
+    private TextField addressTextField6;
+
+    ObservableList<String> departments = FXCollections.observableArrayList(
+            "Meter Reader", "Billing Administrator", "Customer Service Represantative",
+            "Human Resources", "Manager", "Technician", "System Administrator"
+    );
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -199,17 +208,40 @@ public class humanResourceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        deptComboBox6.setItems(departments);
     }
-    
-    private String getCurrUserID() throws IOException {
+
+    private Employee getCurrUser() throws IOException, ClassNotFoundException {
         Parent root = FXMLLoader.load(getClass().getResource("/desco/humanResource.fxml"));
         String userID = (String) root.getUserData();
-        return userID;
+
+        // Read serialized Employee objects from employees.bin file
+        FileInputStream fileIn = new FileInputStream("employees.bin");
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        Employee currUser = null;
+        try {
+            while (true) {
+                Employee emp = (Employee) in.readObject();
+                if (emp.getId().equals(userID)) {
+                    currUser = emp;
+                    break;
+                }
+            }
+        } catch (EOFException e) {
+            // End of file reached
+        } finally {
+            in.close();
+            fileIn.close();
+        }
+
+        return currUser;
     }
 
     @FXML
-    private void viewProfileOnClick(ActionEvent event) {
+    private void viewProfileOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         switchPane(1);
+        Employee curr = getCurrUser();
+        profileNameTextField.setText(curr.getName());
     }
 
     @FXML
@@ -220,11 +252,13 @@ public class humanResourceController implements Initializable {
     @FXML
     private void employeeAttendanceOnClick(ActionEvent event) {
         switchPane(3);
+        deptComboBox3.setItems(departments);
     }
 
     @FXML
     private void payrollOnClick(ActionEvent event) {
         switchPane(4);
+        deptComboBox4.setItems(departments);
     }
 
     @FXML
@@ -235,6 +269,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private void jobOpeningOnClick(ActionEvent event) {
         switchPane(6);
+        
     }
 
     @FXML
@@ -269,13 +304,13 @@ public class humanResourceController implements Initializable {
         p.logout(event);
     }
 
-
     @FXML
     private void saveS2OnClick(ActionEvent event) {
     }
 
     @FXML
     private void saveS3OnClick(ActionEvent event) {
+
     }
 
     @FXML
@@ -292,6 +327,15 @@ public class humanResourceController implements Initializable {
 
     @FXML
     private void saveS6OnClick(ActionEvent event) {
+        String id = idTextField6.getText();
+        String pass = passwordTextField6.getText();
+        String type = deptComboBox6.getValue();
+        String name = idTextField6.getText();
+        Employee e = new Employee(id, pass, type, name);
+        e.setAddress(addressTextField6.getText());
+        e.setEmail(emailTextField6.getText());
+        e.setContact(numberField6.getText());
+        e.setDoB(dobPicker6.getValue());
     }
 
     @FXML
