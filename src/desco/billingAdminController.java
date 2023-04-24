@@ -5,11 +5,26 @@
  */
 package desco;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import static com.itextpdf.kernel.pdf.PdfName.Title;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.TextAlignment;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,10 +59,6 @@ public class billingAdminController implements Initializable {
     @FXML
     private TextField newPassTextField;
     @FXML
-    private TableColumn<?, ?> CustomerIDColumn;
-    @FXML
-    private TextField biLLissuecustomerIDTextField;
-    @FXML
     private Label currentBillLabel;
     @FXML
     private TextField updatedBillTextField;
@@ -57,7 +68,6 @@ public class billingAdminController implements Initializable {
     private Pane pane1;
     @FXML
     private Pane pane2;
-    @FXML
     private Pane pane3;
     @FXML
     private Pane pane4;
@@ -72,8 +82,6 @@ public class billingAdminController implements Initializable {
     @FXML
     private TableView<?> ViewCustomerBillsTable;
     @FXML
-    private TableView<?> ViewDowloadBillsTable;
-    @FXML
     private TableColumn<?, ?> ViewBillNumberCustomerColumn;
     @FXML
     private TableColumn<?, ?> ViewMonthCustomerColumn;
@@ -82,20 +90,13 @@ public class billingAdminController implements Initializable {
     @FXML
     private TableColumn<?, ?> ViewBillAmountCustomerColumn;
     @FXML
-    private TableColumn<?, ?> ViewBillNumberDownloadColumn;
+    private TextField CustomerIDTextField;
     @FXML
-    private TableColumn<?, ?> ViewMonthDownloadColumn;
-    @FXML
-    private TableColumn<?, ?> ViewYearDownloadColumn;
-    @FXML
-    private TableColumn<?, ?> ViewBillAmountDownloadColumn;
-    @FXML
-    private TextField CustomerIDTestField;
+    private TextField biLLIssuecustomerIDTextField;
     
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
-        pane3.setVisible(false);
         pane4.setVisible(false);
         pane5.setVisible(false);
 
@@ -105,9 +106,6 @@ public class billingAdminController implements Initializable {
                 break;
             case 2:
                 pane2.setVisible(true);
-                break;
-            case 3:
-                pane3.setVisible(true);
                 break;
             case 4:
                 pane4.setVisible(true);
@@ -134,11 +132,6 @@ public class billingAdminController implements Initializable {
     @FXML
     private void ViewCustomerBillPaneButtononClick(ActionEvent event) {
         switchPane(2);
-    }
-
-    @FXML
-    private void ViewGenerateBillPaneButtononClick(ActionEvent event) {
-        switchPane(3);
     }
 
     @FXML
@@ -178,13 +171,108 @@ public class billingAdminController implements Initializable {
     }
 
     @FXML
-    private void GenerateNewBillButtononClick(ActionEvent event) {
+    private void DownloadBillButtononClick(ActionEvent event) {
+        File f = new File("bill.pdf");
+        try {
+            if (f!=null){
+                PdfWriter pw = new PdfWriter(new FileOutputStream(f));
+                PdfDocument pdf =  new PdfDocument(pw);
+                pdf.setDefaultPageSize(PageSize.A5);
+                pdf.addNewPage();
+                Document doc = new Document(pdf);
+                
+                doc.setMargins(10f, 10f, 10f, 10f);
+                
+                String imagepath = "src/images/desco.png";
+                ImageData data = ImageDataFactory.create(imagepath);
+                Image image = new Image(data);  
+                image.setAutoScale(true);
+                doc.add(image);
+                
+                String newline = "\n";
+                Paragraph lineSpace = new Paragraph(newline);
+                lineSpace.setHeight(10);
+                
+                Text title = new Text("Customer Bill");
+                title.setFontSize(18f);
+                Paragraph pageTitle = new Paragraph(title);
+                pageTitle.setBold();
+                pageTitle.setTextAlignment(TextAlignment.CENTER);
+                doc.add(lineSpace);
+                doc.add(pageTitle);
+                doc.add(lineSpace);
+                
+                String id = "Customer ID: ";
+                Text custId = new Text(id); 
+                Paragraph cusid = new Paragraph(custId);
+                cusid.setBold();
+                cusid.add(CustomerIDTextField.getText());
+                doc.add(cusid);
+                doc.add(lineSpace);
+                
+                String bil = "Bill Number: ";
+                Text billId = new Text(bil); 
+                Paragraph bill = new Paragraph(billId);
+                bill.setBold();
+                doc.add(bill);
+                doc.add(lineSpace);
+                
+                String month = "Month: ";
+                Text mont = new Text(month); 
+                Paragraph mon = new Paragraph(mont);
+                mon.setBold();
+                doc.add(mon);
+                doc.add(lineSpace);
+                
+                String year = "Year: ";
+                Text yea = new Text(year); 
+                Paragraph yr = new Paragraph(yea);
+                yr.setBold();
+                doc.add(yr);
+                doc.add(lineSpace);
+                
+                String usage = "Usage: ";
+                Text usee = new Text(usage); 
+                Paragraph use = new Paragraph(usee);
+                use.setBold();
+                doc.add(use);
+                doc.add(lineSpace);
+                
+                String billAmnt = "Bill Amount: ";
+                Text billAmt = new Text(billAmnt); 
+                Paragraph billAt = new Paragraph(billAmt);
+                billAt.setBold();
+                doc.add(billAt);
+                doc.add(lineSpace);
+                
+                String dueDate = "Due Date: ";
+                Text dueDat = new Text(dueDate); 
+                Paragraph dueDt = new Paragraph(dueDat);
+                dueDt.setBold();
+                doc.add(dueDt);
+                doc.add(lineSpace);
+                
+                String paid = "Paid: ";
+                Text padd = new Text(paid); 
+                Paragraph paidd = new Paragraph(padd);
+                paidd.setBold();
+                doc.add(paidd);
+                doc.add(lineSpace);
+
+                doc.close();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(billingAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    private void DownloadNewBillButtononClick(ActionEvent event) {
+  
     }
 
     @FXML
-    private void DownloadNewBillButtononClick(ActionEvent event) {
+    private void SearchBillButtononClick(ActionEvent event) {
     }
-
-    
-    
+  
 }
