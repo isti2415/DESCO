@@ -164,7 +164,7 @@ public class sysAdController implements Initializable {
                 break;
         }
     }
-    
+
     private Employee getCurrUser() throws IOException, ClassNotFoundException {
         // Read the current user ID from the session file
         String userID = null;
@@ -181,19 +181,19 @@ public class sysAdController implements Initializable {
 
         // Look for a matching customer in the customers file
         Employee currUser = null;
-        List<Employee> customers = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
         try {
             try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-                customers = (List<Employee>) inputStream.readObject();
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
+                employees = (List<Employee>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
             // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
-        for (Employee customer : customers) {
-            if (customer.getId().equals(userID)) {
-                currUser = customer;
+        for (Employee employee : employees) {
+            if (employee.getId().equals(userID)) {
+                currUser = employee;
                 break;
             }
         }
@@ -219,15 +219,17 @@ public class sysAdController implements Initializable {
         // load the user list from the file and add it to the table view
         meterIDlabel.setVisible(false);
         meterIDField.setVisible(false);
-        
+
         Employee curr;
         try {
             curr = getCurrUser();
-            profileNameTextField.setText(curr.getName());
-            profileUserIDTextField.setText(curr.getId());
-            profileDOBdatepicker.setValue(curr.getDoB());
-            profileEmailTextField.setText(curr.getEmail());
-            profileConNumTextField.setText(curr.getContact());
+            if (curr != null) {
+                profileNameTextField.setText(curr.getName());
+                profileUserIDTextField.setText(curr.getId());
+                profileDOBdatepicker.setValue(curr.getDoB());
+                profileEmailTextField.setText(curr.getEmail());
+                profileConNumTextField.setText(curr.getContact());
+            }
         } catch (IOException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -137,7 +137,6 @@ public class customerController implements Initializable {
             }
             System.out.println(userID);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
         // Look for a matching customer in the customers file
@@ -171,11 +170,15 @@ public class customerController implements Initializable {
         Customer curr;
         try {
             curr = getCurrUser();
-            profileNameTextField.setText(curr.getName());
-            profileUseridTextField.setText(curr.getId());
-            profileDOBdatepicker.setValue(curr.getDoB());
-            profileEmailTextField.setText(curr.getEmail());
-            profileConNumTextField.setText(curr.getContact());
+            if (curr != null) {
+                if (curr != null) {
+                    profileNameTextField.setText(curr.getName());
+                    profileUseridTextField.setText(curr.getId());
+                    profileDOBdatepicker.setValue(curr.getDoB());
+                    profileEmailTextField.setText(curr.getEmail());
+                    profileConNumTextField.setText(curr.getContact());
+                }
+            }
         } catch (IOException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

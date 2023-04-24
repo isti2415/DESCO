@@ -9,7 +9,6 @@ import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import static com.itextpdf.kernel.pdf.PdfName.Title;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
@@ -17,13 +16,10 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
 import java.io.BufferedReader;
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileOutputStream;
-=======
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
->>>>>>> 83597ff4f5fe7d7804efbf4e908ecd5aaecda23d
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -100,18 +96,10 @@ public class billingAdminController implements Initializable {
     @FXML
     private TextField CustomerIDTextField;
     @FXML
-<<<<<<< HEAD
-    private TableColumn<?, ?> ViewMonthDownloadColumn;
-    @FXML
-    private TableColumn<?, ?> ViewYearDownloadColumn;
-    @FXML
-    private TableColumn<?, ?> ViewBillAmountDownloadColumn;
-    @FXML
     private TextField profileNameTextField;
-=======
+    @FXML
     private TextField biLLIssuecustomerIDTextField;
->>>>>>> 18ba156d732e3285426f6251909e488d33d25d8d
-    
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -133,7 +121,7 @@ public class billingAdminController implements Initializable {
                 break;
         }
     }
-    
+
     private Employee getCurrUser() throws IOException, ClassNotFoundException {
         // Read the current user ID from the session file
         String userID = null;
@@ -150,19 +138,19 @@ public class billingAdminController implements Initializable {
 
         // Look for a matching customer in the customers file
         Employee currUser = null;
-        List<Employee> customers = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
         try {
             try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-                customers = (List<Employee>) inputStream.readObject();
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
+                employees = (List<Employee>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
             // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
-        for (Employee customer : customers) {
-            if (customer.getId().equals(userID)) {
-                currUser = customer;
+        for (Employee employee : employees) {
+            if (employee.getId().equals(userID)) {
+                currUser = employee;
                 break;
             }
         }
@@ -179,17 +167,19 @@ public class billingAdminController implements Initializable {
         Employee curr;
         try {
             curr = getCurrUser();
-            profileNameTextField.setText(curr.getName());
-            profileUserIDTextField.setText(curr.getId());
-            profileDOBdatepicker.setValue(curr.getDoB());
-            profileEmailTextField.setText(curr.getEmail());
-            profileConNumTextField.setText(curr.getContact());
+            if (curr != null) {
+                profileNameTextField.setText(curr.getName());
+                profileUserIDTextField.setText(curr.getId());
+                profileDOBdatepicker.setValue(curr.getDoB());
+                profileEmailTextField.setText(curr.getEmail());
+                profileConNumTextField.setText(curr.getContact());
+            }
         } catch (IOException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
@@ -232,7 +222,6 @@ public class billingAdminController implements Initializable {
     private void saveChangesOnClick(ActionEvent event) {
     }
 
-
     @FXML
     private void UpdateBillsButtononClick(ActionEvent event) {
     }
@@ -241,25 +230,25 @@ public class billingAdminController implements Initializable {
     private void DownloadBillButtononClick(ActionEvent event) {
         File f = new File("bill.pdf");
         try {
-            if (f!=null){
+            if (f != null) {
                 PdfWriter pw = new PdfWriter(new FileOutputStream(f));
-                PdfDocument pdf =  new PdfDocument(pw);
+                PdfDocument pdf = new PdfDocument(pw);
                 pdf.setDefaultPageSize(PageSize.A5);
                 pdf.addNewPage();
                 Document doc = new Document(pdf);
-                
+
                 doc.setMargins(10f, 10f, 10f, 10f);
-                
+
                 String imagepath = "src/images/desco.png";
                 ImageData data = ImageDataFactory.create(imagepath);
-                Image image = new Image(data);  
+                Image image = new Image(data);
                 image.setAutoScale(true);
                 doc.add(image);
-                
+
                 String newline = "\n";
                 Paragraph lineSpace = new Paragraph(newline);
                 lineSpace.setHeight(10);
-                
+
                 Text title = new Text("Customer Bill");
                 title.setFontSize(18f);
                 Paragraph pageTitle = new Paragraph(title);
@@ -268,59 +257,59 @@ public class billingAdminController implements Initializable {
                 doc.add(lineSpace);
                 doc.add(pageTitle);
                 doc.add(lineSpace);
-                
+
                 String id = "Customer ID: ";
-                Text custId = new Text(id); 
+                Text custId = new Text(id);
                 Paragraph cusid = new Paragraph(custId);
                 cusid.setBold();
                 cusid.add(CustomerIDTextField.getText());
                 doc.add(cusid);
                 doc.add(lineSpace);
-                
+
                 String bil = "Bill Number: ";
-                Text billId = new Text(bil); 
+                Text billId = new Text(bil);
                 Paragraph bill = new Paragraph(billId);
                 bill.setBold();
                 doc.add(bill);
                 doc.add(lineSpace);
-                
+
                 String month = "Month: ";
-                Text mont = new Text(month); 
+                Text mont = new Text(month);
                 Paragraph mon = new Paragraph(mont);
                 mon.setBold();
                 doc.add(mon);
                 doc.add(lineSpace);
-                
+
                 String year = "Year: ";
-                Text yea = new Text(year); 
+                Text yea = new Text(year);
                 Paragraph yr = new Paragraph(yea);
                 yr.setBold();
                 doc.add(yr);
                 doc.add(lineSpace);
-                
+
                 String usage = "Usage: ";
-                Text usee = new Text(usage); 
+                Text usee = new Text(usage);
                 Paragraph use = new Paragraph(usee);
                 use.setBold();
                 doc.add(use);
                 doc.add(lineSpace);
-                
+
                 String billAmnt = "Bill Amount: ";
-                Text billAmt = new Text(billAmnt); 
+                Text billAmt = new Text(billAmnt);
                 Paragraph billAt = new Paragraph(billAmt);
                 billAt.setBold();
                 doc.add(billAt);
                 doc.add(lineSpace);
-                
+
                 String dueDate = "Due Date: ";
-                Text dueDat = new Text(dueDate); 
+                Text dueDat = new Text(dueDate);
                 Paragraph dueDt = new Paragraph(dueDat);
                 dueDt.setBold();
                 doc.add(dueDt);
                 doc.add(lineSpace);
-                
+
                 String paid = "Paid: ";
-                Text padd = new Text(paid); 
+                Text padd = new Text(paid);
                 Paragraph paidd = new Paragraph(padd);
                 paidd.setBold();
                 doc.add(paidd);
@@ -332,14 +321,14 @@ public class billingAdminController implements Initializable {
             Logger.getLogger(billingAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void DownloadNewBillButtononClick(ActionEvent event) {
-  
+
     }
 
     @FXML
     private void SearchBillButtononClick(ActionEvent event) {
     }
-  
+
 }

@@ -19,19 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.User;
@@ -139,7 +133,7 @@ public class technicianController implements Initializable {
     private TextField newPassTextField;
     @FXML
     private TextArea policyViewTextArea;
-    
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -178,10 +172,10 @@ public class technicianController implements Initializable {
                 break;
             case 9:
                 pane9.setVisible(true);
-                break;    
+                break;
         }
     }
-    
+
     private Employee getCurrUser() throws IOException, ClassNotFoundException {
         // Read the current user ID from the session file
         String userID = null;
@@ -198,19 +192,19 @@ public class technicianController implements Initializable {
 
         // Look for a matching customer in the customers file
         Employee currUser = null;
-        List<Employee> customers = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
         try {
             try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-                customers = (List<Employee>) inputStream.readObject();
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
+                employees = (List<Employee>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
             // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
-        for (Employee customer : customers) {
-            if (customer.getId().equals(userID)) {
-                currUser = customer;
+        for (Employee employee : employees) {
+            if (employee.getId().equals(userID)) {
+                currUser = employee;
                 break;
             }
         }
@@ -227,18 +221,20 @@ public class technicianController implements Initializable {
         Employee curr;
         try {
             curr = getCurrUser();
-            profileNameTextField.setText(curr.getName());
-            profileUserIDTextField.setText(curr.getId());
-            profileDOBdatepicker.setValue(curr.getDoB());
-            profileEmailTextField.setText(curr.getEmail());
-            profileConNumTextField.setText(curr.getContact());
+            if (curr != null) {
+                profileNameTextField.setText(curr.getName());
+                profileUserIDTextField.setText(curr.getId());
+                profileDOBdatepicker.setValue(curr.getDoB());
+                profileEmailTextField.setText(curr.getEmail());
+                profileConNumTextField.setText(curr.getContact());
+            }
         } catch (IOException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-    }    
+
+    }
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) {
@@ -341,5 +337,5 @@ public class technicianController implements Initializable {
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
     }
-    
+
 }
