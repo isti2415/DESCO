@@ -21,23 +21,16 @@ import java.util.List;
  */
 public class Employee extends User {
     
-    private static final String FILENAME = "employee.bin";
+    private static final String FILENAME = "employees.bin";
     
     private String type;
     private String name;
-    private String address;
     private String email;
     private String contact;
     private LocalDate DoB;
+    
     // Add any additional relevant information as needed
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getEmail() {
         return email;
@@ -63,10 +56,19 @@ public class Employee extends User {
         this.DoB = DoB;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Employee(String id, String password, String type, String name) {
         super(id, password);
         this.type = type;
         this.name = name;
+        saveEmployee();
     }
 
     public String getType() {

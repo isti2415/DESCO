@@ -17,11 +17,19 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
 import java.io.BufferedReader;
+<<<<<<< HEAD
 import java.io.File;
 import java.io.FileOutputStream;
+=======
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+>>>>>>> 83597ff4f5fe7d7804efbf4e908ecd5aaecda23d
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +43,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import modelClass.CurrUserID;
+import modelClass.Employee;
 import modelClass.User;
 
 /**
@@ -45,7 +55,7 @@ import modelClass.User;
 public class billingAdminController implements Initializable {
 
     @FXML
-    private TextField customerNameTextField;
+    private TextField profileNameTextField;
     @FXML
     private TextField customerUsernameTextField;
     @FXML
@@ -114,6 +124,42 @@ public class billingAdminController implements Initializable {
                 pane5.setVisible(true);
                 break;
         }
+    }
+    
+    private Employee getCurrUser() throws IOException, ClassNotFoundException {
+        // Read the current user ID from the session file
+        String userID = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
+            CurrUserID savedUser = (CurrUserID) in.readObject();
+            if (savedUser != null) {
+                userID = savedUser.getCurrUserID();
+            }
+            System.out.println(userID);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Look for a matching customer in the customers file
+        Employee currUser = null;
+        List<Employee> customers = new ArrayList<>();
+        try {
+            try ( // Read the list of customers from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+                customers = (List<Employee>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        for (Employee customer : customers) {
+            if (customer.getId().equals(userID)) {
+                currUser = customer;
+                break;
+            }
+        }
+
+        return currUser;
     }
 
     /**

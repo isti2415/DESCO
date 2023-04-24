@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.humanResourceController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.humanResourceController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -198,6 +198,16 @@
             <Button layoutX="448.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
+      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="220.0" layoutY="20.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" layoutX="20.0" layoutY="73.0" prefHeight="453.0" prefWidth="544.0" />
+         </children>
+      </Pane>
       <Pane fx:id="pane7" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
          <children>
             <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="577.0" text="Employee Onboarding" textAlignment="CENTER">
@@ -214,22 +224,12 @@
             <Label layoutX="27.0" layoutY="265.0" prefHeight="17.0" prefWidth="67.0" text="Password" />
             <Label layoutX="28.0" layoutY="321.0" prefHeight="17.0" prefWidth="77.0" text="Date Of Birth" />
             <DatePicker fx:id="dobPicker6" layoutX="132.0" layoutY="317.0" prefHeight="25.0" prefWidth="428.0" />
-            <Label layoutX="25.0" layoutY="456.0" prefHeight="17.0" prefWidth="96.0" text="Contact Number" />
-            <Label layoutX="29.0" layoutY="389.0" prefHeight="17.0" prefWidth="96.0" text="Email" />
+            <Label layoutX="27.0" layoutY="437.0" prefHeight="17.0" prefWidth="96.0" text="Contact Number" />
+            <Label layoutX="28.0" layoutY="386.0" prefHeight="17.0" prefWidth="96.0" text="Email" />
             <TextField fx:id="passwordTextField6" layoutX="133.0" layoutY="261.0" prefHeight="25.0" prefWidth="421.0" />
             <TextField fx:id="idTextField6" layoutX="135.0" layoutY="206.0" prefHeight="25.0" prefWidth="421.0" />
-            <TextField fx:id="numberField6" layoutX="133.0" layoutY="452.0" prefHeight="25.0" prefWidth="421.0" />
-            <TextField fx:id="emailTextField6" layoutX="129.0" layoutY="385.0" prefHeight="25.0" prefWidth="428.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label layoutX="220.0" layoutY="20.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyTextArea" layoutX="20.0" layoutY="73.0" prefHeight="453.0" prefWidth="544.0" />
+            <TextField fx:id="numberField6" layoutX="135.0" layoutY="433.0" prefHeight="25.0" prefWidth="421.0" />
+            <TextField fx:id="emailTextField6" layoutX="128.0" layoutY="382.0" prefHeight="25.0" prefWidth="428.0" />
          </children>
       </Pane>
    </children>
