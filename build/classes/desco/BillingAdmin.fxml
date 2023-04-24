@@ -20,7 +20,6 @@
          <children>
             <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#ViewCustomerBillPaneButtononClick" prefHeight="47.0" prefWidth="211.0" text="Customers Bills" />
-            <Button mnemonicParsing="false" onAction="#ViewGenerateBillPaneButtononClick" prefHeight="46.0" prefWidth="166.0" text="Download Bill" />
             <Button layoutX="10.0" layoutY="242.0" mnemonicParsing="false" onAction="#ViewbillingdisputesButtononclick" prefHeight="46.0" prefWidth="166.0" text=" Billing disputes" />
             <Button layoutX="10.0" layoutY="335.0" mnemonicParsing="false" onAction="#ViewCompanyPolicyButtonsOnclick" prefHeight="46.0" prefWidth="166.0" text="Company Policy" />
             <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="166.0" text="Log Out" />
@@ -75,47 +74,6 @@
             <Button layoutX="494.0" layoutY="495.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="33.0" prefHeight="27.0" prefWidth="623.0" text="Customer Bills" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TableView fx:id="ViewCustomerBillsTable" layoutX="11.0" layoutY="76.0" prefHeight="452.0" prefWidth="595.0">
-               <columns>
-                  <TableColumn fx:id="ViewBillNumberCustomerColumn" prefWidth="102.0" text="Bill Number" />
-                  <TableColumn fx:id="ViewMonthCustomerColumn" prefWidth="76.0" text="Month" />
-                  <TableColumn fx:id="ViewYearCustomerColumn" prefWidth="78.0" text="Year" />
-                  <TableColumn fx:id="ViewUsageColumn" prefWidth="78.0" text="Usage" />
-                  <TableColumn fx:id="ViewBillAmountCustomerColumn" prefWidth="105.0" text="Bill Amount" />
-                  <TableColumn fx:id="ViewDateColumn" prefWidth="113.0" text="Due Date" />
-                  <TableColumn fx:id="ViewPaidColumn" prefWidth="42.0" text="Paid?" />
-               </columns>
-            </TableView>
-         </children>
-      </Pane>
-      <Pane fx:id="pane3" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
-         <children>
-            <Label layoutX="287.0" layoutY="33.0" prefHeight="27.0" prefWidth="48.0" text="Download Bills" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TableView fx:id="ViewDowloadBillsTable" layoutX="29.0" layoutY="108.0" prefHeight="370.0" prefWidth="564.0">
-               <columns>
-                  <TableColumn fx:id="CustomerIDColumn" prefWidth="93.60006713867188" text="Customer ID" />
-                  <TableColumn fx:id="ViewBillNumberDownloadColumn" prefWidth="128.0" text="Bill Number" />
-                  <TableColumn fx:id="ViewMonthDownloadColumn" prefWidth="95.0" text="Month" />
-                  <TableColumn fx:id="ViewYearDownloadColumn" prefWidth="101.0" text="Year" />
-                  <TableColumn fx:id="ViewBillAmountDownloadColumn" prefWidth="145.0" text="Bill Amount" />
-               </columns>
-            </TableView>
-            <Button layoutX="428.0" layoutY="495.0" mnemonicParsing="false" onAction="#DownloadNewBillButtononClick" prefHeight="26.0" prefWidth="166.0" text="Download Bill" />
-            <Label layoutX="29.0" layoutY="499.0" text="Customer ID" />
-            <TextField fx:id="CustomerIDTestField" layoutX="125.0" layoutY="495.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane4" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label layoutX="241.0" layoutY="39.0" prefHeight="27.0" prefWidth="141.0" text="Billing Disputes" textAlignment="CENTER">
@@ -124,13 +82,13 @@
                </font>
             </Label>
             <Label layoutX="41.0" layoutY="155.0" prefHeight="26.0" prefWidth="74.0" text="Customer ID" />
-            <TextField fx:id="biLLissuecustomerIDTextField" layoutX="165.0" layoutY="155.0" prefHeight="26.0" prefWidth="179.0" />
+            <TextField fx:id="biLLIssuecustomerIDTextField" layoutX="165.0" layoutY="155.0" prefHeight="26.0" prefWidth="179.0" />
             <Label layoutX="41.0" layoutY="222.0" prefHeight="26.0" prefWidth="67.0" text="Current Bill" />
             <Label fx:id="currentBillLabel" layoutX="165.0" layoutY="222.0" prefHeight="26.0" prefWidth="179.0" style="-fx-background-color: grey;" />
             <Label layoutX="41.0" layoutY="361.0" prefHeight="26.0" prefWidth="101.0" text="Enter Updated Bill" />
             <TextField fx:id="updatedBillTextField" layoutX="172.0" layoutY="361.0" prefHeight="26.0" prefWidth="150.0" />
             <Button layoutX="41.0" layoutY="471.0" mnemonicParsing="false" onAction="#UpdateBillsButtononClick" prefHeight="40.0" prefWidth="131.0" text="Update Bills" />
-            <Button layoutX="456.0" layoutY="471.0" mnemonicParsing="false" onAction="#GenerateNewBillButtononClick" prefHeight="40.0" prefWidth="131.0" text="Generate New Bill" />
+            <Button layoutX="456.0" layoutY="471.0" mnemonicParsing="false" onAction="#DownloadNewBillButtononClick" prefHeight="40.0" prefWidth="131.0" text="Download New Bill" />
          </children>
       </Pane>
       <Pane fx:id="pane5" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
@@ -141,6 +99,30 @@
                </font>
             </Label>
             <TextArea fx:id="policyTextArea" layoutX="41.0" layoutY="77.0" prefHeight="442.0" prefWidth="544.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="33.0" prefHeight="27.0" prefWidth="623.0" text="Customer Bills" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="ViewCustomerBillsTable" layoutX="11.0" layoutY="76.0" prefHeight="422.0" prefWidth="602.0">
+               <columns>
+                  <TableColumn fx:id="ViewBillNumberCustomerColumn" prefWidth="102.0" text="Bill Number" />
+                  <TableColumn fx:id="ViewMonthCustomerColumn" prefWidth="76.0" text="Month" />
+                  <TableColumn fx:id="ViewYearCustomerColumn" prefWidth="78.0" text="Year" />
+                  <TableColumn fx:id="ViewUsageColumn" prefWidth="78.0" text="Usage" />
+                  <TableColumn fx:id="ViewBillAmountCustomerColumn" prefWidth="105.0" text="Bill Amount" />
+                  <TableColumn fx:id="ViewDateColumn" prefWidth="113.0" text="Due Date" />
+                  <TableColumn fx:id="ViewPaidColumn" prefWidth="49.0" text="Paid?" />
+               </columns>
+            </TableView>
+            <Button layoutX="443.0" layoutY="514.0" mnemonicParsing="false" onAction="#DownloadBillButtononClick" prefHeight="26.0" prefWidth="166.0" text="Download Bill" />
+            <Label layoutX="14.0" layoutY="519.0" text="Customer ID" />
+            <TextField fx:id="CustomerIDTextField" layoutX="97.0" layoutY="515.0" prefHeight="25.0" prefWidth="74.0" />
+            <Button layoutX="229.0" layoutY="514.0" mnemonicParsing="false" onAction="#SearchBillButtononClick" prefHeight="26.0" prefWidth="166.0" text="Search Bill" />
          </children>
       </Pane>
    </children>
