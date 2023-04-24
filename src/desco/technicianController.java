@@ -335,7 +335,14 @@ public class technicianController implements Initializable {
     }
 
     @FXML
-    private void saveChangesOnClick(ActionEvent event) {
+    private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        Employee curr = getCurrUser();
+        if (curr != null) {
+            curr.setName(profileNameTextField.getText());
+            curr.setDoB(profileDOBdatepicker.getValue());
+            curr.setEmail(profileEmailTextField.getText());
+            curr.setContact(profileConNumTextField.getText());
+        }
     }
 
 }

@@ -95,6 +95,8 @@ public class customerController implements Initializable {
     private TextArea complaintTextArea;
     @FXML
     private TextField profileUseridTextField;
+    @FXML
+    private TextField profileAddressTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -171,13 +173,12 @@ public class customerController implements Initializable {
         try {
             curr = getCurrUser();
             if (curr != null) {
-                if (curr != null) {
-                    profileNameTextField.setText(curr.getName());
-                    profileUseridTextField.setText(curr.getId());
-                    profileDOBdatepicker.setValue(curr.getDoB());
-                    profileEmailTextField.setText(curr.getEmail());
-                    profileConNumTextField.setText(curr.getContact());
-                }
+                profileNameTextField.setText(curr.getName());
+                profileUseridTextField.setText(curr.getId());
+                profileDOBdatepicker.setValue(curr.getDoB());
+                profileEmailTextField.setText(curr.getEmail());
+                profileConNumTextField.setText(curr.getContact());
+                profileAddressTextField.setText(curr.getAddress());
             }
         } catch (IOException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,7 +232,15 @@ public class customerController implements Initializable {
     }
 
     @FXML
-    private void saveChangesOnClick(ActionEvent event) {
+    private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        Customer curr = getCurrUser();
+        if (curr != null) {
+            curr.setName(profileNameTextField.getText());
+            curr.setDoB(profileDOBdatepicker.getValue());
+            curr.setEmail(profileEmailTextField.getText());
+            curr.setContact(profileConNumTextField.getText());
+            curr.setAddress(profileAddressTextField.getText());
+        }
     }
 
     @FXML
