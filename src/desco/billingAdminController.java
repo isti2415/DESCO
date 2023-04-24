@@ -44,15 +44,7 @@ public class billingAdminController implements Initializable {
     @FXML
     private TextField newPassTextField;
     @FXML
-    private TableView<?> ViewCustomerAccountTable;
-    @FXML
     private TableColumn<?, ?> CustomerIDColumn;
-    @FXML
-    private TableColumn<?, ?> ViewInvoiceNumberColumn;
-    @FXML
-    private TableColumn<?, ?> ViewBillAmountColumn;
-    @FXML
-    private TableColumn<?, ?> ViewDueDateColumn;
     @FXML
     private TextField biLLissuecustomerIDTextField;
     @FXML
@@ -69,12 +61,43 @@ public class billingAdminController implements Initializable {
     private Pane pane3;
     @FXML
     private Pane pane4;
+    @FXML
+    private TableColumn<?, ?> ViewUsageColumn;
+    @FXML
+    private TableColumn<?, ?> ViewDateColumn;
+    @FXML
+    private TableColumn<?, ?> ViewPaidColumn;
+    @FXML
+    private Pane pane5;
+    @FXML
+    private TableView<?> ViewCustomerBillsTable;
+    @FXML
+    private TableView<?> ViewDowloadBillsTable;
+    @FXML
+    private TableColumn<?, ?> ViewBillNumberCustomerColumn;
+    @FXML
+    private TableColumn<?, ?> ViewMonthCustomerColumn;
+    @FXML
+    private TableColumn<?, ?> ViewYearCustomerColumn;
+    @FXML
+    private TableColumn<?, ?> ViewBillAmountCustomerColumn;
+    @FXML
+    private TableColumn<?, ?> ViewBillNumberDownloadColumn;
+    @FXML
+    private TableColumn<?, ?> ViewMonthDownloadColumn;
+    @FXML
+    private TableColumn<?, ?> ViewYearDownloadColumn;
+    @FXML
+    private TableColumn<?, ?> ViewBillAmountDownloadColumn;
+    @FXML
+    private TextField CustomerIDTestField;
     
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
         pane3.setVisible(false);
         pane4.setVisible(false);
+        pane5.setVisible(false);
 
         switch (paneNumber) {
             case 1:
@@ -88,7 +111,10 @@ public class billingAdminController implements Initializable {
                 break;
             case 4:
                 pane4.setVisible(true);
-                break;    
+                break;
+            case 5:
+                pane5.setVisible(true);
+                break;
         }
     }
 
@@ -106,18 +132,23 @@ public class billingAdminController implements Initializable {
     }
 
     @FXML
-    private void ViewCustomerAccountButtononClick(ActionEvent event) {
+    private void ViewCustomerBillPaneButtononClick(ActionEvent event) {
         switchPane(2);
     }
 
     @FXML
-    private void ViewbillingdisputesButtononclick(ActionEvent event) {
+    private void ViewGenerateBillPaneButtononClick(ActionEvent event) {
         switchPane(3);
     }
 
     @FXML
-    private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
+    private void ViewbillingdisputesButtononclick(ActionEvent event) {
         switchPane(4);
+    }
+
+    @FXML
+    private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
+        switchPane(5);
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
             policyTextArea.setWrapText(true);
@@ -141,9 +172,6 @@ public class billingAdminController implements Initializable {
     private void saveChangesOnClick(ActionEvent event) {
     }
 
-    @FXML
-    private void GenerateBillButtononClick(ActionEvent event) {
-    }
 
     @FXML
     private void UpdateBillsButtononClick(ActionEvent event) {
@@ -152,5 +180,11 @@ public class billingAdminController implements Initializable {
     @FXML
     private void GenerateNewBillButtononClick(ActionEvent event) {
     }
+
+    @FXML
+    private void DownloadNewBillButtononClick(ActionEvent event) {
+    }
+
+    
     
 }

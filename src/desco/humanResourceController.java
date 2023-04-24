@@ -5,6 +5,8 @@
  */
 package desco;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -35,17 +38,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private ComboBox<?> deptComboBox1;
-    @FXML
     private TableView<?> employeeInfoTable;
-    @FXML
-    private TableColumn<?, ?> infoTypeColumn1;
-    @FXML
-    private TableColumn<?, ?> detailsColumn1;
-    @FXML
-    private TextField idTextField1;
-    @FXML
-    private TextField nameTextField1;
     @FXML
     private Pane pane3;
     @FXML
@@ -101,12 +94,6 @@ public class humanResourceController implements Initializable {
     @FXML
     private ComboBox<?> deptComboBox6;
     @FXML
-    private TableView<?> employeeOnboardTable;
-    @FXML
-    private TableColumn<?, ?> infoColumn6;
-    @FXML
-    private TableColumn<?, ?> detailsColumn6;
-    @FXML
     private TextField idTextField6;
     @FXML
     private TextField nameTextField6;
@@ -141,9 +128,25 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane9;
     @FXML
-    private Label policyViewTextLabel;
+    private TableColumn<?, ?> IDInfoColumn;
     @FXML
-    private TextField passwordField1;
+    private TableColumn<?, ?> NameIndoColumn;
+    @FXML
+    private TableColumn<?, ?> DeptInfoColumn;
+    @FXML
+    private TableColumn<?, ?> InfoTypeInfoColumn;
+    @FXML
+    private TableColumn<?, ?> detailsinfoColumn;
+    @FXML
+    private DatePicker dobPicker6;
+    @FXML
+    private TextField passwordTextField6;
+    @FXML
+    private TextField numberField6;
+    @FXML
+    private TextField emailTextField6;
+    @FXML
+    private TextArea policyTextArea;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -247,6 +250,17 @@ public class humanResourceController implements Initializable {
     @FXML
     private void viewPolicyOnClick(ActionEvent event) {
         switchPane(9);
+        try {
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
+                policyTextArea.setWrapText(true);
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    policyTextArea.appendText(line + "\n");
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
+        }
     }
 
     @FXML
@@ -255,9 +269,6 @@ public class humanResourceController implements Initializable {
         p.logout(event);
     }
 
-    @FXML
-    private void save1OnClick(ActionEvent event) {
-    }
 
     @FXML
     private void saveS2OnClick(ActionEvent event) {
@@ -289,6 +300,10 @@ public class humanResourceController implements Initializable {
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void saveInfoOnClick(ActionEvent event) {
     }
 
 }
