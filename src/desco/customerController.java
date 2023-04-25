@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,13 +22,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Customer;
+import modelClass.Service;
 import modelClass.User;
 
 /**
@@ -74,8 +78,6 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane4;
     @FXML
-    private ComboBox<String> serviceTypeComboBox;
-    @FXML
     private TextField detailsTextField;
     @FXML
     private Pane pane5;
@@ -97,6 +99,12 @@ public class customerController implements Initializable {
     private TextField profileUseridTextField;
     @FXML
     private TextField profileAddressTextField;
+    @FXML
+    private RadioButton suspicousRadioButton;
+    @FXML
+    private RadioButton malfunctionRadioButton;
+    @FXML
+    private RadioButton otherRadioButton;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -202,9 +210,15 @@ public class customerController implements Initializable {
         switchPane(3);
     }
 
+    private ToggleGroup serviceToggle;
+
     @FXML
     private void viewServiceRequestOnClick(ActionEvent event) {
         switchPane(4);
+        serviceToggle = new ToggleGroup();
+        suspicousRadioButton.setToggleGroup(serviceToggle);
+        malfunctionRadioButton.setToggleGroup(serviceToggle);
+        otherRadioButton.setToggleGroup(serviceToggle);
     }
 
     @FXML
@@ -252,7 +266,20 @@ public class customerController implements Initializable {
     }
 
     @FXML
-    private void submitOnClick(ActionEvent event) {
+    private void submitOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        String details = complaintTextArea.getText();
+        String cusID = "1001";
+        LocalDate date = LocalDate.now();
+        Boolean status = false;
+        final String[] type = new String[1];
+        serviceToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final RadioButton selectedRadioButton = (RadioButton) newValue;
+                type[0] = selectedRadioButton.getText();
+
+            }
+        });
+        Service service = new Service(type[0],details,cusID,date,status);
     }
 
     @FXML

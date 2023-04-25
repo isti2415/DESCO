@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -67,20 +68,6 @@
             <Button layoutX="318.0" layoutY="97.0" mnemonicParsing="false" onAction="#viewMontlyUsageOnClick" text="View Monthly Usage" />
             <Button layoutX="455.0" layoutY="97.0" mnemonicParsing="false" onAction="#ViewYearlyUsageOnClick" text="View Yearly Usage" />
             <TextArea fx:id="viewTextArea" layoutX="23.0" layoutY="136.0" prefHeight="404.0" prefWidth="544.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="pane4" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
-         <children>
-            <Label alignment="CENTER" layoutX="10.0" layoutY="43.0" prefHeight="46.0" prefWidth="580.0" text="Service Request" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="serviceTypeComboBox" layoutX="272.0" layoutY="149.0" prefHeight="25.0" prefWidth="291.0" />
-            <Label layoutX="29.0" layoutY="153.0" text="Please Choose the Service you want to avail:" />
-            <TextField fx:id="detailsTextField" layoutX="29.0" layoutY="306.0" prefHeight="206.0" prefWidth="533.0" />
-            <Label layoutX="29.0" layoutY="275.0" text="Details about the service" />
-            <Button layoutX="462.0" layoutY="271.0" mnemonicParsing="false" onAction="#submitOnClick" text="Submit Request" />
          </children>
       </Pane>
       <Pane fx:id="pane5" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
@@ -152,6 +139,22 @@
             <Button layoutX="461.0" layoutY="493.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
             <Label layoutX="41.0" layoutY="341.0" text="Address" />
             <TextField fx:id="profileAddressTextField" layoutX="94.0" layoutY="337.0" prefHeight="25.0" prefWidth="456.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="10.0" layoutY="43.0" prefHeight="46.0" prefWidth="580.0" text="Service Request" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="153.0" text="Please Choose the Service you want to avail:" />
+            <TextField fx:id="detailsTextField" layoutX="29.0" layoutY="306.0" prefHeight="206.0" prefWidth="533.0" />
+            <Label layoutX="29.0" layoutY="275.0" text="Details about the service" />
+            <Button layoutX="462.0" layoutY="271.0" mnemonicParsing="false" onAction="#submitOnClick" text="Submit Request" />
+            <RadioButton fx:id="suspicousRadioButton" layoutX="50.0" layoutY="183.0" mnemonicParsing="false" text="Suspicious Activity" />
+            <RadioButton fx:id="malfunctionRadioButton" layoutX="240.0" layoutY="183.0" mnemonicParsing="false" text="Malfunction" />
+            <RadioButton fx:id="otherRadioButton" layoutX="407.0" layoutY="183.0" mnemonicParsing="false" text="Other" />
          </children>
       </Pane>
    </children>

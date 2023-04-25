@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -133,6 +134,8 @@ public class technicianController implements Initializable {
     private TextField newPassTextField;
     @FXML
     private TextArea policyViewTextArea;
+    @FXML
+    private Button resolvedOnClick;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -344,5 +347,4 @@ public class technicianController implements Initializable {
             curr.setContact(profileConNumTextField.getText());
         }
     }
-
 }
