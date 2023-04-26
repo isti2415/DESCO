@@ -29,6 +29,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Service;
@@ -265,10 +266,9 @@ public class customerController implements Initializable {
 
     @FXML
     private void submitOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        String details = complaintTextArea.getText();
+        String details = detailsTextField.getText();
         String cusID = getCurrUser().getId();
         LocalDate date = LocalDate.now();
-        Boolean status = false;
         final String[] type = new String[1];
         serviceToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -277,11 +277,15 @@ public class customerController implements Initializable {
 
             }
         });
-        Service service = new Service(type[0],details,cusID,date,status);
+        Service service = new Service(type[0],details,cusID,date);
     }
 
     @FXML
-    private void submitComplaintButton(ActionEvent event) {
+    private void submitComplaintButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        String details = complaintTextArea.getText();
+        String cusID = getCurrUser().getId();
+        LocalDate date = LocalDate.now();
+        Complaint complaint = new Complaint(cusID,details,date);
     }
 
 }

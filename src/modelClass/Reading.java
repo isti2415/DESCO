@@ -16,7 +16,6 @@ public class Reading implements Serializable {
     private int year;
     private float value;
     private String meterID;
-    private String FILENAME = "readings.bin";
 
     public Reading(String month, String year, float value, String meterID) {
         this.month = convertMonth(month);

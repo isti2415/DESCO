@@ -6,14 +6,13 @@
 package desco;
 
 import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -221,7 +220,7 @@ public class meterReaderController implements Initializable {
 
         // Initialize year combo box
         ObservableList<String> yearList = FXCollections.observableArrayList();
-        for (int i = 2023; i >= 2000; i--) {
+        for (int i = LocalDate.now().getYear(); i >= 2000; i--) {
             yearList.add(Integer.toString(i));
         }
         usageYearCombo.setItems(yearList);

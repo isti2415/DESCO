@@ -19,8 +19,6 @@ import javafx.stage.Stage;
 
 public class User implements Serializable {
 
-    private static final String FILENAME = "users.bin";
-
     private String id;
     private String password;
 

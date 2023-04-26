@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
    <children>
       <VBox layoutX="6.0" layoutY="114.0" prefHeight="309.0" prefWidth="166.0" spacing="20.0">
          <children>
@@ -99,31 +99,6 @@
             <Button layoutX="432.0" layoutY="458.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
-         <children>
-            <Label layoutX="217.0" layoutY="14.0" prefHeight="27.0" prefWidth="190.0" text="Customer Complaints" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="188.0" layoutY="72.0" prefHeight="26.0" prefWidth="68.0" text="Customer ID" />
-            <TextField fx:id="CustomerIDTextField" layoutX="286.0" layoutY="72.0" prefHeight="26.0" prefWidth="150.0" />
-            <Button layoutX="434.0" layoutY="500.0" mnemonicParsing="false" onAction="#markAsResolvedOnclick" prefHeight="19.0" prefWidth="166.0" text="Mark as Resolved">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <TableView fx:id="ViewCustomerAccountTable" layoutX="34.0" layoutY="125.0" prefHeight="350.0" prefWidth="555.0">
-               <columns>
-                  <TableColumn fx:id="ViewCustomerIDColumn" prefWidth="87.20001220703125" text="CustomerID" />
-                  <TableColumn fx:id="ViewComplainIDColumn" prefWidth="104.0" text="ComplainID" />
-                  <TableColumn fx:id="ViewCustomerComplaintColumn" prefWidth="162.4000244140625" text="Customer Complaint" />
-                  <TableColumn fx:id="ViewDateColumn" minWidth="8.0" prefWidth="77.60003662109375" text="Date" />
-                  <TableColumn fx:id="viewFeedback" prefWidth="124.79998779296875" text="Feedback" />
-               </columns>
-            </TableView>
-         </children>
-      </Pane>
       <Pane fx:id="pane3" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
             <Label layoutX="269.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" text="Promotions" textAlignment="CENTER">
@@ -176,6 +151,36 @@
                </font>
             </Label>
             <TextArea fx:id="policyTextArea" layoutX="33.0" layoutY="68.0" prefHeight="458.0" prefWidth="562.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
+         <children>
+            <Label layoutX="217.0" layoutY="14.0" prefHeight="27.0" prefWidth="190.0" text="Customer Complaints" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="500.0" prefHeight="26.0" prefWidth="68.0" text="Customer ID" />
+            <TextField fx:id="CustomerIDTextField" layoutX="114.0" layoutY="500.0" prefHeight="26.0" prefWidth="93.0" />
+            <Button layoutX="434.0" layoutY="500.0" mnemonicParsing="false" onAction="#markAsResolvedOnclick" prefHeight="19.0" prefWidth="166.0" text="Mark as Resolved">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TableView fx:id="ViewCustomerAccountTable" layoutX="34.0" layoutY="70.0" prefHeight="405.0" prefWidth="555.0">
+               <columns>
+                  <TableColumn fx:id="ViewCustomerIDColumn" prefWidth="87.20001220703125" text="CustomerID" />
+                  <TableColumn fx:id="ViewComplainIDColumn" prefWidth="104.0" text="ComplainID" />
+                  <TableColumn fx:id="ViewCustomerComplaintColumn" prefWidth="162.4000244140625" text="Customer Complaint" />
+                  <TableColumn fx:id="ViewDateColumn" minWidth="8.0" prefWidth="77.60003662109375" text="Date" />
+                  <TableColumn fx:id="viewFeedback" prefWidth="124.79998779296875" text="Feedback" />
+               </columns>
+            </TableView>
+            <Button layoutX="217.0" layoutY="500.0" mnemonicParsing="false" onAction="#searchCustomerOnclick" prefHeight="25.0" prefWidth="93.0" text="Search">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

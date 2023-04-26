@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,13 +78,36 @@ public class Service implements Serializable{
         this.status = status;
     }
 
-    public Service(String serviceType, String details, String customerID, LocalDate date, Boolean status) {
+    public Service(String serviceType, String details, String customerID, LocalDate date) {
         this.serviceType = serviceType;
         this.details = details;
         this.customerID = customerID;
         this.date = date;
-        this.status = status;
+        this.status = false;
         saveService();
+    }
+    
+    private String generateComplaintID() {
+        List<Complaint> complaints = new ArrayList<>();
+        String startID = "1";
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("services.bin"))) {
+                complaints = (List<Complaint>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        complaints.sort(Comparator.comparing(Complaint::getComplaintID, String.CASE_INSENSITIVE_ORDER));
+        for (Complaint c : complaints) {
+            if (startID.equals(c.getComplaintID())) {
+                int id = Integer.parseInt(startID.substring(1));
+                id++;
+                startID = String.valueOf(id);
+            }
+        }
+        return startID;
     }
 
     private void saveService() {
@@ -91,7 +115,7 @@ public class Service implements Serializable{
     // Check if the service ID of the current service already exists in the list
         boolean exists = false;
         for (Service service : serviceList) {
-            if (service.getComplaintID().equals(this.getComplaintID())) {
+            if (service.getDetails().equals(this.getDetails())&&service.getCustomerID().equals(this.getCustomerID())) {
                 exists = true;
                 break;
             }

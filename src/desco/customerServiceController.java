@@ -13,19 +13,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -33,9 +30,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 import modelClass.CurrUserID;
 import modelClass.Employee;
+import modelClass.Notification;
 import modelClass.User;
 
 /**
@@ -94,6 +92,8 @@ public class customerServiceController implements Initializable {
     private TextArea feedbackEmailTextArea;
     @FXML
     private TextArea policyTextArea;
+    
+    private String filePath;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -241,18 +241,40 @@ public class customerServiceController implements Initializable {
 
     @FXML
     private void sendtoAllCustomersOnClick(ActionEvent event) {
+        String subject = subjectTextField.getText();
+        String details = emailTextArea.getText();
+        String type = "Promotions";
+        LocalDate date = LocalDate.now();
+        Notification notification = new Notification(date, subject, details, type);
     }
 
     @FXML
     private void attachFilesOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            filePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+filePath);
     }
 
     @FXML
     private void sendtoManagerfOnClick(ActionEvent event) {
+        String subject = subjectTextField.getText();
+        String details = emailTextArea.getText();
+        String type = "Reports";
+        LocalDate date = LocalDate.now();
+        Notification notification = new Notification(date, subject, details, type);
+        notification.setFilepath(filePath);
     }
 
     @FXML
     private void logOutOnclick(ActionEvent event) {
+    }
+
+    @FXML
+    private void searchCustomerOnclick(ActionEvent event) {
     }
 
 }
