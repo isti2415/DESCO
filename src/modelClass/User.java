@@ -94,7 +94,7 @@ public class User implements Serializable {
     public void logout(ActionEvent event) throws IOException {
         try {
             File file = new File("session.bin");
-            System.out.println(file.getPath());
+            file.delete();
             
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
