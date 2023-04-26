@@ -36,6 +36,7 @@ public class Complaint implements Serializable {
         this.date = date;
         this.resolved = false;
         this.complaintID = generateComplaintID();
+        saveComplaint();
     }
 
     public String getCustomerID() {
@@ -101,7 +102,7 @@ public class Complaint implements Serializable {
         complaints.sort(Comparator.comparing(Complaint::getComplaintID, String.CASE_INSENSITIVE_ORDER));
         for (Complaint c : complaints) {
             if (startID.equals(c.getComplaintID())) {
-                int id = Integer.parseInt(startID.substring(1));
+                int id = Integer.parseInt(startID);
                 id++;
                 startID = String.valueOf(id);
             }

@@ -250,7 +250,6 @@ public class sysAdController implements Initializable {
         }
 
         userListTableView.setItems((ObservableList<User>) users);
-
     }
 
     @FXML

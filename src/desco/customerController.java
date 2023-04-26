@@ -286,6 +286,7 @@ public class customerController implements Initializable {
         String cusID = getCurrUser().getId();
         LocalDate date = LocalDate.now();
         Complaint complaint = new Complaint(cusID,details,date);
+        System.out.println("clicked");
     }
 
 }
