@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="pane1" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
+<AnchorPane id="AnchorPane" fx:id="pane1" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -37,7 +37,7 @@
       </Label>
       <ImageView fitHeight="44.0" fitWidth="200.0" layoutX="28.0" layoutY="19.0">
          <image>
-            <Image url="@desco.png" />
+            <Image url="@../images/desco.png" />
          </image>
       </ImageView>
       <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
