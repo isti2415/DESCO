@@ -5,10 +5,12 @@
  */
 package modelClass;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Istiaqs-PC
  */
-public class Complaint {
+public class Complaint implements Serializable{
     
 }

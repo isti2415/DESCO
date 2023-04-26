@@ -86,20 +86,6 @@
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="pane6" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
-         <children>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="15.0" prefHeight="46.0" prefWidth="572.0" text="File Complaint" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <DatePicker fx:id="complaintDatePicker" layoutX="47.0" layoutY="83.0" />
-            <Label layoutX="15.0" layoutY="87.0" text="Date" />
-            <Button layoutX="451.0" layoutY="83.0" mnemonicParsing="false" onAction="#submitComplaintButton" prefHeight="25.0" prefWidth="112.0" text="Submit Complaint" />
-            <Label layoutX="14.0" layoutY="122.0" text="Write Details about your complaint" />
-            <TextArea fx:id="complaintTextArea" layoutX="15.0" layoutY="146.0" prefHeight="394.0" prefWidth="548.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane1" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
          <children>
             <Label alignment="CENTER" layoutX="9.0" layoutY="29.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
@@ -155,6 +141,18 @@
             <RadioButton fx:id="suspicousRadioButton" layoutX="50.0" layoutY="183.0" mnemonicParsing="false" text="Suspicious Activity" />
             <RadioButton fx:id="malfunctionRadioButton" layoutX="240.0" layoutY="183.0" mnemonicParsing="false" text="Malfunction" />
             <RadioButton fx:id="otherRadioButton" layoutX="407.0" layoutY="183.0" mnemonicParsing="false" text="Other" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane6" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="15.0" prefHeight="46.0" prefWidth="572.0" text="File Complaint" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="451.0" layoutY="83.0" mnemonicParsing="false" onAction="#submitComplaintButton" prefHeight="25.0" prefWidth="112.0" text="Submit Complaint" />
+            <Label layoutX="22.0" layoutY="87.0" text="Write Details about your complaint" />
+            <TextArea fx:id="complaintTextArea" layoutX="22.0" layoutY="120.0" prefHeight="414.0" prefWidth="548.0" />
          </children>
       </Pane>
    </children>

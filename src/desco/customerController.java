@@ -92,8 +92,6 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane6;
     @FXML
-    private DatePicker complaintDatePicker;
-    @FXML
     private TextArea complaintTextArea;
     @FXML
     private TextField profileUseridTextField;
@@ -268,7 +266,7 @@ public class customerController implements Initializable {
     @FXML
     private void submitOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         String details = complaintTextArea.getText();
-        String cusID = "1001";
+        String cusID = getCurrUser().getId();
         LocalDate date = LocalDate.now();
         Boolean status = false;
         final String[] type = new String[1];
