@@ -280,9 +280,8 @@ public class ManagerController implements Initializable {
     }
 
     @FXML
-    private void logOutOnClick(ActionEvent event) throws IOException {
-        User p = new User();
-        p.logout(event);
+    private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        getCurrUser().logout(event);
     }
 
     @FXML

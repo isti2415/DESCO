@@ -15,7 +15,6 @@ import java.io.ObjectInputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -34,7 +33,6 @@ import javafx.stage.FileChooser;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.Notification;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -219,11 +217,6 @@ public class customerServiceController implements Initializable {
         }
     }
 
-    private void logOutOnClick(ActionEvent event) throws IOException {
-        User p = new User();
-        p.logout(event);
-    }
-
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         Employee curr = getCurrUser();
@@ -270,7 +263,8 @@ public class customerServiceController implements Initializable {
     }
 
     @FXML
-    private void logOutOnclick(ActionEvent event) {
+    private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        getCurrUser().logout(event);
     }
 
     @FXML
