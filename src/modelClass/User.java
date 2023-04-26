@@ -1,6 +1,7 @@
 package modelClass;
 
 import desco.LoginController;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,9 +28,9 @@ public class User implements Serializable {
         this.password = password;
         saveUser();
     }
-    
-    public User(){
-        
+
+    public User() {
+
     }
 
     public void setPassword(String password) {
@@ -92,6 +93,9 @@ public class User implements Serializable {
 
     public void logout(ActionEvent event) throws IOException {
         try {
+            File file = new File("session.bin");
+            System.out.println(file.getPath());
+            
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
             Parent root = loader.load();
@@ -100,6 +104,7 @@ public class User implements Serializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException ex) {
         }
     }
