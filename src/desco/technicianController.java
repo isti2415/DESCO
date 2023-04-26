@@ -36,6 +36,7 @@ import javafx.stage.FileChooser;
 import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Customer;
+import modelClass.CustomerComplaint;
 import modelClass.Employee;
 import modelClass.User;
 
@@ -61,17 +62,17 @@ public class technicianController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private TableView<Complaint> customerComplainListViewTable;
+    private TableView<CustomerComplaint> customerComplainListViewTable;
     @FXML
-    private TableColumn<Complaint, String> complaintID;
+    private TableColumn<CustomerComplaint, String> complaintID;
     @FXML
-    private TableColumn<Complaint, String> customerID;
+    private TableColumn<CustomerComplaint, String> customerID;
     @FXML
-    private TableColumn<Complaint, String> customerAddress;
+    private TableColumn<CustomerComplaint, String> customerAddress;
     @FXML
-    private TableColumn<Complaint, LocalDate> complainDate;
+    private TableColumn<CustomerComplaint, LocalDate> complainDate;
     @FXML
-    private TableColumn<Complaint, String> contactInfo;
+    private TableColumn<CustomerComplaint, String> contactInfo;
     @FXML
     private Pane pane4;
     @FXML
@@ -267,24 +268,39 @@ public class technicianController implements Initializable {
         
         complaintID.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
         customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        //address
+        customerAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         complainDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        //contact
+        contactInfo.setCellValueFactory(new PropertyValueFactory<>("contact"));
         
-        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
-
-        try {
-            try ( // Read the list of complaints from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
-                complaints.addAll((List<Complaint>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
+        List<Customer> customerList = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("customers.bin"))) {
+            customerList = (List<Customer>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        customerComplainListViewTable.setItems((ObservableList<Complaint>) complaints);
+// Load the Complaint data
+        List<Complaint> complaintList = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+            complaintList = (List<Complaint>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+// Combine the data from both classes
+        ObservableList<CustomerComplaint> combinedList = FXCollections.observableArrayList(new ArrayList<>());
+        for (Customer customer : customerList) {
+            for (Complaint complaint : complaintList) {
+                if (customer.getId().equals(complaint.getCustomerID())) {
+                    combinedList.add(new CustomerComplaint(customer, complaint));
+                }
+            }
+        }
         
+
+// Set the combined list as the data source for your table view
+        ObservableList<CustomerComplaint> observableList = FXCollections.observableArrayList(combinedList);
+        customerComplainListViewTable.setItems(combinedList);
     }
 
     @FXML
