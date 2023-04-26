@@ -12,11 +12,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,8 +29,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import modelClass.Complaint;
 import modelClass.CurrUserID;
+import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.User;
 
@@ -53,29 +59,29 @@ public class technicianController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private TableView<?> customerComplainListViewTable;
+    private TableView<Complaint> customerComplainListViewTable;
     @FXML
-    private TableColumn<?, ?> complaintID;
+    private TableColumn<Complaint, String> complaintID;
     @FXML
-    private TableColumn<?, ?> customerID;
+    private TableColumn<Complaint, String> customerID;
     @FXML
-    private TableColumn<?, ?> customerAddress;
+    private TableColumn<Complaint, String> customerAddress;
     @FXML
-    private TableColumn<?, ?> complainDate;
+    private TableColumn<Complaint, LocalDate> complainDate;
     @FXML
-    private TableColumn<?, ?> contactInfo;
+    private TableColumn<Complaint, String> contactInfo;
     @FXML
     private Pane pane4;
     @FXML
-    private TableView<?> ComplainListViewTable;
+    private TableView<Complaint> ComplainListViewTable;
     @FXML
-    private TableColumn<?, ?> complaintID1;
+    private TableColumn<Complaint, String> complaintID1;
     @FXML
-    private TableColumn<?, ?> complaintDescription;
+    private TableColumn<Complaint, String> complaintDescription;
     @FXML
-    private TableColumn<?, ?> complainDate1;
+    private TableColumn<Complaint, LocalDate> complainDate1;
     @FXML
-    private TableColumn<?, ?> complainStatus;
+    private TableColumn<Complaint, Boolean> complainStatus;
     @FXML
     private Pane pane5;
     @FXML
@@ -252,11 +258,52 @@ public class technicianController implements Initializable {
     @FXML
     private void viewCustomerInfoOnClick(ActionEvent event) {
         switchPane(3);
+        
+        complaintID.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
+        customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        //address
+        complainDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        //contact
+        
+        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
+
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+                complaints.addAll((List<Complaint>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+
+        customerComplainListViewTable.setItems((ObservableList<Complaint>) complaints);
+        
     }
 
     @FXML
     private void viewComplaintsOnClick(ActionEvent event) {
         switchPane(4);
+        
+        complaintID1.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
+        complaintDescription.setCellValueFactory(new PropertyValueFactory<>("details"));
+        complainDate1.setCellValueFactory(new PropertyValueFactory<>("date"));
+        complainStatus.setCellValueFactory(new PropertyValueFactory<>("resolved"));
+        
+        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
+
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+                complaints.addAll((List<Complaint>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+
+        ComplainListViewTable.setItems((ObservableList<Complaint>) complaints);
+
     }
 
     @FXML
@@ -282,6 +329,7 @@ public class technicianController implements Initializable {
     @FXML
     private void viewPolicyOnClick(ActionEvent event) {
         switchPane(9);
+        policyViewTextArea.clear();
         try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
                 policyViewTextArea.setWrapText(true);
@@ -293,6 +341,7 @@ public class technicianController implements Initializable {
         } catch (IOException ex) {
             System.out.println("Error reading file: " + ex.getMessage());
         }
+        
     }
 
     @FXML
