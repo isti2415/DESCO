@@ -24,6 +24,9 @@ public class CurrUserID implements Serializable {
 
     public String userID;
 
+    public CurrUserID() {
+    }
+
     public void setCurrUserID(String userID) throws FileNotFoundException, IOException {
         this.userID = userID;
         saveSession();

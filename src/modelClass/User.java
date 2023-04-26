@@ -93,15 +93,9 @@ public class User implements Serializable {
 
     public void logout(ActionEvent event) throws IOException {
         try {
-            User blank = new User();
-
-            // Write the object to the file
-            FileOutputStream fileOut = new FileOutputStream("session.bin");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(blank);
-            out.close();
-            fileOut.close();
-
+            File file = new File("session.bin");
+            System.out.println(file.getPath());
+            
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
             Parent root = loader.load();
