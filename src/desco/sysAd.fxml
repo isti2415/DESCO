@@ -229,14 +229,10 @@
             <Button layoutX="404.0" layoutY="503.0" mnemonicParsing="false" onAction="#deleteUserOnClick" prefHeight="25.0" prefWidth="149.0" text="Delete User" />
             <TableView fx:id="userListTableView" layoutX="21.0" layoutY="85.0" prefHeight="409.0" prefWidth="532.0">
                <columns>
-                  <TableColumn fx:id="userIDTableColumn" prefWidth="63.0" text="User ID" />
-                  <TableColumn fx:id="passwordTableColumn" prefWidth="73.0" text="Password" />
-                  <TableColumn fx:id="nameTableColumn" prefWidth="231.0" text="User Name" />
-                  <TableColumn fx:id="userTypeTableColumn" prefWidth="164.0" text="User Type" />
+                  <TableColumn fx:id="userIDTableColumn" prefWidth="191.0" text="User ID" />
+                  <TableColumn fx:id="passwordTableColumn" prefWidth="340.0" text="Password" />
                </columns>
             </TableView>
-            <Label fx:id="meterIDlabel" layoutX="22.0" layoutY="179.0" text="Meter ID" />
-            <TextField fx:id="meterIDField" layoutX="76.0" layoutY="174.0" />
          </children>
       </Pane>
     </children>

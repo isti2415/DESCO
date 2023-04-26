@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,8 +50,6 @@ public class sysAdController implements Initializable {
     private TableColumn<User, String> userIDTableColumn;
     @FXML
     private TableColumn<User, String> passwordTableColumn;
-    @FXML
-    private TableColumn<User, String> userTypeTableColumn;
     @FXML
     private Pane pane3;
     @FXML
@@ -102,7 +102,6 @@ public class sysAdController implements Initializable {
     private Pane pane1;
     @FXML
     private TextField profileNameTextField;
-    @FXML
     private TextField profileUserIDTextField;
     @FXML
     private DatePicker profileDOBdatepicker;
@@ -117,11 +116,7 @@ public class sysAdController implements Initializable {
     @FXML
     private TextArea policyTextArea;
     @FXML
-    private TableColumn<User, String> nameTableColumn;
-    @FXML
-    private Label meterIDlabel;
-    @FXML
-    private TextField meterIDField;
+    private TextField profileUsernameTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -211,15 +206,8 @@ public class sysAdController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-        userIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        passwordTableColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
-        nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        userTypeTableColumn.setCellValueFactory(new PropertyValueFactory<>("userType"));
 
         // load the user list from the file and add it to the table view
-        meterIDlabel.setVisible(false);
-        meterIDField.setVisible(false);
-
         Employee curr;
         try {
             curr = getCurrUser();
@@ -245,6 +233,24 @@ public class sysAdController implements Initializable {
     @FXML
     private void manageAccountOnClick(ActionEvent event) {
         switchPane(2);
+        userIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        passwordTableColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        
+        ObservableList<User> users = FXCollections.observableList(new ArrayList<>());
+
+        try {
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
+                users.addAll((List<User>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            // Handle exceptions as needed
+        }
+
+        userListTableView.setItems((ObservableList<User>) users);
+
     }
 
     @FXML
