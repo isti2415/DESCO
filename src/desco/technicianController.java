@@ -6,6 +6,7 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Customer;
@@ -142,6 +144,10 @@ public class technicianController implements Initializable {
     private TextArea policyViewTextArea;
     @FXML
     private Button resolvedOnClick;
+    
+    private String repFilePath;
+    private String textFilePath;
+    private String dataFilePath;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -372,14 +378,35 @@ public class technicianController implements Initializable {
 
     @FXML
     private void fileChooserOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            repFilePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+dataFilePath);
     }
 
     @FXML
     private void textChooserOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            repFilePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+textFilePath);
     }
 
     @FXML
     private void ReportChooserOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            repFilePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+repFilePath);
     }
 
     @FXML

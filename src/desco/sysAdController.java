@@ -285,6 +285,7 @@ public class sysAdController implements Initializable {
     @FXML
     private void viewCompanyPolicyOnClick(ActionEvent event) {
         switchPane(9);
+        policyTextArea.clear();
         try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
                 policyTextArea.setWrapText(true);
