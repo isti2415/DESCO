@@ -105,8 +105,8 @@
             </Label>
             <TableView fx:id="inventoryTable" layoutX="14.0" layoutY="107.0" prefHeight="414.0" prefWidth="548.0">
                <columns>
-                  <TableColumn fx:id="serialColumn" prefWidth="44.0" text="Serial" />
-                  <TableColumn fx:id="itemColumn" prefWidth="231.0" text="Item Name" />
+                  <TableColumn fx:id="inventoryId" prefWidth="44.0" text="Inventory ID" />
+                  <TableColumn fx:id="invName" prefWidth="231.0" text="Name" />
                   <TableColumn fx:id="invQtyColumn" prefWidth="97.5999755859375" text="Quantity Left" />
                   <TableColumn fx:id="invDepartmentColumn" prefWidth="175.20001220703125" text="Department Using" />
                </columns>

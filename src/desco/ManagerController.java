@@ -92,10 +92,6 @@ public class ManagerController implements Initializable {
     @FXML
     private TableView<?> inventoryTable;
     @FXML
-    private TableColumn<?, ?> serialColumn;
-    @FXML
-    private TableColumn<?, ?> itemColumn;
-    @FXML
     private TableColumn<?, ?> invQtyColumn;
     @FXML
     private TableColumn<?, ?> invDepartmentColumn;
@@ -131,6 +127,10 @@ public class ManagerController implements Initializable {
     private Pane pane8;
     @FXML
     private TextField profileUserIDTextField;
+    @FXML
+    private TableColumn<?, ?> inventoryId;
+    @FXML
+    private TableColumn<?, ?> invName;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);

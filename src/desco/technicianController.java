@@ -9,9 +9,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +41,10 @@ import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.CustomerComplaint;
 import modelClass.Employee;
+import modelClass.Inventory;
+import modelClass.Notification;
+import modelClass.Service;
+import modelClass.Task;
 import modelClass.User;
 
 /**
@@ -50,15 +57,15 @@ public class technicianController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private TableView<?> taskListViewTable;
+    private TableView<Task> taskListViewTable;
     @FXML
-    private TableColumn<?, ?> taskId;
+    private TableColumn<Task, String> taskId;
     @FXML
-    private TableColumn<?, ?> taskDescription;
+    private TableColumn<Task, String> taskDescription;
     @FXML
-    private TableColumn<?, ?> taskDate;
+    private TableColumn<Task, LocalDate> taskDate;
     @FXML
-    private TableColumn<?, ?> taskStatus;
+    private TableColumn<Task, Boolean> taskStatus;
     @FXML
     private Pane pane3;
     @FXML
@@ -88,41 +95,13 @@ public class technicianController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> faultyEquipmentViewTable;
-    @FXML
-    private TableColumn<?, ?> equipmentID;
-    @FXML
-    private TableColumn<?, ?> complaintID2;
-    @FXML
-    private TableColumn<?, ?> customerAddress1;
-    @FXML
-    private TableColumn<?, ?> problemDescription;
+    private TableView<Service> faultyEquipmentViewTable;
     @FXML
     private Pane pane6;
     @FXML
-    private TableView<?> inventoryEquipmentViewTable;
-    @FXML
-    private TableColumn<?, ?> equipmentID1;
-    @FXML
-    private TableColumn<?, ?> equipmentName;
-    @FXML
-    private TableColumn<?, ?> qtyOfEquipment;
-    @FXML
-    private Pane pane7;
-    @FXML
-    private DatePicker dateOfWork;
-    @FXML
-    private TextField complainIDtextField;
-    @FXML
-    private TextArea noteTextArea;
+    private TableView<Inventory> inventoryEquipmentViewTable;
     @FXML
     private Pane pane8;
-    @FXML
-    private DatePicker dateOfWorkOfReport;
-    @FXML
-    private TextField getComplainID;
-    @FXML
-    private TextArea noteTextArea1;
     @FXML
     private Pane pane9;
     @FXML
@@ -145,10 +124,28 @@ public class technicianController implements Initializable {
     private TextArea policyViewTextArea;
     @FXML
     private Button resolvedOnClick;
+    @FXML
+    private TableColumn<Inventory, String> inventoryID;
+    @FXML
+    private TableColumn<Inventory, String> invName;
+    @FXML
+    private TableColumn<Inventory, String> qtyInv;
+    @FXML
+    private TableColumn<Inventory, String> invDept;
+    @FXML
+    private TextField feedbackSubjectTextField;
+    @FXML
+    private TextArea feedbackEmailTextArea;
     
-    private String repFilePath;
-    private String textFilePath;
-    private String dataFilePath;
+    private String feedbackFilePath;
+    @FXML
+    private TableColumn<Service, String> faultyComplaintId;
+    @FXML
+    private TableColumn<Service, String> faultyMeterId;
+    @FXML
+    private TableColumn<Service, LocalDate> faultyDate;
+    @FXML
+    private TableColumn<Service, String> faultyProblem;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -157,7 +154,6 @@ public class technicianController implements Initializable {
         pane4.setVisible(false);
         pane5.setVisible(false);
         pane6.setVisible(false);
-        pane7.setVisible(false);
         pane8.setVisible(false);
         pane9.setVisible(false);
 
@@ -179,9 +175,6 @@ public class technicianController implements Initializable {
                 break;
             case 6:
                 pane6.setVisible(true);
-                break;
-            case 7:
-                pane7.setVisible(true);
                 break;
             case 8:
                 pane8.setVisible(true);
@@ -227,7 +220,8 @@ public class technicianController implements Initializable {
 
         return currUser;
     }
-
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -260,6 +254,25 @@ public class technicianController implements Initializable {
     @FXML
     private void viewTaskListOnClick(ActionEvent event) {
         switchPane(2);
+        
+        taskId.setCellValueFactory(new PropertyValueFactory<>("taskID"));
+        taskDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        taskDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        taskStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        
+        ObservableList<Task> taskList = FXCollections.observableList(new ArrayList<>());
+        
+        try {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tasks.bin"))) {
+                taskList.addAll((List<Task>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading tasks from file");
+        }
+        
+        taskListViewTable.setItems((ObservableList<Task>) taskList);
     }
 
     @FXML
@@ -331,16 +344,47 @@ public class technicianController implements Initializable {
     @FXML
     private void checkFaultyEquipmentOnClick(ActionEvent event) {
         switchPane(5);
+        
+        faultyComplaintId.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
+        faultyMeterId.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        faultyDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        faultyProblem.setCellValueFactory(new PropertyValueFactory<>("details"));
+        
+        ObservableList<Service> services = FXCollections.observableList(new ArrayList<>());
+        
+        try {
+            try ( // Read the list of services from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("services.bin"))) {
+                services.addAll((List<Service>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        
+        faultyEquipmentViewTable.setItems((ObservableList<Service>) services);
     }
 
     @FXML
     private void checkInventoryEquipmentOnClick(ActionEvent event) {
         switchPane(6);
-    }
-
-    @FXML
-    private void viewUploadDataOnClick(ActionEvent event) {
-        switchPane(7);
+        
+        inventoryID.setCellValueFactory(new PropertyValueFactory<>("inventoryID"));
+        invName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        qtyInv.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        invDept.setCellValueFactory(new PropertyValueFactory<>("department"));
+        
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+        
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        
+        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) inventoryList);
     }
 
     @FXML
@@ -374,58 +418,17 @@ public class technicianController implements Initializable {
     @FXML
     private void selectTaskandMarkasDoneOnClick(ActionEvent event) {
     }
-
-    @FXML
-    private void selectTaskandUpdateOnClick(ActionEvent event) {
-    }
-
+    
     @FXML
     private void selectComplainandMarkasResolvedOnClick(ActionEvent event) {
+        TableViewSelectionModel<Complaint> selectionModel = ComplainListViewTable.getSelectionModel();
+        Complaint selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setResolved(true); 
+        ComplainListViewTable.refresh();
     }
 
     @FXML
     private void selectEquipmentAndMarkAsRepaired(ActionEvent event) {
-    }
-
-    @FXML
-    private void selectEquipmentAndRequestRestockOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void fileChooserOnClick(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select File");
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            repFilePath = selectedFile.getAbsolutePath();
-        }
-        System.out.println("File uploaded from "+dataFilePath);
-    }
-
-    @FXML
-    private void textChooserOnClick(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select File");
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            repFilePath = selectedFile.getAbsolutePath();
-        }
-        System.out.println("File uploaded from "+textFilePath);
-    }
-
-    @FXML
-    private void ReportChooserOnClick(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select File");
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            repFilePath = selectedFile.getAbsolutePath();
-        }
-        System.out.println("File uploaded from "+repFilePath);
-    }
-
-    @FXML
-    private void submitReportOnClick(ActionEvent event) {
     }
 
     @FXML
@@ -437,5 +440,32 @@ public class technicianController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+    }
+
+    @FXML
+    private void selectInventoryAndRequestRestockOnClick(ActionEvent event) {
+        //inventoryEquipmentViewTable.getSelectionModel();
+    }
+
+
+    @FXML
+    private void attachFilesOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            feedbackFilePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+feedbackFilePath);
+    }
+
+    @FXML
+    private void sendtoManagerOnClick(ActionEvent event) {
+        String subject = feedbackSubjectTextField.getText();
+        String details = feedbackEmailTextArea.getText();
+        String type = "Reports";
+        LocalDate date = LocalDate.now();
+        Notification notification = new Notification(date, subject, details, type);
+        notification.setFilepath(feedbackFilePath);
     }
 }

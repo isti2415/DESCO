@@ -262,13 +262,16 @@ public class customerServiceController implements Initializable {
         notification.setFilepath(filePath);
     }
 
-    @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         getCurrUser().logout(event);
     }
 
     @FXML
     private void searchCustomerOnclick(ActionEvent event) {
+    }
+
+    @FXML
+    private void logOutOnclick(ActionEvent event) {
     }
 
 }

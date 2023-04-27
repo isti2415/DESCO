@@ -84,7 +84,8 @@ public class Service implements Serializable{
         this.customerID = customerID;
         this.date = date;
         this.status = false;
-        saveService();
+        this.complaintID = generateComplaintID();
+        saveService();   
     }
     
     private String generateComplaintID() {

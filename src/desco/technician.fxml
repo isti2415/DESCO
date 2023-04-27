@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.technicianController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.technicianController">
    <children>
       <VBox layoutX="18.0" layoutY="102.0" prefHeight="438.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -24,7 +24,6 @@
             <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Complaints" />
             <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Faulty Equipments" />
             <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Inventory" />
-            <Button mnemonicParsing="false" onAction="#viewUploadDataOnClick" prefHeight="46.0" prefWidth="211.0" text="Upload Data" />
             <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Submit Work Reports" />
             <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
             <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
@@ -40,84 +39,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane2" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <Button layoutX="415.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandMarkasDoneOnClick" prefHeight="26.0" prefWidth="153.0" text="Mark as Done" />
-            <Label alignment="CENTER" layoutY="14.0" prefHeight="46.0" prefWidth="583.0" text="Task List" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Button layoutX="16.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandUpdateOnClick" prefHeight="26.0" prefWidth="153.0" text="Update Task List" />
-            <TableView fx:id="taskListViewTable" layoutX="15.0" layoutY="81.0" prefHeight="420.0" prefWidth="552.0">
-               <columns>
-                  <TableColumn fx:id="taskId" prefWidth="75.0" text="Task ID" />
-                  <TableColumn fx:id="taskDescription" prefWidth="239.20001220703125" text="Task Description" />
-                  <TableColumn fx:id="taskDate" prefWidth="96.79998779296875" text="Date" />
-                  <TableColumn fx:id="taskStatus" prefWidth="138.39996337890625" text="Status" />
-               </columns>
-            </TableView>
-         </children>
-      </Pane>
-      <Pane fx:id="pane6" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <TableView fx:id="inventoryEquipmentViewTable" layoutX="13.0" layoutY="97.0" prefHeight="410.0" prefWidth="558.0">
-               <columns>
-                  <TableColumn fx:id="equipmentID1" prefWidth="151.99993896484375" text="Equipment ID" />
-                  <TableColumn fx:id="equipmentName" prefWidth="229.60000610351562" text="Equipment Name" />
-                  <TableColumn fx:id="qtyOfEquipment" prefWidth="169.60003662109375" text="Quantity Remaining" />
-               </columns>
-            </TableView>
-            <Button layoutX="379.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectEquipmentAndRequestRestockOnClick" prefHeight="26.0" prefWidth="186.0" text="Request Restock" />
-            <Label alignment="CENTER" layoutX="-18.0" layoutY="24.0" prefHeight="46.0" prefWidth="601.0" text="Inventory of Equipements" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="pane7" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <Label layoutX="14.0" layoutY="101.0" text="Date of Work" />
-            <DatePicker fx:id="dateOfWork" layoutX="99.0" layoutY="97.0" promptText="DD/MM/YYYY" />
-            <Button layoutX="411.0" layoutY="515.0" mnemonicParsing="false" onAction="#fileChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload File" />
-            <Label alignment="CENTER" layoutY="28.0" prefHeight="46.0" prefWidth="577.0" text="Upload Data" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="287.0" layoutY="101.0" text="Complain ID" />
-            <TextField fx:id="complainIDtextField" layoutX="362.0" layoutY="97.0" prefHeight="25.0" prefWidth="208.0" />
-            <TextArea fx:id="noteTextArea" layoutX="13.0" layoutY="147.0" prefHeight="347.0" prefWidth="556.0" promptText="Note" />
-            <Button layoutX="233.0" layoutY="515.0" mnemonicParsing="false" onAction="#textChooserOnClick" prefHeight="26.0" prefWidth="159.0" text="Upload Text" />
-         </children>
-      </Pane>
-      <Pane fx:id="pane8" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <Label layoutX="51.0" layoutY="100.0" prefHeight="26.0" prefWidth="74.0" text="Date of Work" />
-            <DatePicker fx:id="dateOfWorkOfReport" layoutX="127.0" layoutY="100.0" promptText="DD/MM/YYYY" />
-            <TextField fx:id="getComplainID" layoutX="127.0" layoutY="137.0" prefHeight="26.0" prefWidth="175.0" promptText="Enter Complain ID" />
-            <Button layoutX="374.0" layoutY="100.0" mnemonicParsing="false" onAction="#ReportChooserOnClick" prefHeight="26.0" prefWidth="175.0" text="Choose Report File" />
-            <Button layoutX="374.0" layoutY="137.0" mnemonicParsing="false" onAction="#submitReportOnClick" prefHeight="26.0" prefWidth="175.0" text="Submit Report to Admin" />
-            <Label alignment="CENTER" layoutY="31.0" prefHeight="46.0" prefWidth="601.0" text="Submit Reports" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="51.0" layoutY="137.0" prefHeight="26.0" prefWidth="74.0" text="Complain ID" />
-            <TextArea fx:id="noteTextArea1" layoutX="15.0" layoutY="191.0" prefHeight="347.0" prefWidth="555.0" text="Note..." />
-         </children>
-      </Pane>
-      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <Label layoutX="217.0" layoutY="24.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyViewTextArea" layoutX="39.0" layoutY="79.0" prefHeight="443.0" prefWidth="506.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane1" layoutX="220.0" layoutY="4.0" prefHeight="554.0" prefWidth="583.0">
          <children>
             <Label alignment="CENTER" layoutX="5.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
@@ -157,6 +78,34 @@
             <Label layoutX="38.0" layoutY="121.0" text="Name" />
          </children>
       </Pane>
+      <Pane fx:id="pane2" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Button layoutX="415.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectTaskandMarkasDoneOnClick" prefHeight="26.0" prefWidth="153.0" text="Mark as Done" />
+            <Label alignment="CENTER" layoutY="14.0" prefHeight="46.0" prefWidth="583.0" text="Task List" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="taskListViewTable" layoutX="15.0" layoutY="81.0" prefHeight="420.0" prefWidth="552.0">
+               <columns>
+                  <TableColumn fx:id="taskId" prefWidth="75.0" text="Task ID" />
+                  <TableColumn fx:id="taskDescription" prefWidth="239.20001220703125" text="Task Description" />
+                  <TableColumn fx:id="taskDate" prefWidth="96.79998779296875" text="Date" />
+                  <TableColumn fx:id="taskStatus" prefWidth="138.39996337890625" text="Status" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="217.0" layoutY="24.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyViewTextArea" layoutX="39.0" layoutY="79.0" prefHeight="443.0" prefWidth="506.0" />
+         </children>
+      </Pane>
       <Pane fx:id="pane3" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
          <children>
             <TableView fx:id="customerComplainListViewTable" layoutX="12.0" layoutY="82.0" prefHeight="420.0" prefWidth="557.0">
@@ -176,24 +125,6 @@
             <Button fx:id="resolvedOnClick" layoutX="460.0" layoutY="515.0" mnemonicParsing="false" text="Mark as Resolved" />
          </children>
       </Pane>
-      <Pane fx:id="pane5" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <TableView fx:id="faultyEquipmentViewTable" layoutX="11.0" layoutY="86.0" prefHeight="420.0" prefWidth="562.0">
-               <columns>
-                  <TableColumn fx:id="equipmentID" prefWidth="101.0" text="Complaint ID" />
-                  <TableColumn fx:id="complaintID2" prefWidth="108.0" text="Meter ID" />
-                  <TableColumn fx:id="customerAddress1" prefWidth="90.0" text="Date" />
-                  <TableColumn fx:id="problemDescription" prefWidth="257.0" text="Problem" />
-               </columns>
-            </TableView>
-            <Button layoutX="387.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectEquipmentAndMarkAsRepaired" prefHeight="26.0" prefWidth="186.0" text="Mark as Repaired" />
-            <Label alignment="CENTER" layoutX="-9.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Faulty Equipments" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane4" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
          <children>
             <TableView fx:id="ComplainListViewTable" layoutX="16.0" layoutY="100.0" prefHeight="403.0" prefWidth="552.0">
@@ -210,6 +141,56 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="faultyEquipmentViewTable" layoutX="11.0" layoutY="86.0" prefHeight="420.0" prefWidth="562.0">
+               <columns>
+                  <TableColumn fx:id="faultyComplaintId" prefWidth="101.0" text="Complaint ID" />
+                  <TableColumn fx:id="faultyMeterId" prefWidth="108.0" text="Meter ID" />
+                  <TableColumn fx:id="faultyDate" prefWidth="90.0" text="Date" />
+                  <TableColumn fx:id="faultyProblem" prefWidth="257.0" text="Problem" />
+               </columns>
+            </TableView>
+            <Button layoutX="387.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectEquipmentAndMarkAsRepaired" prefHeight="26.0" prefWidth="186.0" text="Mark as Repaired" />
+            <Label alignment="CENTER" layoutX="-9.0" layoutY="14.0" prefHeight="46.0" prefWidth="601.0" text="Faulty Equipments" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane6" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="inventoryEquipmentViewTable" layoutX="13.0" layoutY="97.0" prefHeight="410.0" prefWidth="558.0">
+               <columns>
+                  <TableColumn fx:id="inventoryID" prefWidth="99.0" text="Inventory ID" />
+                  <TableColumn fx:id="invName" prefWidth="131.0" text="Name" />
+                  <TableColumn fx:id="qtyInv" prefWidth="189.0" text="Quantity Remaining" />
+                  <TableColumn fx:id="invDept" prefWidth="138.0" text="Department Using" />
+               </columns>
+            </TableView>
+            <Button layoutX="379.0" layoutY="514.0" mnemonicParsing="false" onAction="#selectInventoryAndRequestRestockOnClick" prefHeight="26.0" prefWidth="186.0" text="Request Restock" />
+            <Label alignment="CENTER" layoutX="-18.0" layoutY="24.0" prefHeight="46.0" prefWidth="601.0" text="Inventory of Equipements" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane8" layoutX="222.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
+         <children>
+            <Label layoutX="216.0" layoutY="26.0" prefHeight="27.0" prefWidth="190.0" text="Feedback to Manager" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="75.0" prefHeight="26.0" prefWidth="41.0" text="Subject" />
+            <TextField fx:id="feedbackSubjectTextField" layoutX="94.0" layoutY="75.0" prefHeight="26.0" prefWidth="507.0" promptText="Write Feedback Subject" />
+            <Button layoutX="405.0" layoutY="493.0" mnemonicParsing="false" onAction="#sendtoManagerOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to Manager" />
+            <Button layoutX="27.0" layoutY="493.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files" />
+            <TextArea fx:id="feedbackEmailTextArea" layoutX="27.0" layoutY="130.0" prefHeight="345.0" prefWidth="568.0" promptText="Write Feedback Email" />
          </children>
       </Pane>
    </children>
