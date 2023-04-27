@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
         } catch (IOException | ClassNotFoundException e) {
         }
         for (User p : users) {
-            if (p.verificataion(userID, password)) {
+            if (p.verification(userID, password)) {
                 CurrUserID c = new CurrUserID();
                 c.setCurrUserID(userID);
                 if (p instanceof Customer) {

@@ -390,10 +390,6 @@ public class meterReaderController implements Initializable {
     ) {
     }
 
-    @FXML
-    private void updateTargetOnClick(ActionEvent event
-    ) {
-    }
 
     @FXML
     private void markAsDoneOnClick(ActionEvent event

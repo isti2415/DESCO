@@ -20,24 +20,23 @@ import java.util.List;
  * @author Istiaqs-PC
  */
 public class Employee extends User {
-    
+
     private static final String FILENAME = "employees.bin";
-    
+
     private String type;
     private String name;
     private String email;
     private String contact;
     private LocalDate DoB;
-    
+
     // Add any additional relevant information as needed
-
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+        updateEmployee();
     }
 
     public String getContact() {
@@ -46,6 +45,7 @@ public class Employee extends User {
 
     public void setContact(String contact) {
         this.contact = contact;
+        updateEmployee();
     }
 
     public LocalDate getDoB() {
@@ -54,14 +54,17 @@ public class Employee extends User {
 
     public void setDoB(LocalDate DoB) {
         this.DoB = DoB;
+        updateEmployee();
     }
 
     public void setType(String type) {
         this.type = type;
+        updateEmployee();
     }
 
     public void setName(String name) {
         this.name = name;
+        updateEmployee();
     }
 
     public Employee(String id, String password, String type, String name) {
@@ -78,7 +81,7 @@ public class Employee extends User {
     public String getName() {
         return name;
     }
-    
+
     private void saveEmployee() {
         List<Employee> employeeList = Employee.loadEmployee();
         // Check if the employee ID of the current employee already exists in the list
@@ -117,4 +120,29 @@ public class Employee extends User {
         }
         return employees;
     }
+
+    private void updateEmployee() {
+        List<Employee> employeeList = Employee.loadEmployee();
+        boolean updated = false;
+
+        for (int i = 0; i < employeeList.size(); i++) {
+            if (employeeList.get(i).getId().equals(this.getId())) {
+                employeeList.set(i, this);
+                updated = true;
+                break;
+            }
+        }
+
+        if (!updated) {
+            System.out.println("Employee not found");
+        } else {
+            try (FileOutputStream fileOut = new FileOutputStream("employees.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(employeeList);
+                System.out.println("Employee updated and saved to employees.bin file");
+            } catch (IOException e) {
+                System.out.println("Error updating employee");
+            }
+        }
+    }
+
 }

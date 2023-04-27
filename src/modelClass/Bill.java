@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelClass;
 
 import java.io.FileInputStream;
@@ -11,22 +6,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Istiaqs-PC
- */
+public class Bill implements Serializable {
 
-
-
-public class Bill {
     private String billMonth;
     private String billYear;
     private float usage;
-    private float rate=4.14f;
-    private float Total;
+    private float rate = 4.14f;
+    private float total;
     private String userID;
     private Boolean dispute;
 
@@ -35,7 +25,7 @@ public class Bill {
         this.billMonth = billMonth;
         this.billYear = billYear;
         this.usage = usage;
-        this.Total = this.usage*rate;
+        this.total = this.usage * rate;
         this.dispute = false;
         saveBill();
     }
@@ -49,11 +39,11 @@ public class Bill {
     }
 
     public float getTotal() {
-        return Total;
+        return total;
     }
 
-    public void setTotal(float Total) {
-        this.Total = Total;
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     public String getUserID() {
@@ -97,24 +87,24 @@ public class Bill {
     }
 
     public float getNetBill() {
-        return Total;
+        return total;
     }
 
-    public void setNetBill(float Total) {
-        this.Total = Total;
+    public void setNetBill(float total) {
+        this.total = total;
     }
-    
-    public String viewBill(String userID,String month, String year){
-        
+
+    public String viewBill(String userID, String month, String year) {
+        // TODO: Implement viewBill method
         return null;
     }
-    
+
     private void saveBill() {
         List<Bill> billList = Bill.loadBill();
         // Check if the user ID of the current user already exists in the list
         boolean exists = false;
         for (Bill bill : billList) {
-            if (bill.getUserID().equals(this.getUserID()) && bill.getBillMonth() == this.getBillMonth() && bill.getBillYear() == this.getBillYear()) {
+            if (bill.getUserID().equals(this.getUserID()) && bill.getBillMonth().equals(this.getBillMonth()) && bill.getBillYear().equals(this.getBillYear())) {
                 exists = true;
                 break;
             }
@@ -147,5 +137,30 @@ public class Bill {
         }
         return bills;
     }
-    
+
+    public void updateBill(String userID, String billMonth, String billYear, float usage) {
+        List<Bill> billList = Bill.loadBill();
+        boolean updated = false;
+
+        for (Bill bill : billList) {
+            if (bill.getUserID().equals(userID) && bill.getBillMonth().equals(billMonth) && bill.getBillYear().equals(billYear)) {
+                bill.setUsage(usage);
+                bill.setTotal(usage * bill.getRate());
+                updated = true;
+                break;
+            }
+        }
+
+        if (!updated) {
+            System.out.println("Bill not found");
+        } else {
+            try (FileOutputStream fileOut = new FileOutputStream("bills.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(billList);
+                System.out.println("Bill updated and saved to bills.bin file");
+            } catch (IOException e) {
+                System.out.println("Error updating bill");
+            }
+        }
+    }
+
 }

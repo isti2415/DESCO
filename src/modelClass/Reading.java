@@ -1,14 +1,7 @@
 package modelClass;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class Reading implements Serializable {
 
@@ -16,6 +9,23 @@ public class Reading implements Serializable {
     private int year;
     private float value;
     private String meterID;
+
+    private static final Map<String, Integer> MONTHS_MAP = new HashMap<>();
+
+    static {
+        MONTHS_MAP.put("january", 1);
+        MONTHS_MAP.put("february", 2);
+        MONTHS_MAP.put("march", 3);
+        MONTHS_MAP.put("april", 4);
+        MONTHS_MAP.put("may", 5);
+        MONTHS_MAP.put("june", 6);
+        MONTHS_MAP.put("july", 7);
+        MONTHS_MAP.put("august", 8);
+        MONTHS_MAP.put("september", 9);
+        MONTHS_MAP.put("october", 10);
+        MONTHS_MAP.put("november", 11);
+        MONTHS_MAP.put("december", 12);
+    }
 
     public Reading(String month, String year, float value, String meterID) {
         this.month = convertMonth(month);
@@ -31,6 +41,7 @@ public class Reading implements Serializable {
 
     public void setMeterID(String meterID) {
         this.meterID = meterID;
+        updateReadings();
     }
 
     public int getMonth() {
@@ -39,6 +50,7 @@ public class Reading implements Serializable {
 
     public void setMonth(String month) {
         this.month = convertMonth(month);
+        updateReadings();
     }
 
     public int getYear() {
@@ -47,6 +59,7 @@ public class Reading implements Serializable {
 
     public void setYear(String year) {
         this.year = convertYear(year);
+        updateReadings();
     }
 
     public float getValue() {
@@ -55,11 +68,12 @@ public class Reading implements Serializable {
 
     public void setValue(float value) {
         this.value = value;
+        updateReadings();
     }
 
     private void saveReadings() {
         List<Reading> readingList = Reading.loadReadings();
-        // Check if the user ID of the current user already exists in the list
+        // Check if the reading ID of the current reading already exists in the list
         boolean exists = false;
         for (Reading reading : readingList) {
             if (reading.getMeterID().equals(this.getMeterID()) && reading.getMonth() == this.getMonth() && reading.getYear() == this.getYear()) {
@@ -67,11 +81,11 @@ public class Reading implements Serializable {
                 break;
             }
         }
-        // If the user ID already exists, show an error message and do not save the user
+        // If the reading ID already exists, show an error message and do not save the reading
         if (exists) {
             System.out.println("Reading already exists");
         } else {
-            // Otherwise, add the user to the list and save the list to the file
+            // Otherwise, add the reading to the list and save the list to the file
             readingList.add(this);
             try (FileOutputStream fileOut = new FileOutputStream("readings.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(readingList);
@@ -82,48 +96,46 @@ public class Reading implements Serializable {
         }
     }
 
+    private void updateReadings() {
+        List<Reading> readingList = Reading.loadReadings();
+        boolean found = false;
+        for (int i = 0; i < readingList.size(); i++) {
+            Reading r = readingList.get(i);
+            if (r.getMeterID().equals(this.getMeterID()) && r.getMonth() == this.getMonth() && r.getYear() == this.getYear()) {
+                readingList.set(i, this);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            readingList.add(this);
+        }
+        try (FileOutputStream fileOut = new FileOutputStream("readings.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(readingList);
+            System.out.println("Readings updated in readings.bin file");
+        } catch (IOException e) {
+            System.out.println("Error updating readings in file");
+        }
+    }
+
     private static List<Reading> loadReadings() {
         List<Reading> readings = new ArrayList<>();
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
-                readings = (List<Reading>) inputStream.readObject();
-            }
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
+            readings = (List<Reading>) inputStream.readObject();
         } catch (FileNotFoundException e) {
             // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return readings;
     }
 
     public int convertMonth(String month) {
-        switch (month.toLowerCase()) {
-            case "january":
-                return 1;
-            case "february":
-                return 2;
-            case "march":
-                return 3;
-            case "april":
-                return 4;
-            case "may":
-                return 5;
-            case "june":
-                return 6;
-            case "july":
-                return 7;
-            case "august":
-                return 8;
-            case "september":
-                return 9;
-            case "october":
-                return 10;
-            case "november":
-                return 11;
-            case "december":
-                return 12;
-            default:
-                return -1;
+        Integer monthNumber = MONTHS_MAP.get(month.toLowerCase());
+        if (monthNumber != null) {
+            return monthNumber;
+        } else {
+            return -1;
         }
     }
 
@@ -136,34 +148,12 @@ public class Reading implements Serializable {
     }
 
     public String convertMonth(int month) {
-        switch (month) {
-            case 1:
-                return "January";
-            case 2:
-                return "February";
-            case 3:
-                return "March";
-            case 4:
-                return "April";
-            case 5:
-                return "May";
-            case 6:
-                return "June";
-            case 7:
-                return "July";
-            case 8:
-                return "August";
-            case 9:
-                return "September";
-            case 10:
-                return "October";
-            case 11:
-                return "November";
-            case 12:
-                return "December";
-            default:
-                return "Invalid Month";
+        for (Map.Entry<String, Integer> entry : MONTHS_MAP.entrySet()) {
+            if (entry.getValue() == month) {
+                return entry.getKey();
+            }
         }
+        return "Invalid Month";
     }
 
     public String convertYear(int year) {

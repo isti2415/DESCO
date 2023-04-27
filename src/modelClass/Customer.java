@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelClass;
 
 import java.io.FileInputStream;
@@ -15,10 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Istiaqs-PC
- */
 public class Customer extends User {
 
     private static final String FILENAME = "customers.bin";
@@ -30,7 +21,6 @@ public class Customer extends User {
     private String contact;
     private LocalDate DoB;
 
-    // Add any additional relevant information as needed
     public Customer(String id, String password, Meter meter, String name, String address) {
         super(id, password);
         this.meter = meter;
@@ -45,6 +35,7 @@ public class Customer extends User {
 
     public void setEmail(String email) {
         this.email = email;
+        updateCustomer();
     }
 
     public String getContact() {
@@ -53,7 +44,7 @@ public class Customer extends User {
 
     public void setContact(String contact) {
         this.contact = contact;
-        saveCustomer();
+        updateCustomer();
     }
 
     public LocalDate getDoB() {
@@ -62,49 +53,74 @@ public class Customer extends User {
 
     public void setDoB(LocalDate DoB) {
         this.DoB = DoB;
+        updateCustomer();
     }
 
     public Meter getMeter() {
         return meter;
     }
 
+    public void setMeter(Meter meter) {
+        this.meter = meter;
+        updateCustomer();
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        updateCustomer();
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setMeter(Meter meter) {
-        this.meter = meter;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setAddress(String address) {
         this.address = address;
+        updateCustomer();
     }
 
-    private void saveCustomer() {
-        List<Customer> customerList = Customer.loadCustomer();
-        // Check if the customer ID of the current customer already exists in the list
-        boolean exists = false;
+    private void updateCustomer() {
+        List<Customer> customerList = loadCustomer();
+        Boolean found = false;
         for (Customer customer : customerList) {
             if (customer.getId().equals(this.getId())) {
                 customerList.remove(customer);
+                found = true;
                 break;
             }
         }
-        // If the customer ID already exists, show an error message and do not save the customer
+        if (found == false) {
+            System.out.println("Customer not found");
+        } else {
+            customerList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream(FILENAME, false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(customerList);
+                System.out.println("Customer saved to customers.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+
+    }
+
+    private void saveCustomer() {
+        List<Customer> customerList = loadCustomer();
+        boolean exists = false;
+        for (Customer customer : customerList) {
+            if (customer.getId().equals(this.getId())) {
+                exists = true;
+                break;
+            }
+        }
         if (exists) {
             System.out.println("Customer already exists");
         } else {
-            // Otherwise, add the customer to the list and save the list to the file
             customerList.add(this);
-            try (FileOutputStream fileOut = new FileOutputStream("customers.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            try (FileOutputStream fileOut = new FileOutputStream(FILENAME, false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(customerList);
                 System.out.println("Customer saved to customers.bin file");
             } catch (IOException e) {

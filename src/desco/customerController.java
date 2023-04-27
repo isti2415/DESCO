@@ -144,6 +144,7 @@ public class customerController implements Initializable {
             if (savedUser != null) {
                 userID = savedUser.getCurrUserID();
             }
+            in.close();
             System.out.println(userID);
         } catch (IOException | ClassNotFoundException e) {
         }

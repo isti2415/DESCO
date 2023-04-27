@@ -89,7 +89,6 @@
                   <TableColumn fx:id="perDescriptionCol" prefWidth="262.0" text="Descriptions" />
                </columns>
             </TableView>
-            <Button layoutX="22.0" layoutY="87.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="192.0" text="Update Targets" />
             <Button layoutX="378.0" layoutY="87.0" mnemonicParsing="false" onAction="#markAsDoneOnClick" prefHeight="25.0" prefWidth="192.0" text="Mark as done" />
          </children>
       </Pane>

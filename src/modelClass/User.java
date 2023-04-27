@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 
 public class User implements Serializable {
 
+    private static final String FILENAME = "users.bin";
+
     private String id;
     private String password;
 
@@ -33,8 +35,14 @@ public class User implements Serializable {
 
     }
 
+    public void setId(String id) {
+        this.id = id;
+        updateUser();
+    }
+
     public void setPassword(String password) {
         this.password = password;
+        updateUser();
     }
 
     public String getId() {
@@ -46,8 +54,7 @@ public class User implements Serializable {
     }
 
     private void saveUser() {
-        List<User> userList = User.loadUser();
-        // Check if the user ID of the current user already exists in the list
+        List<User> userList = loadUser();
         boolean exists = false;
         for (User user : userList) {
             if (user.getId().equals(this.getId())) {
@@ -55,13 +62,34 @@ public class User implements Serializable {
                 break;
             }
         }
-        // If the user ID already exists, show an error message and do not save the user
         if (exists) {
             System.out.println("User already exists");
         } else {
-            // Otherwise, add the user to the list and save the list to the file
             userList.add(this);
-            try (FileOutputStream fileOut = new FileOutputStream("users.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            try (FileOutputStream fileOut = new FileOutputStream(FILENAME, false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(userList);
+                System.out.println("User saved to users.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
+    private void updateUser() {
+        List<User> userList = loadUser();
+        Boolean found = false;
+        for (User user : userList) {
+            if (user.getId().equals(this.getId())) {
+                userList.remove(user);
+                found = true;
+                break;
+            }
+        }
+        if (found == false) {
+            System.out.println("User not found");
+        } else {
+            userList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream(FILENAME, false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(userList);
                 System.out.println("User saved to users.bin file");
             } catch (IOException e) {
@@ -73,8 +101,7 @@ public class User implements Serializable {
     private static List<User> loadUser() {
         List<User> users = new ArrayList<>();
         try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {
                 users = (List<User>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
@@ -84,7 +111,7 @@ public class User implements Serializable {
         return users;
     }
 
-    public boolean verificataion(String userid, String pass) {
+    public boolean verification(String userid, String pass) {
         if (id.equals(userid) && password.equals(pass)) {
             return true;
         }
@@ -95,7 +122,7 @@ public class User implements Serializable {
         try {
             File file = new File("session.bin");
             file.delete();
-            
+
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getResource("/desco/login.fxml"));
             Parent root = loader.load();
@@ -108,4 +135,5 @@ public class User implements Serializable {
         } catch (IOException ex) {
         }
     }
+
 }
