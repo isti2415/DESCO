@@ -5,6 +5,7 @@
  */
 package modelClass;
 
+import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,12 +17,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author Istiaqs-PC
  */
-public class Service implements Serializable{
+public class Service implements Serializable {
 
     private String serviceType;
     private String details;
@@ -32,6 +34,7 @@ public class Service implements Serializable{
 
     public void setComplaintID(String complaintID) {
         this.complaintID = complaintID;
+        updateService();
     }
 
     public String getComplaintID() {
@@ -44,6 +47,7 @@ public class Service implements Serializable{
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
+        updateService();
     }
 
     public String getDetails() {
@@ -52,6 +56,7 @@ public class Service implements Serializable{
 
     public void setDetails(String details) {
         this.details = details;
+        updateService();
     }
 
     public String getCustomerID() {
@@ -60,6 +65,7 @@ public class Service implements Serializable{
 
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
+        updateService();
     }
 
     public LocalDate getDate() {
@@ -68,6 +74,7 @@ public class Service implements Serializable{
 
     public void setDate(LocalDate date) {
         this.date = date;
+        updateService();
     }
 
     public Boolean getStatus() {
@@ -76,6 +83,7 @@ public class Service implements Serializable{
 
     public void setStatus(Boolean status) {
         this.status = status;
+        updateService();
     }
 
     public Service(String serviceType, String details, String customerID, LocalDate date) {
@@ -86,7 +94,7 @@ public class Service implements Serializable{
         this.status = false;
         saveService();
     }
-    
+
     private String generateComplaintID() {
         List<Complaint> complaints = new ArrayList<>();
         String startID = "1";
@@ -110,21 +118,44 @@ public class Service implements Serializable{
         return startID;
     }
 
+    private void updateService() {
+        ObservableList<Service> serviceList = (ObservableList<Service>) loadService();
+        Boolean found = false;
+        for (Service service : serviceList) {
+            if (service.getComplaintID().equals(this.getComplaintID())) {
+                serviceList.remove(service);
+                found = true;
+                break;
+            }
+        }
+        if (found == false) {
+            System.out.println("Service not found");
+        } else {
+            serviceList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("services.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(serviceList);
+                System.out.println("Service saved to services.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
     private void saveService() {
         List<Service> serviceList = Service.loadService();
-    // Check if the service ID of the current service already exists in the list
+        // Check if the service ID of the current service already exists in the list
         boolean exists = false;
         for (Service service : serviceList) {
-            if (service.getDetails().equals(this.getDetails())&&service.getCustomerID().equals(this.getCustomerID())) {
+            if (service.getDetails().equals(this.getDetails()) && service.getCustomerID().equals(this.getCustomerID())) {
                 exists = true;
                 break;
             }
         }
-    // If the service ID already exists, show an error message and do not save the service
+        // If the service ID already exists, show an error message and do not save the service
         if (exists) {
             System.out.println("Service already exists");
         } else {
-    // Otherwise, add the service to the list and save the list to the file
+            // Otherwise, add the service to the list and save the list to the file
             serviceList.add(this);
             try (FileOutputStream fileOut = new FileOutputStream("services.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(serviceList);

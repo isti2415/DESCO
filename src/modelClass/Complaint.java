@@ -5,6 +5,7 @@
  */
 package modelClass;
 
+import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -46,6 +48,7 @@ public class Complaint implements Serializable {
 
     public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
+        updateComplaint();
     }
 
     public String getCustomerID() {
@@ -54,6 +57,7 @@ public class Complaint implements Serializable {
 
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
+        updateComplaint();
     }
 
     public String getComplaintID() {
@@ -62,6 +66,7 @@ public class Complaint implements Serializable {
 
     public void setComplaintID(String complaintID) {
         this.complaintID = complaintID;
+        updateComplaint();
     }
 
     public String getDetails() {
@@ -70,6 +75,7 @@ public class Complaint implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
+        updateComplaint();
     }
 
     public LocalDate getDate() {
@@ -78,6 +84,7 @@ public class Complaint implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+        updateComplaint();
     }
 
     public String getFeedback() {
@@ -86,6 +93,7 @@ public class Complaint implements Serializable {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+        updateComplaint();
     }
 
     public Boolean getResolved() {
@@ -94,6 +102,7 @@ public class Complaint implements Serializable {
 
     public void setResolved(Boolean resolved) {
         this.resolved = resolved;
+        updateComplaint();
     }
 
     private String generateComplaintID() {
@@ -119,12 +128,35 @@ public class Complaint implements Serializable {
         return startID;
     }
 
+    private void updateComplaint() {
+        ObservableList<Complaint> complaintList = (ObservableList<Complaint>) loadComplaint();
+        Boolean found = false;
+        for (Complaint complaint : complaintList) {
+            if (complaint.getComplaintID().equals(this.getComplaintID())) {
+                complaintList.remove(complaint);
+                found = true;
+                break;
+            }
+        }
+        if (found == false) {
+            System.out.println("Complaint not found");
+        } else {
+            complaintList.add(this);
+            try (FileOutputStream fileOut = new FileOutputStream("complaints.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(complaintList);
+                System.out.println("Complaint saved to complaints.bin file");
+            } catch (IOException e) {
+                System.out.println("Error saving reading to file");
+            }
+        }
+    }
+
     private void saveComplaint() {
         List<Complaint> complaintList = Complaint.loadComplaint();
         // Check if the complaint ID of the current complaint already exists in the list
         boolean exists = false;
         for (Complaint complaint : complaintList) {
-            if (complaint.getDetails().equals(this.getDetails())&&complaint.getCustomerID().equals(this.getCustomerID())) {
+            if (complaint.getDetails().equals(this.getDetails()) && complaint.getCustomerID().equals(this.getCustomerID())) {
                 exists = true;
                 break;
             }
