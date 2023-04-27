@@ -1,10 +1,18 @@
 package modelClass;
 
-import java.io.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory {
+public class Inventory implements Serializable {
+    
     private static final String FILENAME = "inventory.bin";
 
     private String inventoryID;
@@ -53,8 +61,8 @@ public class Inventory {
     }
 
     public void setDepartment(String department) {
-        updateInventory();
         this.department = department;
+        updateInventory();
     }
 
     public static List<Inventory> loadInventory() {
