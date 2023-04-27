@@ -28,6 +28,15 @@ public class Employee extends User {
     private String email;
     private String contact;
     private LocalDate DoB;
+    private String salary;
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 
     // Add any additional relevant information as needed
     public String getEmail() {
@@ -144,5 +153,4 @@ public class Employee extends User {
             }
         }
     }
-
 }

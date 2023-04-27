@@ -31,7 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Employee;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -63,15 +62,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableView<?> payrollTable;
     @FXML
-    private TableColumn<?, ?> paymentTypeColumn3;
-    @FXML
     private TableColumn<?, ?> amountColumn3;
-    @FXML
-    private ComboBox<String> deptComboBox3;
-    @FXML
-    private TextField idTextField3;
-    @FXML
-    private TextField nameTextField3;
     @FXML
     private Pane pane5;
     @FXML
@@ -86,14 +77,6 @@ public class humanResourceController implements Initializable {
     private TextField idTextField4;
     @FXML
     private TextField nameTextField4;
-    @FXML
-    private Pane pane6;
-    @FXML
-    private TableView<?> jobOpeningTable;
-    @FXML
-    private TableColumn<?, ?> infoColumn5;
-    @FXML
-    private TableColumn<?, ?> detailsColumn5;
     @FXML
     private Pane pane7;
     @FXML
@@ -157,6 +140,14 @@ public class humanResourceController implements Initializable {
             "Meter Reader", "Billing Administrator", "Customer Service Represantative",
             "Human Resources", "Manager", "Technician", "System Administrator"
     );
+    @FXML
+    private TableColumn<?, ?> idColumn3;
+    @FXML
+    private TableColumn<?, ?> deptColumn3;
+    @FXML
+    private TableColumn<?, ?> monthColumn3;
+    @FXML
+    private TableColumn<?, ?> yearColumn3;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -164,7 +155,6 @@ public class humanResourceController implements Initializable {
         pane3.setVisible(false);
         pane4.setVisible(false);
         pane5.setVisible(false);
-        pane6.setVisible(false);
         pane7.setVisible(false);
         pane8.setVisible(false);
         pane9.setVisible(false);
@@ -184,9 +174,6 @@ public class humanResourceController implements Initializable {
                 break;
             case 5:
                 pane5.setVisible(true);
-                break;
-            case 6:
-                pane6.setVisible(true);
                 break;
             case 7:
                 pane7.setVisible(true);
@@ -278,7 +265,6 @@ public class humanResourceController implements Initializable {
     @FXML
     private void employeeAttendanceOnClick(ActionEvent event) {
         switchPane(3);
-        deptComboBox3.setItems(departments);
     }
 
     @FXML
@@ -290,12 +276,6 @@ public class humanResourceController implements Initializable {
     @FXML
     private void employeePerformanceOnClick(ActionEvent event) {
         switchPane(5);
-    }
-
-    @FXML
-    private void jobOpeningOnClick(ActionEvent event) {
-        switchPane(6);
-
     }
 
     @FXML
@@ -334,20 +314,7 @@ public class humanResourceController implements Initializable {
     }
 
     @FXML
-    private void saveS3OnClick(ActionEvent event) {
-
-    }
-
-    @FXML
     private void saveS4OnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void viewPrevOpeningsS5OnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void saveS5OnClick(ActionEvent event) {
     }
 
     @FXML
@@ -379,7 +346,12 @@ public class humanResourceController implements Initializable {
 
     @FXML
     private void saveInfoOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        
+
     }
+
+    @FXML
+    private void paySalaryOnClick(ActionEvent event) {
+    }
+
 
 }

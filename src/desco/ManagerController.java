@@ -6,9 +6,11 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,11 +30,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import modelClass.Complaint;
 import modelClass.CurrUserID;
-import modelClass.Customer;
 import modelClass.Employee;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -74,15 +79,15 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private TableView<?> complaintTable;
+    private TableView<Complaint> complaintTable;
     @FXML
-    private TableColumn<?, ?> complaintColumn;
+    private TableColumn<Complaint, String> complaintColumn;
     @FXML
-    private TableColumn<?, ?> customerIDcolumn;
+    private TableColumn<Complaint, String> customerIDcolumn;
     @FXML
-    private TableColumn<?, ?> feedbackColumn;
+    private TableColumn<Complaint, String> feedbackColumn;
     @FXML
-    private TableColumn<?, ?> employeeIDColumn;
+    private TableColumn<Complaint, String> employeeIDColumn;
     @FXML
     private Pane pane4;
     @FXML
@@ -131,6 +136,8 @@ public class ManagerController implements Initializable {
     private TableColumn<?, ?> inventoryId;
     @FXML
     private TableColumn<?, ?> invName;
+
+    private String filePath;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -241,6 +248,22 @@ public class ManagerController implements Initializable {
     @FXML
     private void viewCustomerComplaintOnClick(ActionEvent event) {
         switchPane(3);
+        complaintColumn.setCellValueFactory(new PropertyValueFactory<>("details"));
+        customerIDcolumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        feedbackColumn.setCellValueFactory(new PropertyValueFactory<>("feedback"));
+        employeeIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        
+        ObservableList<Complaint> complaints = FXCollections.observableArrayList();
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+                complaints.addAll((List<Complaint>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+        // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        complaintTable.setItems((ObservableList<Complaint>) complaints);
     }
 
     @FXML
@@ -297,10 +320,39 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void openContractOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            filePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from " + filePath);
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(selectedFile));
+            contractTextArea.setWrapText(true);
+            contractTextArea.setEditable(true);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                contractTextArea.appendText(line + "\n");
+            }
+            bufferedReader.close();
+        } catch (IOException ex) {
+            System.out.println("Error reading file: " + ex.getMessage());
+        }
     }
 
     @FXML
     private void saveContractOnClick(ActionEvent event) {
+        if (filePath != null) {
+            try (FileWriter fileWriter = new FileWriter(filePath)) {
+                fileWriter.write(contractTextArea.getText());
+                System.out.println("File saved to " + filePath);
+            } catch (IOException ex) {
+                System.out.println("Error saving file: " + ex.getMessage());
+            }
+        } else {
+            System.out.println("No file has been selected");
+        }
     }
 
     @FXML
