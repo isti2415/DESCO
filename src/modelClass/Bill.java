@@ -28,6 +28,7 @@ public class Bill {
     private float rate=4.14f;
     private float Total;
     private String userID;
+    private Boolean dispute;
 
     public Bill(String userID, String billMonth, String billYear, float usage) {
         this.userID = userID;
@@ -35,7 +36,16 @@ public class Bill {
         this.billYear = billYear;
         this.usage = usage;
         this.Total = this.usage*rate;
+        this.dispute = false;
         saveBill();
+    }
+
+    public Boolean getDispute() {
+        return dispute;
+    }
+
+    public void setDispute(Boolean dispute) {
+        this.dispute = dispute;
     }
 
     public float getTotal() {

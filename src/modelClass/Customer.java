@@ -53,6 +53,7 @@ public class Customer extends User {
 
     public void setContact(String contact) {
         this.contact = contact;
+        saveCustomer();
     }
 
     public LocalDate getDoB() {
@@ -93,7 +94,7 @@ public class Customer extends User {
         boolean exists = false;
         for (Customer customer : customerList) {
             if (customer.getId().equals(this.getId())) {
-                exists = true;
+                customerList.remove(customer);
                 break;
             }
         }

@@ -253,6 +253,7 @@ public class customerController implements Initializable {
             curr.setContact(profileConNumTextField.getText());
             curr.setAddress(profileAddressTextField.getText());
         }
+        System.out.println("clicked");
     }
 
     @FXML
@@ -286,6 +287,10 @@ public class customerController implements Initializable {
         LocalDate date = LocalDate.now();
         Complaint complaint = new Complaint(cusID,details,date);
         System.out.println("clicked");
+    }
+
+    @FXML
+    private void disputeBillOnClick(ActionEvent event) {
     }
 
 }

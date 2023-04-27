@@ -292,7 +292,7 @@ public class technicianController implements Initializable {
         for (Customer customer : customerList) {
             for (Complaint complaint : complaintList) {
                 if (customer.getId().equals(complaint.getCustomerID())) {
-                    combinedList.add(new CustomerComplaint(customer, complaint));
+                    combinedList.add(new CustomerComplaint(customer.getId(),complaint.getComplaintID(),customer.getAddress(),complaint.getDate(),customer.getContact()));
                 }
             }
         }

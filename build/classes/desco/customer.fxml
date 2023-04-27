@@ -40,22 +40,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane2" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
-         <children>
-            <ComboBox fx:id="billMonthComboBox" layoutX="16.0" layoutY="62.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
-            <ComboBox fx:id="billYearComboBox" layoutX="170.0" layoutY="62.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
-            <Button layoutX="382.0" layoutY="62.0" mnemonicParsing="false" onAction="#viewBillOnClick" prefHeight="25.0" prefWidth="67.0" text="View Bill" />
-            <Button layoutX="471.0" layoutY="62.0" mnemonicParsing="false" onAction="#makePaymentOnClick" text="Make Payment" />
-            <CheckBox fx:id="autoPaymentCheckbox" layoutX="16.0" layoutY="492.0" mnemonicParsing="false" text="Pay Bill automatically each month" />
-            <CheckBox fx:id="paperlessbillCheckBox" layoutX="16.0" layoutY="516.0" mnemonicParsing="false" text="Join the initiative to save paper and choose paperless billng" />
-            <TextArea fx:id="billTextField" layoutX="14.0" layoutY="121.0" prefHeight="351.0" prefWidth="552.0" />
-            <Label alignment="CENTER" layoutX="4.0" prefHeight="46.0" prefWidth="572.0" text="My Bills" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane3" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
          <children>
             <Label alignment="CENTER" layoutX="1.0" layoutY="28.0" prefHeight="46.0" prefWidth="582.0" text="Energy Usage" textAlignment="CENTER">
@@ -153,6 +137,23 @@
             <Button layoutX="451.0" layoutY="83.0" mnemonicParsing="false" onAction="#submitComplaintButton" prefHeight="25.0" prefWidth="112.0" text="Submit Complaint" />
             <Label layoutX="22.0" layoutY="87.0" text="Write Details about your complaint" />
             <TextArea fx:id="complaintTextArea" layoutX="22.0" layoutY="120.0" prefHeight="414.0" prefWidth="548.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="228.0" layoutY="5.0" prefHeight="554.0" prefWidth="590.0">
+         <children>
+            <ComboBox fx:id="billMonthComboBox" layoutX="16.0" layoutY="62.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
+            <ComboBox fx:id="billYearComboBox" layoutX="170.0" layoutY="62.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
+            <Button layoutX="404.0" layoutY="62.0" mnemonicParsing="false" onAction="#viewBillOnClick" prefHeight="25.0" prefWidth="67.0" text="View Bill" />
+            <Button layoutX="471.0" layoutY="504.0" mnemonicParsing="false" onAction="#makePaymentOnClick" text="Make Payment" />
+            <CheckBox fx:id="autoPaymentCheckbox" layoutX="16.0" layoutY="492.0" mnemonicParsing="false" text="Pay Bill automatically each month" />
+            <CheckBox fx:id="paperlessbillCheckBox" layoutX="16.0" layoutY="516.0" mnemonicParsing="false" text="Join the initiative to save paper and choose paperless billng" />
+            <TextArea fx:id="billTextField" layoutX="14.0" layoutY="121.0" prefHeight="351.0" prefWidth="552.0" />
+            <Label alignment="CENTER" layoutX="4.0" prefHeight="46.0" prefWidth="572.0" text="My Bills" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="490.0" layoutY="62.0" mnemonicParsing="false" onAction="#disputeBillOnClick" text="Dispute Bill" />
          </children>
       </Pane>
    </children>

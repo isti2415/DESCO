@@ -58,11 +58,11 @@ public class CustomerComplaint {
         this.contact = contact;
     }
 
-    public CustomerComplaint(String customerID, String complaintID, LocalDate date) {
+    public CustomerComplaint(String customerID, String complaintID, String address, LocalDate date, String contact) {
         this.customerID = customerID;
         this.complaintID = complaintID;
+        this.address = address;
         this.date = date;
-    }
-
-    
+        this.contact = contact;
+    }   
 }
