@@ -29,6 +29,7 @@ public class Complaint implements Serializable {
     private LocalDate date;
     private String feedback;
     private Boolean resolved;
+    private String employeeID;
 
     public Complaint(String customerID, String details, LocalDate date) {
         this.customerID = customerID;
@@ -37,6 +38,14 @@ public class Complaint implements Serializable {
         this.resolved = false;
         this.complaintID = generateComplaintID();
         saveComplaint();
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
     }
 
     public String getCustomerID() {
@@ -148,5 +157,4 @@ public class Complaint implements Serializable {
         }
         return complaints;
     }
-
 }

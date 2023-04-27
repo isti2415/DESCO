@@ -24,7 +24,6 @@
             <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#employeeAttendanceOnClick" prefHeight="47.0" prefWidth="211.0" text="Employee Attendance" />
             <Button mnemonicParsing="false" onAction="#payrollOnClick" prefHeight="46.0" prefWidth="211.0" text="Payroll" />
             <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#employeePerformanceOnClick" prefHeight="47.0" prefWidth="210.0" text="Employee Performance" />
-            <Button mnemonicParsing="false" onAction="#jobOpeningOnClick" prefHeight="46.0" prefWidth="209.0" text="Job Opening" />
             <Button mnemonicParsing="false" onAction="#employeeOnboardOnClick" prefHeight="47.0" prefWidth="211.0" text="Employee Onboarding" />
             <Button mnemonicParsing="false" onAction="#employeeOffOnClick" prefHeight="47.0" prefWidth="211.0" text="Employee Offboarding" />
             <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
@@ -80,28 +79,6 @@
             <Button layoutX="464.0" layoutY="81.0" mnemonicParsing="false" onAction="#saveS2OnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="pane4" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Payroll" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="32.0" layoutY="85.0" text="Employee Department" />
-            <Label layoutX="358.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
-            <TableView fx:id="payrollTable" layoutX="32.0" layoutY="158.0" prefHeight="376.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="paymentTypeColumn3" prefWidth="135.0" text="Payment Type" />
-                  <TableColumn fx:id="amountColumn3" prefWidth="384.0" text="Amount" />
-               </columns>
-            </TableView>
-            <Label layoutX="32.0" layoutY="124.0" text="Employee Name" />
-            <ComboBox fx:id="deptComboBox3" layoutX="158.0" layoutY="81.0" prefHeight="25.0" prefWidth="192.0" />
-            <TextField fx:id="idTextField3" layoutX="440.0" layoutY="80.0" prefHeight="26.0" prefWidth="112.0" />
-            <TextField fx:id="nameTextField3" layoutX="133.0" layoutY="119.0" prefHeight="26.0" prefWidth="317.0" />
-            <Button layoutX="462.0" layoutY="120.0" mnemonicParsing="false" onAction="#saveS3OnClick" text="Save Changes" />
-         </children>
-      </Pane>
       <Pane fx:id="pane5" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
          <children>
             <TableView fx:id="performanceTable" layoutX="21.0" layoutY="156.0" prefHeight="376.0" prefWidth="541.0">
@@ -122,23 +99,6 @@
             <Button layoutX="472.0" layoutY="120.0" mnemonicParsing="false" onAction="#saveS4OnClick" text="Save Changes" />
             <TextField fx:id="idTextField4" layoutX="442.0" layoutY="79.0" prefHeight="26.0" prefWidth="119.0" />
             <TextField fx:id="nameTextField4" layoutX="125.0" layoutY="120.0" prefHeight="26.0" prefWidth="317.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="pane6" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label alignment="CENTER" layoutX="-5.0" layoutY="14.0" prefHeight="46.0" prefWidth="589.0" text="Job Opening" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Button layoutX="21.0" layoutY="81.0" mnemonicParsing="false" onAction="#viewPrevOpeningsS5OnClick" text="View previous openings" />
-            <Button layoutX="476.0" layoutY="81.0" mnemonicParsing="false" onAction="#saveS5OnClick" text="Save Changes" />
-            <TableView fx:id="jobOpeningTable" layoutX="21.0" layoutY="120.0" prefHeight="414.0" prefWidth="545.0">
-               <columns>
-                  <TableColumn fx:id="infoColumn5" prefWidth="128.0" text="Information" />
-                  <TableColumn fx:id="detailsColumn5" prefWidth="416.0" text="Details" />
-               </columns>
-            </TableView>
          </children>
       </Pane>
       <Pane fx:id="pane8" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
@@ -230,6 +190,25 @@
             <Label layoutX="300.0" layoutY="393.0" text="New Password" />
             <TextField fx:id="newPassTextField" layoutX="389.0" layoutY="389.0" />
             <Button layoutX="448.0" layoutY="446.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
+         <children>
+            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Payroll" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="payrollTable" layoutX="16.0" layoutY="81.0" prefHeight="406.0" prefWidth="544.0">
+               <columns>
+                  <TableColumn fx:id="idColumn3" prefWidth="141.0" text="Employee ID" />
+                  <TableColumn fx:id="deptColumn3" prefWidth="124.0" text="Department" />
+                  <TableColumn fx:id="monthColumn3" prefWidth="104.0" text="Month" />
+                  <TableColumn fx:id="yearColumn3" prefWidth="63.0" text="Year" />
+                  <TableColumn fx:id="amountColumn3" prefWidth="111.0" text="Amount" />
+               </columns>
+            </TableView>
+            <Button layoutX="490.0" layoutY="498.0" mnemonicParsing="false" onAction="#paySalaryOnClick" text="Pay Salary" />
          </children>
       </Pane>
    </children>
