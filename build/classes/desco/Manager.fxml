@@ -136,16 +136,6 @@
             <Button layoutX="466.0" layoutY="96.0" mnemonicParsing="false" onAction="#updateOnClick" text="Request Update" />
          </children>
       </Pane>
-      <Pane fx:id="pane8" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
-         <children>
-            <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyTextArea" layoutX="35.0" layoutY="73.0" prefHeight="457.0" prefWidth="510.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane1" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
             <Label alignment="CENTER" layoutX="5.0" layoutY="7.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
@@ -212,6 +202,17 @@
                   <Font size="16.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane8" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
+            <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" layoutX="15.0" layoutY="45.0" prefHeight="457.0" prefWidth="552.0" />
+            <Button layoutX="466.0" layoutY="508.0" mnemonicParsing="false" onAction="#updateCompanyPolicyOnClick" prefHeight="25.0" prefWidth="101.0" text="Save Changes" />
          </children>
       </Pane>
    </children>

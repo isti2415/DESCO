@@ -286,8 +286,12 @@ public class customerController implements Initializable {
     }
 
     @FXML
+<<<<<<< HEAD
 
     private void makePaymentOnClick(ActionEvent event) {             
+=======
+    private void makePaymentOnClick(ActionEvent event) {
+>>>>>>> 6d38fb5c272be8140da172e724f04dbc64ca5a45
     }
 
     @FXML
