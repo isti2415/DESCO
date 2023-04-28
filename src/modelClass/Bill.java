@@ -9,6 +9,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Comparator;
+import static java.util.stream.IntStream.generate;
 
 public class Bill implements Serializable {
 
@@ -19,14 +23,22 @@ public class Bill implements Serializable {
     private float total;
     private String userID;
     private Boolean dispute;
+    private LocalDate dueDate;
+    private String billID;
+    private Boolean Status;
 
-    public Bill(String userID, String billMonth, String billYear, float usage) {
+    public Bill(String userID, String billMonth, String billYear, float usage, LocalDate date) {
         this.userID = userID;
         this.billMonth = billMonth;
         this.billYear = billYear;
         this.usage = usage;
-        this.total = this.usage * rate;
         this.dispute = false;
+        int year = Integer.parseInt(billYear);
+        Month month = Month.valueOf(billMonth.toUpperCase());
+        this.dueDate = LocalDate.of(year, month, 1).plusMonths(1);
+        this.Status = false;
+        this.billID = generateBillID();
+
         saveBill();
     }
 
@@ -36,6 +48,7 @@ public class Bill implements Serializable {
 
     public void setDispute(Boolean dispute) {
         this.dispute = dispute;
+        updateBill();
     }
 
     public float getTotal() {
@@ -44,6 +57,7 @@ public class Bill implements Serializable {
 
     public void setTotal(float total) {
         this.total = total;
+        updateBill();
     }
 
     public String getUserID() {
@@ -52,6 +66,7 @@ public class Bill implements Serializable {
 
     public void setUserID(String userID) {
         this.userID = userID;
+        updateBill();
     }
 
     public String getBillMonth() {
@@ -60,6 +75,7 @@ public class Bill implements Serializable {
 
     public void setBillMonth(String billMonth) {
         this.billMonth = billMonth;
+        updateBill();
     }
 
     public String getBillYear() {
@@ -68,6 +84,7 @@ public class Bill implements Serializable {
 
     public void setBillYear(String billYear) {
         this.billYear = billYear;
+        updateBill();
     }
 
     public float getUsage() {
@@ -76,6 +93,7 @@ public class Bill implements Serializable {
 
     public void setUsage(float usage) {
         this.usage = usage;
+        updateBill();
     }
 
     public float getRate() {
@@ -84,6 +102,7 @@ public class Bill implements Serializable {
 
     public void setRate(float rate) {
         this.rate = rate;
+        updateBill();
     }
 
     public float getNetBill() {
@@ -92,6 +111,57 @@ public class Bill implements Serializable {
 
     public void setNetBill(float total) {
         this.total = total;
+        updateBill();
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+        updateBill();
+    }
+
+    public String getBillID() {
+        return billID;
+    }
+
+    public void setBillID(String billID) {
+        this.billID = billID;
+        updateBill();
+    }
+
+    public Boolean getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Boolean Status) {
+        this.Status = Status;
+        updateBill();
+    }
+
+    private String generateBillID() {
+        List<Bill> bills = new ArrayList<>();
+        String startID = "1";
+        try {
+            try ( // Read the list of bills from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bills.bin"))) {
+                bills = (List<Bill>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+// Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        bills.sort(Comparator.comparing(Bill::getBillID, String.CASE_INSENSITIVE_ORDER));
+        for (Bill b : bills) {
+            if (startID.equals(b.getBillID())) {
+                int id = Integer.parseInt(startID);
+                id++;
+                startID = String.valueOf(id);
+            }
+        }
+        return startID;
     }
 
     private void saveBill() {
@@ -133,28 +203,25 @@ public class Bill implements Serializable {
         return bills;
     }
 
-    public void updateBill(String userID, String billMonth, String billYear, float usage) {
-        List<Bill> billList = Bill.loadBill();
+    private void updateBill() {
+        List<Bill> billList = loadBill();
         boolean updated = false;
-
-        for (Bill bill : billList) {
-            if (bill.getUserID().equals(userID) && bill.getBillMonth().equals(billMonth) && bill.getBillYear().equals(billYear)) {
-                bill.setUsage(usage);
-                bill.setTotal(usage * bill.getRate());
+        for (int i = 0; i < billList.size(); i++) {
+            if (billList.get(i).getBillID().equals(this.billID)&& billList.get(i).getBillMonth().equals(this.billMonth) && billList.get(i).getBillYear().equals(this.billYear)) {
+                billList.set(i, this);
                 updated = true;
                 break;
             }
         }
-
         if (!updated) {
-            System.out.println("Bill not found");
-        } else {
-            try (FileOutputStream fileOut = new FileOutputStream("bills.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-                out.writeObject(billList);
-                System.out.println("Bill updated and saved to bills.bin file");
-            } catch (IOException e) {
-                System.out.println("Error updating bill");
-            }
+            System.out.println("Bill with ID " + this.billID + " not found");
+            return;
+        }
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("bills.bin"))) {
+            outputStream.writeObject(billList);
+            System.out.println("Bill updated");
+        } catch (IOException e) {
+            System.out.println("Error saving bill to file: " + e.getMessage());
         }
     }
 

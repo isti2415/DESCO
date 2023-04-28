@@ -20,16 +20,25 @@ public class Inventory implements Serializable {
     private String name;
     private String quantity;
     private String department;
+    private Boolean restock;
 
     public Inventory(String name, String quantity, String department) {
         this.inventoryID = generateInventoryID();
         this.name = name;
         this.quantity = quantity;
         this.department = department;
+        this.restock = false;
         saveInventory();
     }
 
+    public Boolean getRestock() {
+        return restock;
+    }
+
     // Getters and setters
+    public void setRestock(Boolean restock) {
+        this.restock = restock;
+    }
 
     public String getInventoryID() {
         return inventoryID;

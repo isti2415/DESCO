@@ -268,23 +268,7 @@ public class customerController implements Initializable {
     }
 
     @FXML
-    private void makePaymentOnClick(ActionEvent event) {
-        billIDColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
-        invName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        qtyInv.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        invDept.setCellValueFactory(new PropertyValueFactory<>("department"));
-        
-        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
-        
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList.addAll((List<Inventory>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-        
-        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) inventoryList);        
+    private void makePaymentOnClick(ActionEvent event) {       
     }
 
     @FXML
