@@ -143,7 +143,7 @@
          <children>
             <ComboBox fx:id="billMonthComboBox" layoutX="16.0" layoutY="62.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
             <ComboBox fx:id="billYearComboBox" layoutX="170.0" layoutY="62.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
-            <Button layoutX="404.0" layoutY="62.0" mnemonicParsing="false" onAction="#viewBillOnClick" prefHeight="25.0" prefWidth="67.0" text="Download Bill" />
+            <Button layoutX="376.0" layoutY="62.0" mnemonicParsing="false" onAction="#viewBillOnClick" prefHeight="25.0" prefWidth="95.0" text="Download Bill" />
             <Button layoutX="471.0" layoutY="504.0" mnemonicParsing="false" onAction="#makePaymentOnClick" text="Make Payment" />
             <CheckBox fx:id="autoBIllCheckbox" layoutX="16.0" layoutY="492.0" mnemonicParsing="false" text="Pay Bill automatically each month" />
             <CheckBox fx:id="paperlessBillCheckBox" layoutX="16.0" layoutY="516.0" mnemonicParsing="false" text="Join the initiative to save paper and choose paperless billng" />

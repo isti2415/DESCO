@@ -76,8 +76,6 @@ public class meterReaderController implements Initializable {
     @FXML
     private TextField energyUseCurrReadingTextField;
     @FXML
-    private TextArea energyUseNotesTextArea;
-    @FXML
     private Pane pane3;
     @FXML
     private TableView<Inventory> inventoryTableView;

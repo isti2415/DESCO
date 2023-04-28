@@ -230,6 +230,22 @@ public class customerController implements Initializable {
     @FXML
     private void viewMyBillsOnClick(ActionEvent event) {
         switchPane(2);
+        billIDColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
+        monthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        
+        ObservableList<Bill> billList = FXCollections.observableList(new ArrayList<>());
+        
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bills.bin"))) {
+            billList.addAll((List<Bill>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading bill from file: " + e.getMessage());
+        }
+        
+        billTableView.setItems((ObservableList<Bill>) billList);         
     }
 
     @FXML
@@ -268,7 +284,12 @@ public class customerController implements Initializable {
     }
 
     @FXML
+<<<<<<< HEAD
+    private void makePaymentOnClick(ActionEvent event) {
+       
+=======
     private void makePaymentOnClick(ActionEvent event) {       
+>>>>>>> ae5bde7f916631ea8252f6362ffa14657266daa4
     }
 
     @FXML
