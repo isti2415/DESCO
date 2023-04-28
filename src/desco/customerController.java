@@ -31,11 +31,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.Bill;
 import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Customer;
+import modelClass.Inventory;
 import modelClass.Service;
 import modelClass.User;
 
@@ -267,6 +269,22 @@ public class customerController implements Initializable {
 
     @FXML
     private void makePaymentOnClick(ActionEvent event) {
+        billIDColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
+        invName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        qtyInv.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        invDept.setCellValueFactory(new PropertyValueFactory<>("department"));
+        
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+        
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        
+        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) inventoryList);        
     }
 
     @FXML
