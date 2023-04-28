@@ -35,12 +35,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.Inventory;
 import modelClass.Meter;
+import modelClass.Notification;
 import modelClass.Reading;
 
 /**
@@ -77,21 +80,11 @@ public class meterReaderController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private TableView<?> inventoryTableView;
-    @FXML
-    private TableColumn<?, ?> equipmentCol;
-    @FXML
-    private TableColumn<?, ?> modelCol;
+    private TableView<Inventory> inventoryTableView;
     @FXML
     private TableColumn<?, ?> qntCol;
     @FXML
     private Pane pane4;
-    @FXML
-    private TextField reportMeterIDTextField;
-    @FXML
-    private DatePicker reportDatePicker;
-    @FXML
-    private ComboBox<?> reportTypeComboBox;
     @FXML
     private TextArea reportNoteTextArea;
     @FXML
@@ -134,7 +127,17 @@ public class meterReaderController implements Initializable {
     private ComboBox<String> yearCombo;
     @FXML
     private TextField currPassTextField;
+    @FXML
+    private TextField subjectTextField;
 
+    private String filePath;
+    @FXML
+    private TableColumn<?, ?> deptuseCol;
+    @FXML
+    private TableColumn<?, ?> invIdCol;
+    @FXML
+    private TableColumn<?, ?> nameCol;
+    
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -257,6 +260,22 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewInventoryOnClick(ActionEvent event) {
         switchPane(3);
+        invIdCol.setCellValueFactory(new PropertyValueFactory<>("inventoryID"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        qntCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        deptuseCol.setCellValueFactory(new PropertyValueFactory<>("department"));
+        
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+        
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        
+        inventoryTableView.setItems((ObservableList<Inventory>) inventoryList);        
     }
 
     @FXML
@@ -272,9 +291,9 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
-<<<<<<< HEAD
+
         //safetyProcedureTextArea.clear();         
-=======
+
         File file = new File("safety_procedures.txt");
         ObservableList<String> safetyProcedures = FXCollections.observableArrayList();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -286,7 +305,7 @@ public class meterReaderController implements Initializable {
             System.err.format("IOException: %s%n", e);
         }
         safetyProceduresTextArea.setItems(safetyProcedures);
->>>>>>> 8b8937fb65708d0fc42b96f5dc4c77ce97c67b98
+
     }
 
     @FXML
@@ -420,6 +439,12 @@ public class meterReaderController implements Initializable {
     @FXML
     private void reportOnClick(ActionEvent event
     ) {
+        String subject = subjectTextField.getText();
+        String details = reportNoteTextArea.getText();
+        String type = "Reports";
+        LocalDate date = LocalDate.now();
+        Notification notification = new Notification(date, subject, details, type);
+        notification.setFilepath(filePath);        
     }
 
     @FXML
@@ -438,4 +463,16 @@ public class meterReaderController implements Initializable {
         }
     }
 
-}
+    @FXML
+    private void attachOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            filePath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from "+filePath);
+    }        
+    }
+
+
