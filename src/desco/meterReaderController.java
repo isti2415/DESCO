@@ -5,7 +5,9 @@
  */
 package desco;
 
+import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -37,9 +39,9 @@ import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Employee;
+import modelClass.Inventory;
 import modelClass.Meter;
 import modelClass.Reading;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -105,7 +107,7 @@ public class meterReaderController implements Initializable {
     @FXML
     private Pane pane6;
     @FXML
-    private ListView<?> safetyProceduresTextArea;
+    private ListView<String> safetyProceduresTextArea;
     @FXML
     private Pane pane7;
     @FXML
@@ -237,9 +239,7 @@ public class meterReaderController implements Initializable {
                 profileEmailTextField.setText(curr.getEmail());
                 profileConNumTextField.setText(curr.getContact());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -272,7 +272,21 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
+<<<<<<< HEAD
         //safetyProcedureTextArea.clear();         
+=======
+        File file = new File("safety_procedures.txt");
+        ObservableList<String> safetyProcedures = FXCollections.observableArrayList();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                safetyProcedures.add(line);
+            }
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+        safetyProceduresTextArea.setItems(safetyProcedures);
+>>>>>>> 8b8937fb65708d0fc42b96f5dc4c77ce97c67b98
     }
 
     @FXML
@@ -307,6 +321,21 @@ public class meterReaderController implements Initializable {
     private void saveChangesOnClick(ActionEvent event) {
         Meter meter = new Meter(meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
         Customer customer = new Customer(cusIDTextField.getText(), passwordField.getText(), meter, cusNameTextField.getText(), cusAddressTextField.getText());
+        List<Inventory> inventoryList = new ArrayList<>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList = (List<Inventory>) inputStream.readObject();
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        for (Inventory i : inventoryList) {
+            if (i.getName().equals("Meter")) {
+                int quantity = Integer.parseInt(i.getQuantity());
+                quantity--;
+                i.setQuantity(String.valueOf(quantity));
+            }
+        }
     }
 
     @FXML
@@ -392,7 +421,6 @@ public class meterReaderController implements Initializable {
     private void reportOnClick(ActionEvent event
     ) {
     }
-
 
     @FXML
     private void markAsDoneOnClick(ActionEvent event

@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import modelClass.Bill;
 import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Customer;
@@ -50,12 +52,6 @@ public class customerController implements Initializable {
     private ComboBox billMonthComboBox;
     @FXML
     private ComboBox billYearComboBox;
-    @FXML
-    private CheckBox autoPaymentCheckbox;
-    @FXML
-    private CheckBox paperlessbillCheckBox;
-    @FXML
-    private TextArea billTextField;
     @FXML
     private Pane pane1;
     @FXML
@@ -106,6 +102,20 @@ public class customerController implements Initializable {
     private RadioButton malfunctionRadioButton;
     @FXML
     private RadioButton otherRadioButton;
+    @FXML
+    private CheckBox autoBIllCheckbox;
+    @FXML
+    private CheckBox paperlessBillCheckBox;
+    @FXML
+    private TableView<Bill> billTableView;
+    @FXML
+    private TableColumn<Bill, String> billIDColumn;
+    @FXML
+    private TableColumn<Bill, String> monthColumn;
+    @FXML
+    private TableColumn<Bill, String> yearColumn;
+    @FXML
+    private TableColumn<Bill, String> amountColumn;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
