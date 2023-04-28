@@ -36,6 +36,8 @@ import javafx.stage.FileChooser;
 import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Employee;
+import modelClass.Inventory;
+import modelClass.User;
 
 /**
  * FXML Controller class
@@ -97,9 +99,9 @@ public class ManagerController implements Initializable {
     @FXML
     private TableView<?> inventoryTable;
     @FXML
-    private TableColumn<?, ?> invQtyColumn;
+    private TableColumn<Inventory, String> invQtyColumn;
     @FXML
-    private TableColumn<?, ?> invDepartmentColumn;
+    private TableColumn<Inventory, String> invDepartmentColumn;
     @FXML
     private Pane pane6;
     @FXML
@@ -133,12 +135,22 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField profileUserIDTextField;
     @FXML
-    private TableColumn<?, ?> inventoryId;
+    private TableColumn<Inventory, String> inventoryId;
     @FXML
-    private TableColumn<?, ?> invName;
+    private TableColumn<Inventory, String> invName;
+    @FXML
+    private TextField itemNameTextField;
+    @FXML
+    private TextField itemQuantityTextField;
+    @FXML
+    private ComboBox<String> itemDeptCombo;
 
+    ObservableList<String> departments = FXCollections.observableArrayList(
+            "Meter Reader", "Billing Administrator", "Customer Service Represantative",
+            "Human Resources", "Manager", "Technician", "System Administrator"
+    );
     private String filePath;
-
+    
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -219,6 +231,7 @@ public class ManagerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        itemDeptCombo.setItems(departments);
         Employee curr;
         try {
             curr = getCurrUser();
@@ -274,6 +287,19 @@ public class ManagerController implements Initializable {
     @FXML
     private void checkInvOnClick(ActionEvent event) {
         switchPane(5);
+        inventoryId.setCellValueFactory(new PropertyValueFactory<>("inventoryID"));
+        invName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        invQtyColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        invDepartmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        
     }
 
     @FXML
@@ -357,6 +383,10 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void restockOnClick(ActionEvent event) {
+        String name=itemNameTextField.getText();
+        String quantity = itemQuantityTextField.getText();
+        String department=itemDeptCombo.getValue();
+        Inventory i = new Inventory(name,quantity,department);
     }
 
     @FXML

@@ -3,33 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/billingAdminController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/humanResourceController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/technicianController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/main.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/customerServiceController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/customerController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/meterReaderController.java</file>
-            <file>file:/C:/Users/Arpis-PC/Documents/NetBeansProjects/DESCO/DESCO/src/desco/ManagerController.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/ManagerController.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/main.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/customerController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Service.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Customer.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Complaint.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Task.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/customerServiceController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Inventory.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/meterReaderController.java</file>
-            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/sysAdController.java</file>
-=======
-            <file>file:/E:/niaz/cse213/DESCO/src/desco/main.java</file>
-            <file>file:/E:/niaz/cse213/DESCO/src/desco/technicianController.java</file>
->>>>>>> 3edba496e8308b7fc401f07fc4f4ebf316b1eee0
->>>>>>> 8b8937fb65708d0fc42b96f5dc4c77ce97c67b98
+            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Report.java</file>
+            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/technicianController.java</file>
+            <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Bill.java</file>
         </group>
     </open-files>
 </project-private>

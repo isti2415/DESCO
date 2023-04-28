@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Inventory implements Serializable {
@@ -19,15 +20,25 @@ public class Inventory implements Serializable {
     private String name;
     private String quantity;
     private String department;
+    private Boolean restock;
 
-    public Inventory(String inventoryID, String name, String quantity, String department) {
-        this.inventoryID = inventoryID;
+    public Inventory(String name, String quantity, String department) {
+        this.inventoryID = generateInventoryID();
         this.name = name;
         this.quantity = quantity;
         this.department = department;
+        this.restock = false;
+        saveInventory();
+    }
+
+    public Boolean getRestock() {
+        return restock;
     }
 
     // Getters and setters
+    public void setRestock(Boolean restock) {
+        this.restock = restock;
+    }
 
     public String getInventoryID() {
         return inventoryID;
@@ -63,6 +74,29 @@ public class Inventory implements Serializable {
     public void setDepartment(String department) {
         this.department = department;
         updateInventory();
+    }
+    
+    private String generateInventoryID() {
+        List<Inventory> inventory = new ArrayList<>();
+        String startID = "1";
+        try {
+            try ( // Read the list of inventory items from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventoryItems.bin"))) {
+                inventory = (List<Inventory>) inputStream.readObject();
+            }
+        } catch (FileNotFoundException e) {
+// Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        inventory.sort(Comparator.comparing(Inventory::getInventoryID, String.CASE_INSENSITIVE_ORDER));
+        for (Inventory item : inventory) {
+            if (startID.equals(item.getInventoryID())) {
+                int id = Integer.parseInt(startID);
+                id++;
+                startID = String.valueOf(id);
+            }
+        }
+        return startID;
     }
 
     public static List<Inventory> loadInventory() {

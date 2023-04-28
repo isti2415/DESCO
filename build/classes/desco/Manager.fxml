@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="pane1" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
+<AnchorPane id="AnchorPane" fx:id="pane1" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -94,24 +94,6 @@
             <Button layoutX="20.0" layoutY="77.0" mnemonicParsing="false" onAction="#openContractOnClick" prefHeight="44.0" prefWidth="200.0" text="Open Contract / Agrement" />
             <Button layoutX="367.0" layoutY="77.0" mnemonicParsing="false" onAction="#saveContractOnClick" prefHeight="44.0" prefWidth="200.0" text="Save Contract / Agreement" />
             <TextArea fx:id="contractTextArea" layoutX="18.0" layoutY="132.0" prefHeight="401.0" prefWidth="546.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="pane5" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
-         <children>
-            <Label alignment="CENTER" layoutX="2.0" prefHeight="46.0" prefWidth="572.0" text="Inventory" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TableView fx:id="inventoryTable" layoutX="14.0" layoutY="107.0" prefHeight="414.0" prefWidth="548.0">
-               <columns>
-                  <TableColumn fx:id="inventoryId" prefWidth="44.0" text="Inventory ID" />
-                  <TableColumn fx:id="invName" prefWidth="231.0" text="Name" />
-                  <TableColumn fx:id="invQtyColumn" prefWidth="97.5999755859375" text="Quantity Left" />
-                  <TableColumn fx:id="invDepartmentColumn" prefWidth="175.20001220703125" text="Department Using" />
-               </columns>
-            </TableView>
-            <Button layoutX="465.0" layoutY="68.0" mnemonicParsing="false" onAction="#restockOnClick" prefHeight="25.0" prefWidth="97.0" text="Restock" />
          </children>
       </Pane>
       <Pane fx:id="pane6" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
@@ -201,6 +183,35 @@
             <Label layoutX="299.0" layoutY="433.0" text="New Password" />
             <TextField fx:id="newPassTextField" layoutX="388.0" layoutY="429.0" />
             <Button layoutX="447.0" layoutY="486.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
+            <Label alignment="CENTER" layoutX="2.0" prefHeight="46.0" prefWidth="572.0" text="Inventory" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="inventoryTable" layoutX="14.0" layoutY="74.0" prefHeight="339.0" prefWidth="548.0">
+               <columns>
+                  <TableColumn fx:id="inventoryId" prefWidth="84.0" text="Inventory ID" />
+                  <TableColumn fx:id="invName" prefWidth="191.0" text="Name" />
+                  <TableColumn fx:id="invQtyColumn" prefWidth="104.0" text="Quantity Left" />
+                  <TableColumn fx:id="invDepartmentColumn" prefWidth="170.0" text="Department" />
+               </columns>
+            </TableView>
+            <Button layoutX="465.0" layoutY="425.0" mnemonicParsing="false" onAction="#restockOnClick" prefHeight="25.0" prefWidth="97.0" text="Restock" />
+            <TextField fx:id="itemNameTextField" layoutX="91.0" layoutY="467.0" prefHeight="25.0" prefWidth="444.0" />
+            <Label layoutX="39.0" layoutY="471.0" text="Name" />
+            <Label layoutX="39.0" layoutY="507.0" text="Quantity" />
+            <TextField fx:id="itemQuantityTextField" layoutX="91.0" layoutY="503.0" />
+            <Label layoutX="256.0" layoutY="507.0" text="Department" />
+            <ComboBox fx:id="itemDeptCombo" layoutX="325.0" layoutY="503.0" prefHeight="25.0" prefWidth="212.0" />
+            <Label layoutX="33.0" layoutY="425.0" text="New Stock">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
