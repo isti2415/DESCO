@@ -272,16 +272,19 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
+        //safetyProcedureTextArea.clear();         
     }
 
     @FXML
     private void viewMeterReordsOnClick(ActionEvent event) {
         switchPane(7);
+       
     }
 
     @FXML
     private void viewCompanyPolicyOnClick(ActionEvent event) {
         switchPane(8);
+        policyTextArea.clear();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
             policyTextArea.setWrapText(true);
