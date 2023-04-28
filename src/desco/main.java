@@ -17,7 +17,29 @@ public class main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        Parent root = FXMLLoader.load(getClass().getResource("MeterReader.fxml"));
+        
+
+
+        
+
+
+=======
+<<<<<<< HEAD
+
         Parent root = FXMLLoader.load(getClass().getResource("technician.fxml"));
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8b8937fb65708d0fc42b96f5dc4c77ce97c67b98
+        
+<<<<<<< HEAD
+        Parent root = FXMLLoader.load(getClass().getResource("technician.fxml"));
+=======
+        Parent root = FXMLLoader.load(getClass().getResource("MeterReader.fxml"));
+>>>>>>> ba7b4a86134899bb71681883b56264feba2f607f
+>>>>>>> 3edba496e8308b7fc401f07fc4f4ebf316b1eee0
+>>>>>>> 15a94dec9410f134c6c47a6ec06c94e975b1dbb1
 
         Scene scene = new Scene(root);
         

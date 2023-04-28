@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -47,9 +49,9 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private ComboBox<?> billMonthComboBox;
+    private ComboBox billMonthComboBox;
     @FXML
-    private ComboBox<?> billYearComboBox;
+    private ComboBox billYearComboBox;
     @FXML
     private Pane pane1;
     @FXML
@@ -67,9 +69,9 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private ComboBox<?> energyUseMonthCombobox;
+    private ComboBox energyUseMonthCombobox;
     @FXML
-    private ComboBox<?> energyUseYearCombobox;
+    private ComboBox energyUseYearCombobox;
     @FXML
     private TextArea viewTextArea;
     @FXML
@@ -187,6 +189,19 @@ public class customerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
+        ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        billMonthComboBox.setItems(monthList);
+        energyUseMonthCombobox.setItems(monthList);
+
+        // Initialize year combo box
+        ObservableList<String> yearList = FXCollections.observableArrayList();
+        for (int i = 2023; i >= 2000; i--) {
+            yearList.add(Integer.toString(i));
+        }
+        billYearComboBox.setItems(yearList);
+        energyUseYearCombobox.setItems(yearList);
+
+        
         Customer curr;
         try {
             curr = getCurrUser();
