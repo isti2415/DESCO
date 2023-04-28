@@ -428,4 +428,14 @@ public class ManagerController implements Initializable {
     private void updateTargetOnClick(ActionEvent event) {
     }
 
+    @FXML
+    private void updateCompanyPolicyOnClick(ActionEvent event) {
+        try (FileWriter fileWriter = new FileWriter("companypolicy.txt")) {
+                fileWriter.write(policyTextArea.getText());
+                System.out.println("File saved to " + "companypolicy.txt");
+            } catch (IOException ex) {
+                System.out.println("Error saving file: " + ex.getMessage());
+            }
+    }
+
 }
