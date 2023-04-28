@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/ManagerController.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/main.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/customerController.java</file>
@@ -14,6 +15,10 @@
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/modelClass/Inventory.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/meterReaderController.java</file>
             <file>file:/C:/Users/Istiaqs-PC/Documents/DESCO/src/desco/sysAdController.java</file>
+=======
+            <file>file:/E:/niaz/cse213/DESCO/src/desco/main.java</file>
+            <file>file:/E:/niaz/cse213/DESCO/src/desco/technicianController.java</file>
+>>>>>>> 3edba496e8308b7fc401f07fc4f4ebf316b1eee0
         </group>
     </open-files>
 </project-private>
