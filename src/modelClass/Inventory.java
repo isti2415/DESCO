@@ -38,6 +38,7 @@ public class Inventory implements Serializable {
     // Getters and setters
     public void setRestock(Boolean restock) {
         this.restock = restock;
+        updateInventory();
     }
 
     public String getInventoryID() {

@@ -319,6 +319,7 @@ public class ManagerController implements Initializable {
                         } else {
                             setStyle("");
                         }
+                        System.out.println(inventory.getRestock());
                     }
                 }
             };
