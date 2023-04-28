@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
     <children>
         <VBox layoutX="18.0" layoutY="117.0" prefHeight="417.0" prefWidth="192.0" spacing="6.0">
             <children>
@@ -156,16 +156,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="pane9" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <Label layoutX="216.0" layoutY="26.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyTextArea" layoutX="30.0" layoutY="66.0" prefHeight="456.0" prefWidth="514.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane1" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <Label alignment="CENTER" layoutX="1.0" layoutY="38.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
@@ -233,6 +223,16 @@
                   <TableColumn fx:id="passwordTableColumn" prefWidth="340.0" text="Password" />
                </columns>
             </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="pane9" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <Label layoutX="216.0" layoutY="26.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" editable="false" layoutX="30.0" layoutY="66.0" prefHeight="456.0" prefWidth="514.0" wrapText="true" />
          </children>
       </Pane>
     </children>

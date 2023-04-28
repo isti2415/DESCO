@@ -457,7 +457,7 @@ public class technicianController implements Initializable {
     }
 
     @FXML
-    private void selectInventoryAndRequestRestockOnClick(ActionEvent event) {
+    private void selectInventoryAndRequestRestockOnClick(ActionEvent event) {      
         //inventoryEquipmentViewTable.getSelectionModel();
     }
 

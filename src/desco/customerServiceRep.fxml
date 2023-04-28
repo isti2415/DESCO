@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.customerServiceController">
    <children>
       <VBox layoutX="6.0" layoutY="114.0" prefHeight="309.0" prefWidth="166.0" spacing="20.0">
          <children>
@@ -143,16 +143,6 @@
             <TextArea fx:id="feedbackEmailTextArea" layoutX="27.0" layoutY="130.0" prefHeight="345.0" prefWidth="568.0" promptText="Write Feedback Email" />
          </children>
       </Pane>
-      <Pane fx:id="pane5" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
-         <children>
-            <Label layoutX="244.0" layoutY="33.0" prefHeight="27.0" prefWidth="140.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyTextArea" layoutX="33.0" layoutY="68.0" prefHeight="458.0" prefWidth="562.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane2" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
          <children>
             <Label layoutX="217.0" layoutY="14.0" prefHeight="27.0" prefWidth="190.0" text="Customer Complaints" textAlignment="CENTER">
@@ -181,6 +171,16 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="177.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="628.0">
+         <children>
+            <Label layoutX="244.0" layoutY="33.0" prefHeight="27.0" prefWidth="140.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" editable="false" layoutX="33.0" layoutY="68.0" prefHeight="458.0" prefWidth="562.0" wrapText="true" />
          </children>
       </Pane>
    </children>
