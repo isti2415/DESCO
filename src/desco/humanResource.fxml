@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.humanResourceController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.humanResourceController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -119,16 +119,6 @@
             <Button layoutX="437.0" layoutY="499.0" mnemonicParsing="false" onAction="#offboardS7OnClick" text="Offboard Employee" />
          </children>
       </Pane>
-      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label layoutX="220.0" layoutY="20.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="policyTextArea" layoutX="20.0" layoutY="73.0" prefHeight="453.0" prefWidth="544.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane7" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
          <children>
             <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="577.0" text="Employee Onboarding" textAlignment="CENTER">
@@ -209,6 +199,16 @@
                </columns>
             </TableView>
             <Button layoutX="490.0" layoutY="498.0" mnemonicParsing="false" onAction="#paySalaryOnClick" text="Pay Salary" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane9" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
+         <children>
+            <Label layoutX="220.0" layoutY="20.0" prefHeight="27.0" prefWidth="143.0" text="Company Policy" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="policyTextArea" editable="false" layoutX="20.0" layoutY="73.0" prefHeight="453.0" prefWidth="544.0" wrapText="true" />
          </children>
       </Pane>
    </children>

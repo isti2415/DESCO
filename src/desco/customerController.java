@@ -118,6 +118,8 @@ public class customerController implements Initializable {
     private TableColumn<Bill, String> yearColumn;
     @FXML
     private TableColumn<Bill, String> amountColumn;
+    @FXML
+    private TableColumn<?, ?> statusColumn;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -284,7 +286,12 @@ public class customerController implements Initializable {
     }
 
     @FXML
+<<<<<<< HEAD
+
+    private void makePaymentOnClick(ActionEvent event) {             
+=======
     private void makePaymentOnClick(ActionEvent event) {
+>>>>>>> 6d38fb5c272be8140da172e724f04dbc64ca5a45
     }
 
     @FXML

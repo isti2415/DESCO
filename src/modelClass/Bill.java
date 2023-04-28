@@ -25,7 +25,7 @@ public class Bill implements Serializable {
     private Boolean dispute;
     private LocalDate dueDate;
     private String billID;
-    private Boolean Status;
+    private Boolean status;
 
     public Bill(String userID, String billMonth, String billYear, float usage, LocalDate date) {
         this.userID = userID;
@@ -36,7 +36,7 @@ public class Bill implements Serializable {
         int year = Integer.parseInt(billYear);
         Month month = Month.valueOf(billMonth.toUpperCase());
         this.dueDate = LocalDate.of(year, month, 1).plusMonths(1);
-        this.Status = false;
+        this.status = false;
         this.billID = generateBillID();
 
         saveBill();
@@ -133,11 +133,11 @@ public class Bill implements Serializable {
     }
 
     public Boolean getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(Boolean Status) {
-        this.Status = Status;
+    public void setStatus(Boolean status) {
+        this.status = status;
         updateBill();
     }
 

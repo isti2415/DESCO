@@ -38,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import modelClass.Bill;
 import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Employee;
@@ -428,6 +429,10 @@ public class meterReaderController implements Initializable {
     @FXML
     private void requestRestockOnClick(ActionEvent event
     ) {
+        TableView.TableViewSelectionModel<Inventory> selectionModel = inventoryTableView.getSelectionModel();
+        Inventory selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setRestock(true);
+        inventoryTableView.refresh();            
     }
 
     @FXML
