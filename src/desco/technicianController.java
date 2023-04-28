@@ -147,6 +147,19 @@ public class technicianController implements Initializable {
     @FXML
     private TableColumn<Service, String> faultyProblem;
 
+    private ObservableList<Inventory> loadInventory() {
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        return inventoryList;
+    }
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -383,17 +396,7 @@ public class technicianController implements Initializable {
         qtyInv.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         invDept.setCellValueFactory(new PropertyValueFactory<>("department"));
 
-        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
-
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList.addAll((List<Inventory>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-
-        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) inventoryList);
+        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) loadInventory());
     }
 
     @FXML
@@ -433,8 +436,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Complaint> selectionModel = ComplainListViewTable.getSelectionModel();
         Complaint selectedItem = selectionModel.getSelectedItem();
         selectedItem.setResolved(true);
-        ComplainListViewTable.getItems().remove(selectedItem);
-        ComplainListViewTable.refresh();
+        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) loadInventory());
     }
 
     @FXML
