@@ -129,7 +129,7 @@ public class Complaint implements Serializable {
     }
 
     private void updateComplaint() {
-        ObservableList<Complaint> complaintList = (ObservableList<Complaint>) loadComplaint();
+        List<Complaint> complaintList = Complaint.loadComplaint();
         Boolean found = false;
         for (Complaint complaint : complaintList) {
             if (complaint.getComplaintID().equals(this.getComplaintID())) {

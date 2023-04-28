@@ -316,16 +316,18 @@ public class technicianController implements Initializable {
         customerComplainListViewTable.setItems(combinedList);
     }
 
+    
     @FXML
     private void viewComplaintsOnClick(ActionEvent event) {
         switchPane(4);
+        
+        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
         
         complaintID1.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
         complaintDescription.setCellValueFactory(new PropertyValueFactory<>("details"));
         complainDate1.setCellValueFactory(new PropertyValueFactory<>("date"));
         complainStatus.setCellValueFactory(new PropertyValueFactory<>("resolved"));
         
-        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
 
         try {
             try ( // Read the list of complaints from the file
@@ -425,6 +427,10 @@ public class technicianController implements Initializable {
         Complaint selectedItem = selectionModel.getSelectedItem();
         selectedItem.setResolved(true); 
         ComplainListViewTable.refresh();
+        
+//        int selectedIndex = selectionModel.getSelectedIndex();
+//        complains.remove(selectedIndex);
+//        ComplainListViewTable.refresh();
     }
 
     @FXML
