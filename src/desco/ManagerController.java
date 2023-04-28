@@ -63,7 +63,7 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private ComboBox<?> attendEmpDeptComboBox;
+    private ComboBox<String> attendEmpDeptComboBox;
     @FXML
     private TableView<?> performanceTable;
     @FXML
@@ -105,7 +105,7 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane6;
     @FXML
-    private ComboBox<?> deptComboBox;
+    private ComboBox<String> deptComboBox;
     @FXML
     private TableView<?> reportTable;
     @FXML
@@ -129,7 +129,7 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField perfEmployeeIDTextField;
     @FXML
-    private ComboBox<?> perfEmployeeTypeComboBox;
+    private ComboBox<String> perfEmployeeTypeComboBox;
     @FXML
     private Pane pane8;
     @FXML
@@ -331,6 +331,7 @@ public class ManagerController implements Initializable {
     @FXML
     private void viewTargetsOnClick(ActionEvent event) {
         switchPane(6);
+        perfEmployeeTypeComboBox.setItems(departments);
     }
 
     @FXML
@@ -437,5 +438,4 @@ public class ManagerController implements Initializable {
                 System.out.println("Error saving file: " + ex.getMessage());
             }
     }
-
 }
