@@ -6,6 +6,7 @@
 package desco;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -105,7 +106,7 @@ public class meterReaderController implements Initializable {
     @FXML
     private Pane pane6;
     @FXML
-    private ListView<?> safetyProceduresTextArea;
+    private ListView<String> safetyProceduresTextArea;
     @FXML
     private Pane pane7;
     @FXML
@@ -272,7 +273,19 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
+         File file = new File("safety_procedures.txt");
+        ObservableList<String> safetyProcedures = FXCollections.observableArrayList();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                safetyProcedures.add(line);
+            }
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+        safetyProceduresTextArea.setItems(safetyProcedures);
     }
+    
 
     @FXML
     private void viewMeterReordsOnClick(ActionEvent event) {
