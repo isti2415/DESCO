@@ -20,6 +20,8 @@ public class Customer extends User {
     private String email;
     private String contact;
     private LocalDate DoB;
+    private Boolean autoBill;
+    private Boolean paperlessBill;
 
     public Customer(String id, String password, Meter meter, String name, String address) {
         super(id, password);
@@ -27,6 +29,24 @@ public class Customer extends User {
         this.name = name;
         this.address = address;
         saveCustomer();
+    }
+
+    public Boolean getAutoBill() {
+        return autoBill;
+    }
+
+    public void setAutoBill(Boolean autoBill) {
+        this.autoBill = autoBill;
+        updateCustomer();
+    }
+
+    public Boolean getPaperlessBill() {
+        return paperlessBill;
+    }
+
+    public void setPaperlessBill(Boolean paperlessBill) {
+        this.paperlessBill = paperlessBill;
+        updateCustomer();
     }
 
     public String getEmail() {

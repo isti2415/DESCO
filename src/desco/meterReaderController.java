@@ -5,6 +5,7 @@
  */
 package desco;
 
+import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,9 +39,9 @@ import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Employee;
+import modelClass.Inventory;
 import modelClass.Meter;
 import modelClass.Reading;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -238,9 +239,7 @@ public class meterReaderController implements Initializable {
                 profileEmailTextField.setText(curr.getEmail());
                 profileConNumTextField.setText(curr.getContact());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -273,7 +272,7 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
-         File file = new File("safety_procedures.txt");
+        File file = new File("safety_procedures.txt");
         ObservableList<String> safetyProcedures = FXCollections.observableArrayList();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -285,7 +284,6 @@ public class meterReaderController implements Initializable {
         }
         safetyProceduresTextArea.setItems(safetyProcedures);
     }
-    
 
     @FXML
     private void viewMeterReordsOnClick(ActionEvent event) {
@@ -317,6 +315,21 @@ public class meterReaderController implements Initializable {
     private void saveChangesOnClick(ActionEvent event) {
         Meter meter = new Meter(meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
         Customer customer = new Customer(cusIDTextField.getText(), passwordField.getText(), meter, cusNameTextField.getText(), cusAddressTextField.getText());
+        List<Inventory> inventoryList = new ArrayList<>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList = (List<Inventory>) inputStream.readObject();
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        for (Inventory i : inventoryList) {
+            if (i.getName().equals("Meter")) {
+                int quantity = Integer.parseInt(i.getQuantity());
+                quantity--;
+                i.setQuantity(String.valueOf(quantity));
+            }
+        }
     }
 
     @FXML
@@ -402,7 +415,6 @@ public class meterReaderController implements Initializable {
     private void reportOnClick(ActionEvent event
     ) {
     }
-
 
     @FXML
     private void markAsDoneOnClick(ActionEvent event
