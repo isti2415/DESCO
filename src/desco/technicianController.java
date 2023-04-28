@@ -9,11 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,7 +43,6 @@ import modelClass.Inventory;
 import modelClass.Notification;
 import modelClass.Service;
 import modelClass.Task;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -136,8 +133,6 @@ public class technicianController implements Initializable {
     private TextField feedbackSubjectTextField;
     @FXML
     private TextArea feedbackEmailTextArea;
-
-    private String feedbackFilePath;
     @FXML
     private TableColumn<Service, String> faultyComplaintId;
     @FXML
@@ -146,6 +141,8 @@ public class technicianController implements Initializable {
     private TableColumn<Service, LocalDate> faultyDate;
     @FXML
     private TableColumn<Service, String> faultyProblem;
+    
+    private String feedbackFilePath;
 
     private ObservableList<Inventory> loadInventory() {
         ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
@@ -159,6 +156,27 @@ public class technicianController implements Initializable {
         }
         return inventoryList;
     }
+    
+    private ObservableList<Complaint> loadComplaints(){
+        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+                complaints.addAll((List<Complaint>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+
+        for (Complaint c : complaints) {
+            if (c.getResolved() == true) {
+                complaints.remove(c);
+            }
+        }
+        
+        return complaints;
+    } 
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -326,40 +344,18 @@ public class technicianController implements Initializable {
                 }
             }
         }
-
-// Set the combined list as the data source for your table view
-        ObservableList<CustomerComplaint> observableList = FXCollections.observableArrayList(combinedList);
         customerComplainListViewTable.setItems(combinedList);
     }
 
     @FXML
     private void viewComplaintsOnClick(ActionEvent event) {
         switchPane(4);
-
-        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
-
         complaintID1.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
         complaintDescription.setCellValueFactory(new PropertyValueFactory<>("details"));
         complainDate1.setCellValueFactory(new PropertyValueFactory<>("date"));
         complainStatus.setCellValueFactory(new PropertyValueFactory<>("resolved"));
 
-        try {
-            try ( // Read the list of complaints from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
-                complaints.addAll((List<Complaint>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-
-        for (Complaint c : complaints) {
-            if (c.getResolved() == true) {
-                complaints.remove(c);
-            }
-        }
-
-        ComplainListViewTable.setItems((ObservableList<Complaint>) complaints);
+        ComplainListViewTable.setItems((ObservableList<Complaint>) loadComplaints());
 
     }
 
@@ -436,7 +432,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Complaint> selectionModel = ComplainListViewTable.getSelectionModel();
         Complaint selectedItem = selectionModel.getSelectedItem();
         selectedItem.setResolved(true);
-        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) loadInventory());
+        ComplainListViewTable.setItems((ObservableList<Complaint>) loadComplaints());
     }
 
     @FXML

@@ -155,10 +155,11 @@
             <Button layoutX="490.0" layoutY="62.0" mnemonicParsing="false" onAction="#disputeBillOnClick" text="Dispute Bill" />
             <TableView fx:id="billTableView" layoutX="16.0" layoutY="104.0" prefHeight="382.0" prefWidth="556.0">
               <columns>
-                <TableColumn fx:id="billIDColumn" prefWidth="102.0" text="Bill ID" />
-                <TableColumn fx:id="monthColumn" prefWidth="163.0" text="Month" />
-                  <TableColumn fx:id="yearColumn" prefWidth="132.0" text="Year" />
-                  <TableColumn fx:id="amountColumn" prefWidth="158.0" text="Amount" />
+                <TableColumn fx:id="billIDColumn" prefWidth="95.0" text="Bill ID" />
+                <TableColumn fx:id="monthColumn" prefWidth="104.0" text="Month" />
+                  <TableColumn fx:id="yearColumn" prefWidth="94.0" text="Year" />
+                  <TableColumn fx:id="amountColumn" prefWidth="132.0" text="Amount" />
+                  <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Payment Status" />
               </columns>
             </TableView>
          </children>
