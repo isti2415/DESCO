@@ -5,7 +5,6 @@
  */
 package modelClass;
 
-import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import javafx.collections.ObservableList;
 
 /**
  *

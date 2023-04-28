@@ -94,11 +94,6 @@ public class Bill implements Serializable {
         this.total = total;
     }
 
-    public String viewBill(String userID, String month, String year) {
-        // TODO: Implement viewBill method
-        return null;
-    }
-
     private void saveBill() {
         List<Bill> billList = Bill.loadBill();
         // Check if the user ID of the current user already exists in the list

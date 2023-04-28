@@ -272,9 +272,6 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewSafetyProceduresOnClick(ActionEvent event) {
         switchPane(6);
-<<<<<<< HEAD
-        //safetyProcedureTextArea.clear();         
-=======
         File file = new File("safety_procedures.txt");
         ObservableList<String> safetyProcedures = FXCollections.observableArrayList();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -286,7 +283,6 @@ public class meterReaderController implements Initializable {
             System.err.format("IOException: %s%n", e);
         }
         safetyProceduresTextArea.setItems(safetyProcedures);
->>>>>>> 8b8937fb65708d0fc42b96f5dc4c77ce97c67b98
     }
 
     @FXML
