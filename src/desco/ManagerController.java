@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -37,7 +38,6 @@ import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.Inventory;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -97,7 +97,7 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> inventoryTable;
+    private TableView<Inventory> inventoryTable;
     @FXML
     private TableColumn<Inventory, String> invQtyColumn;
     @FXML
@@ -150,7 +150,7 @@ public class ManagerController implements Initializable {
             "Human Resources", "Manager", "Technician", "System Administrator"
     );
     private String filePath;
-    
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -187,6 +187,18 @@ public class ManagerController implements Initializable {
                 pane8.setVisible(true);
                 break;
         }
+    }
+
+    private ObservableList<Inventory> loadInventory() {
+        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
+            inventoryList.addAll((List<Inventory>) inputStream.readObject());
+        } catch (FileNotFoundException e) {
+            // Ignore if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
+        return inventoryList;
     }
 
     private Employee getCurrUser() throws IOException, ClassNotFoundException {
@@ -265,7 +277,7 @@ public class ManagerController implements Initializable {
         customerIDcolumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         feedbackColumn.setCellValueFactory(new PropertyValueFactory<>("feedback"));
         employeeIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
-        
+
         ObservableList<Complaint> complaints = FXCollections.observableArrayList();
         try {
             try ( // Read the list of complaints from the file
@@ -273,7 +285,7 @@ public class ManagerController implements Initializable {
                 complaints.addAll((List<Complaint>) inputStream.readObject());
             }
         } catch (FileNotFoundException e) {
-        // Ignore the exception if the file does not exist yet
+            // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
         }
         complaintTable.setItems((ObservableList<Complaint>) complaints);
@@ -291,15 +303,28 @@ public class ManagerController implements Initializable {
         invName.setCellValueFactory(new PropertyValueFactory<>("name"));
         invQtyColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         invDepartmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
-        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList.addAll((List<Inventory>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-        
+        invQtyColumn.setCellFactory(column -> {
+            return new TableCell<Inventory, String>() {
+                @Override
+                protected void updateItem(String quantity, boolean empty) {
+                    super.updateItem(quantity, empty);
+                    if (empty || quantity == null) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(quantity);
+                        Inventory inventory = getTableView().getItems().get(getIndex());
+                        if (inventory.getRestock()) {
+                            setStyle("-fx-text-fill: red;");
+                        } else {
+                            setStyle("");
+                        }
+                    }
+                }
+            };
+        });
+
+        inventoryTable.setItems(loadInventory());
     }
 
     @FXML
@@ -383,10 +408,11 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void restockOnClick(ActionEvent event) {
-        String name=itemNameTextField.getText();
+        String name = itemNameTextField.getText();
         String quantity = itemQuantityTextField.getText();
-        String department=itemDeptCombo.getValue();
-        Inventory i = new Inventory(name,quantity,department);
+        String department = itemDeptCombo.getValue();
+        Inventory i = new Inventory(name, quantity, department);
+        inventoryTable.setItems(loadInventory());
     }
 
     @FXML

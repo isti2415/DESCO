@@ -435,10 +435,6 @@ public class technicianController implements Initializable {
         selectedItem.setResolved(true);
         ComplainListViewTable.getItems().remove(selectedItem);
         ComplainListViewTable.refresh();
-
-    //        int selectedIndex = selectionModel.getSelectedIndex();
-    //        complains.remove(selectedIndex);
-    //        ComplainListViewTable.refresh();
     }
 
     @FXML
@@ -458,7 +454,9 @@ public class technicianController implements Initializable {
 
     @FXML
     private void selectInventoryAndRequestRestockOnClick(ActionEvent event) {
-        //inventoryEquipmentViewTable.getSelectionModel();
+        TableViewSelectionModel<Inventory> selectionModel = inventoryEquipmentViewTable.getSelectionModel();
+        Inventory selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setRestock(true);
     }
 
     @FXML

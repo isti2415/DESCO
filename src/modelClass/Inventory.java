@@ -81,7 +81,7 @@ public class Inventory implements Serializable {
         String startID = "1";
         try {
             try ( // Read the list of inventory items from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventoryItems.bin"))) {
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {
                 inventory = (List<Inventory>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
