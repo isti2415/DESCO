@@ -455,6 +455,11 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Inventory> selectionModel = inventoryEquipmentViewTable.getSelectionModel();
         Inventory selectedItem = selectionModel.getSelectedItem();
         selectedItem.setRestock(true);
+<<<<<<< HEAD
+        System.out.println(selectedItem.getRestock());
+
+=======
+>>>>>>> f2c885c080dbe77c7192c302b4400253a04e6a79
     }
 
     @FXML

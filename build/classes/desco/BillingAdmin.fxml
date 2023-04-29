@@ -74,6 +74,26 @@
             <Button layoutX="494.0" layoutY="495.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
+<<<<<<< HEAD
+      <Pane fx:id="pane4" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
+         <children>
+            <Label layoutX="241.0" layoutY="39.0" prefHeight="27.0" prefWidth="141.0" text="Billing Disputes" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="155.0" prefHeight="26.0" prefWidth="74.0" text="Customer ID" />
+            <TextField fx:id="biLLIssuecustomerIDTextField" layoutX="165.0" layoutY="155.0" prefHeight="26.0" prefWidth="179.0" />
+            <Label layoutX="41.0" layoutY="222.0" prefHeight="26.0" prefWidth="67.0" text="Current Bill" />
+            <Label fx:id="currentBillLabel" layoutX="165.0" layoutY="222.0" prefHeight="26.0" prefWidth="179.0" style="-fx-background-color: grey;" />
+            <Label layoutX="41.0" layoutY="361.0" prefHeight="26.0" prefWidth="101.0" text="Enter Updated Bill" />
+            <TextField fx:id="updatedBillTextField" layoutX="172.0" layoutY="361.0" prefHeight="26.0" prefWidth="150.0" />
+            <Button layoutX="41.0" layoutY="471.0" mnemonicParsing="false" onAction="#UpdateBillsButtononClick" prefHeight="40.0" prefWidth="131.0" text="Update Bills" />
+            <Button layoutX="456.0" layoutY="471.0" mnemonicParsing="false" onAction="#DownloadNewBillButtononClick" prefHeight="40.0" prefWidth="131.0" text="Download New Bill" />
+         </children>
+      </Pane>
+=======
+>>>>>>> f2c885c080dbe77c7192c302b4400253a04e6a79
       <Pane fx:id="pane2" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="33.0" prefHeight="27.0" prefWidth="623.0" text="Customer Bills" textAlignment="CENTER">
@@ -108,6 +128,8 @@
             <TextArea fx:id="policyTextArea" editable="false" layoutX="41.0" layoutY="77.0" prefHeight="442.0" prefWidth="544.0" wrapText="true" />
          </children>
       </Pane>
+<<<<<<< HEAD
+=======
       <Pane fx:id="pane4" layoutX="182.0" layoutY="-1.0" prefHeight="554.0" prefWidth="623.0">
          <children>
             <Label layoutX="241.0" layoutY="39.0" prefHeight="27.0" prefWidth="141.0" text="Billing Disputes" textAlignment="CENTER">
@@ -129,5 +151,6 @@
             <TextField fx:id="newAmountColumn" layoutX="92.0" layoutY="514.0" />
          </children>
       </Pane>
+>>>>>>> f2c885c080dbe77c7192c302b4400253a04e6a79
    </children>
 </AnchorPane>
