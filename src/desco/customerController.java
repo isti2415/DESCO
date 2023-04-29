@@ -298,7 +298,6 @@ public class customerController implements Initializable {
             curr.setContact(profileConNumTextField.getText());
             curr.setAddress(profileAddressTextField.getText());
         }
-        System.out.println("clicked");
     }
 
     @FXML

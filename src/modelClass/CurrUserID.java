@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,13 @@ public class CurrUserID implements Serializable {
     }
 
     private void saveLog() {
-        String[] session = {getCurrUserID(), LocalDateTime.now().toString()};
+        LocalDateTime timestamp = LocalDateTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss a");
+        String date = timestamp.format(dateFormatter);
+        String time = timestamp.format(timeFormatter);
+        String[] session = {getCurrUserID(), date, time};
+
         List<String[]> sessions;
         try {
             // Read existing sessions from log.bin file if it exists

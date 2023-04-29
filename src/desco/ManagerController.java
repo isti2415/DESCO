@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import modelClass.Complaint;
@@ -63,7 +64,7 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private ComboBox<?> attendEmpDeptComboBox;
+    private ComboBox<String> attendEmpDeptComboBox;
     @FXML
     private TableView<?> performanceTable;
     @FXML
@@ -105,7 +106,7 @@ public class ManagerController implements Initializable {
     @FXML
     private Pane pane6;
     @FXML
-    private ComboBox<?> deptComboBox;
+    private ComboBox<String> deptComboBox;
     @FXML
     private TableView<?> reportTable;
     @FXML
@@ -129,7 +130,7 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField perfEmployeeIDTextField;
     @FXML
-    private ComboBox<?> perfEmployeeTypeComboBox;
+    private ComboBox<String> perfEmployeeTypeComboBox;
     @FXML
     private Pane pane8;
     @FXML
@@ -150,6 +151,10 @@ public class ManagerController implements Initializable {
             "Human Resources", "Manager", "Technician", "System Administrator"
     );
     private String filePath;
+    @FXML
+    private TextField targetTextField;
+    @FXML
+    private TextField descriptionTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -260,8 +265,9 @@ public class ManagerController implements Initializable {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void viewProfile(ActionEvent event) {
+    
+    @FXML
+    private void viewProfileOnClick(ActionEvent event) {
         switchPane(1);
     }
 
@@ -324,13 +330,13 @@ public class ManagerController implements Initializable {
                 }
             };
         });
-
         inventoryTable.setItems(loadInventory());
     }
 
     @FXML
     private void viewTargetsOnClick(ActionEvent event) {
         switchPane(6);
+        perfEmployeeTypeComboBox.setItems(departments);
     }
 
     @FXML
@@ -421,10 +427,6 @@ public class ManagerController implements Initializable {
     }
 
     @FXML
-    private void viewProfileOnClick(ActionEvent event) {
-    }
-
-    @FXML
     private void updateTargetOnClick(ActionEvent event) {
     }
 
@@ -437,5 +439,4 @@ public class ManagerController implements Initializable {
                 System.out.println("Error saving file: " + ex.getMessage());
             }
     }
-
 }

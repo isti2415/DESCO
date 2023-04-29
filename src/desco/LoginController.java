@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import modelClass.CurrUserID;
 import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.User;
+import modelClass.Version;
 
 /**
  * FXML Controller class
@@ -39,6 +41,8 @@ public class LoginController implements Initializable {
     private TextField useridfield;
     @FXML
     private PasswordField passwordfield;
+    @FXML
+    private Label versionLabel;
 
     /**
      * Initializes the controller class.
@@ -49,6 +53,15 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        List<Version> versionList = new ArrayList<>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("versions.bin"))) {
+            versionList = (List<Version>) inputStream.readObject();
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading version from file: " + e.getMessage());
+        }
+        versionLabel.setText("Current version: v" + versionList.get(versionList.size() - 1).getVersion());
     }
 
     @FXML

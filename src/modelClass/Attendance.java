@@ -16,12 +16,21 @@ public class Attendance implements Serializable {
     private String employeeID;
     private LocalDate date;
     private Boolean present;
+    private String reason;
     private static final String FILENAME = "attendance.bin";
 
     public Attendance(String employeeID, LocalDate date, Boolean present) {
         this.employeeID = employeeID;
-        this.date = date;
+        this.date = LocalDate.now();
         this.present = present;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getEmployeeID() {

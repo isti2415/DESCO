@@ -33,7 +33,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -41,7 +40,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Employee;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -62,10 +60,6 @@ public class billingAdminController implements Initializable {
     private TextField profileConNumTextField;
     @FXML
     private TextField newPassTextField;
-    @FXML
-    private Label currentBillLabel;
-    @FXML
-    private TextField updatedBillTextField;
     @FXML
     private TextArea policyTextArea;
     @FXML
@@ -98,7 +92,17 @@ public class billingAdminController implements Initializable {
     @FXML
     private TextField profileNameTextField;
     @FXML
-    private TextField biLLIssuecustomerIDTextField;
+    private TableView<?> disputeTableView;
+    @FXML
+    private TableColumn<?, ?> disputeIDColumn;
+    @FXML
+    private TableColumn<?, ?> disputeMonthColumn;
+    @FXML
+    private TableColumn<?, ?> disputeYearColumn;
+    @FXML
+    private TableColumn<?, ?> disputeAmountColumn;
+    @FXML
+    private TextField newAmountColumn;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);

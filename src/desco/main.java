@@ -16,12 +16,17 @@ public class main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+<<<<<<< HEAD
 
 
 
         Parent root = FXMLLoader.load(getClass().getResource("sysAd.fxml"));
 
 
+=======
+        
+        Parent root = FXMLLoader.load(getClass().getResource("sysAd.fxml"));
+>>>>>>> f2c885c080dbe77c7192c302b4400253a04e6a79
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
