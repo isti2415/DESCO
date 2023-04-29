@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -17,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
     <children>
         <VBox layoutX="18.0" layoutY="117.0" prefHeight="417.0" prefWidth="192.0" spacing="6.0">
             <children>
@@ -27,8 +29,7 @@
                 <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewActivtyLogOnClick" prefHeight="47.0" prefWidth="211.0" text="Activity Logs" />
                 <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#viewNotificationSceneOnClick" prefHeight="47.0" prefWidth="210.0" text="Customize Notifications" />
                 <Button mnemonicParsing="false" onAction="#viewAppUpdateOnScene" prefHeight="46.0" prefWidth="209.0" text="Manage Application Updates" />
-                <Button mnemonicParsing="false" onAction="#viewSecuritySceneOnClick" prefHeight="47.0" prefWidth="210.0" text="Security Measures" />
-                <Button mnemonicParsing="false" onAction="#viewBackupOnSceneOnClick" prefHeight="46.0" prefWidth="211.0" text="Make Backup" />
+                <Button mnemonicParsing="false" onAction="#viewBackupSceneOnClick" prefHeight="46.0" prefWidth="211.0" text="Make Backup" />
                 <Button mnemonicParsing="false" onAction="#viewCompanyPolicyOnClick" prefHeight="46.0" prefWidth="211.0" text="Company Policy" />
                 <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
             </children>
@@ -43,22 +44,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane4" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <TableView fx:id="activityLogTask" layoutX="8.0" layoutY="88.0" prefHeight="449.0" prefWidth="559.0">
-               <columns>
-                  <TableColumn fx:id="userId" prefWidth="135.0" text="User ID" />
-                  <TableColumn fx:id="userAction" prefWidth="234.0" text="User Action" />
-                  <TableColumn fx:id="logDate" prefWidth="183.20001220703125" text="Time &amp; Date" />
-               </columns>
-            </TableView>
-            <Label alignment="CENTER" layoutX="-14.0" layoutY="18.0" prefHeight="46.0" prefWidth="601.0" text="Activity Logs" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane5" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <ToggleButton layoutX="48.0" layoutY="94.0" mnemonicParsing="false" onAction="#billDueToggle" prefHeight="26.0" prefWidth="151.0" text="Bill Due" />
@@ -70,86 +55,6 @@
             <ToggleButton layoutX="400.0" layoutY="259.0" mnemonicParsing="false" onAction="#energySaveToggle" prefHeight="26.0" prefWidth="151.0" text="Energy Save Notices" />
             <ToggleButton layoutX="48.0" layoutY="178.0" mnemonicParsing="false" onAction="#emergencyToggle" prefHeight="26.0" prefWidth="151.0" text="Natural Emergency" />
             <Label alignment="CENTER" layoutY="25.0" prefHeight="46.0" prefWidth="574.0" text="Customize Notifications" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="pane6" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <Label layoutX="53.0" layoutY="158.0" text="Current Version">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="currentVersionLabel" layoutX="228.0" layoutY="159.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: grey;" textFill="WHITE" />
-            <Button layoutX="52.0" layoutY="257.0" mnemonicParsing="false" onAction="#uploadOnClick" prefHeight="46.0" prefWidth="209.0" text="Upload New Version" />
-            <Button layoutX="52.0" layoutY="329.0" mnemonicParsing="false" onAction="#scheduleOnClick" prefHeight="46.0" prefWidth="209.0" text="Schedule Push Update" />
-            <Button layoutX="313.0" layoutY="257.0" mnemonicParsing="false" onAction="#pushOnCLick" prefHeight="46.0" prefWidth="209.0" text="Push Update Now" />
-            <Button layoutX="313.0" layoutY="331.0" mnemonicParsing="false" onAction="#rollbackOnClick" prefHeight="46.0" prefWidth="209.0" text="Rollback Update" />
-            <DatePicker layoutX="342.0" layoutY="153.0" prefHeight="30.0" prefWidth="150.0" />
-            <Label alignment="CENTER" layoutY="35.0" prefHeight="46.0" prefWidth="574.0" text="Manage Application Updates" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="pane7" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <TableView fx:id="adminRequestTable" layoutX="15.0" layoutY="131.0" prefHeight="200.0" prefWidth="249.0">
-               <columns>
-                  <TableColumn fx:id="adminTableUserID" prefWidth="124.80000305175781" text="UserID" />
-                  <TableColumn fx:id="adminTableDate" prefWidth="122.4000244140625" text="Date" />
-               </columns>
-            </TableView>
-            <Button layoutX="15.0" layoutY="345.0" mnemonicParsing="false" onAction="#acceptOnClick" text="Accept Request" />
-            <Button layoutX="171.0" layoutY="345.0" mnemonicParsing="false" onAction="#rejectOnClick" text="Reject Request" />
-            <Button layoutX="129.0" layoutY="410.0" mnemonicParsing="false" onAction="#editPassOnClick" prefHeight="25.0" prefWidth="135.0" text="Edit Password Policies" />
-            <Button layoutX="129.0" layoutY="458.0" mnemonicParsing="false" onAction="#editNetworkOnClick" prefHeight="25.0" prefWidth="135.0" text="Edit Network Security" />
-            <Button layoutX="129.0" layoutY="511.0" mnemonicParsing="false" onAction="#editDataOnClick" prefHeight="25.0" prefWidth="135.0" text="Edit Data Encryption" />
-            <Button layoutX="305.0" layoutY="410.0" mnemonicParsing="false" onAction="#viewPassDetailsOnClick" prefHeight="25.0" prefWidth="100.0" text="View Details" />
-            <Button layoutX="305.0" layoutY="458.0" mnemonicParsing="false" onAction="#viewNetworkDetailsOnClick" prefHeight="25.0" prefWidth="100.0" text="View Details" />
-            <Button layoutX="305.0" layoutY="511.0" mnemonicParsing="false" onAction="#viewDataEncryptionDetailsOnClick" prefHeight="25.0" prefWidth="100.0" text="View Details" />
-            <Label layoutX="62.0" layoutY="91.0" text="Admin Access Reqeusts">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="372.0" layoutY="91.0" text="2FA Request Logs">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TableView fx:id="twoFARequestTable" layoutX="305.0" layoutY="131.0" prefHeight="200.0" prefWidth="249.0">
-               <columns>
-                  <TableColumn fx:id="twoFATableUserID" prefWidth="128.79998779296875" text="UserID" />
-                  <TableColumn fx:id="twoFATableDate" prefWidth="120.00006103515625" text="Date" />
-               </columns>
-            </TableView>
-            <Button layoutX="305.0" layoutY="345.0" mnemonicParsing="false" onAction="#verifyOnClick" prefHeight="26.0" prefWidth="107.0" text="Verify Request" />
-            <Button layoutX="457.0" layoutY="345.0" mnemonicParsing="false" onAction="#flagOnClick" prefHeight="26.0" prefWidth="98.0" text="Flag Request" />
-            <Label alignment="CENTER" layoutY="18.0" prefHeight="46.0" prefWidth="574.0" text="Security Measures" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="pane8" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <TableView fx:id="resetPasswordTaskList" layoutX="24.0" layoutY="90.0" prefHeight="409.0" prefWidth="526.0">
-               <columns>
-                  <TableColumn fx:id="fileType" prefWidth="168.8000030517578" text="Type" />
-                  <TableColumn fx:id="fileSize" prefWidth="165.60003662109375" text="Size" />
-                  <TableColumn fx:id="backupDate" prefWidth="192.80002441406248" text="Last Backed Up (Date)" />
-               </columns>
-            </TableView>
-            <Button layoutX="24.0" layoutY="511.0" mnemonicParsing="false" onAction="#initiateBackupOnClick" prefHeight="26.0" prefWidth="154.0" text="Initiate Backup" />
-            <Button layoutX="216.0" layoutY="511.0" mnemonicParsing="false" onAction="#scheduleAutoBackupOnClick" prefHeight="26.0" prefWidth="154.0" text="Schedule Auto Backup" />
-            <Button layoutX="395.0" layoutY="511.0" mnemonicParsing="false" onAction="#restorePreviousVersionOnClick" prefHeight="26.0" prefWidth="154.0" text="Restore Previous Version" />
-            <Label alignment="CENTER" layoutX="-20.0" layoutY="17.0" prefHeight="46.0" prefWidth="601.0" text="Manage Account" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -195,19 +100,6 @@
             <Button layoutX="444.0" layoutY="469.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
          </children>
       </Pane>
-      <Pane fx:id="pane3" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <ComboBox layoutX="16.0" layoutY="84.0" prefHeight="25.0" prefWidth="134.0" promptText="Month" />
-            <ComboBox layoutX="174.0" layoutY="84.0" prefHeight="25.0" prefWidth="113.0" promptText="Year" />
-            <Button layoutX="308.0" layoutY="84.0" mnemonicParsing="false" text="View Monthly Usage" />
-            <Button layoutX="445.0" layoutY="84.0" mnemonicParsing="false" text="View Yearly Usage" />
-            <Label alignment="CENTER" layoutY="23.0" prefHeight="46.0" prefWidth="574.0" text="Energy Usage" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane2" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <Label alignment="CENTER" layoutX="-13.0" layoutY="17.0" prefHeight="46.0" prefWidth="601.0" text="Manage Account" textAlignment="CENTER">
@@ -233,6 +125,90 @@
                </font>
             </Label>
             <TextArea fx:id="policyTextArea" editable="false" layoutX="30.0" layoutY="66.0" prefHeight="456.0" prefWidth="514.0" wrapText="true" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane6" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <Label layoutX="109.0" layoutY="169.0" text="Current Version">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentVersionLabel" layoutX="395.0" layoutY="169.0" prefHeight="18.0" prefWidth="46.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Button layoutX="79.0" layoutY="392.0" mnemonicParsing="false" onAction="#pushOnCLick" prefHeight="46.0" prefWidth="209.0" text="Push Update Now" />
+            <Button layoutX="316.0" layoutY="392.0" mnemonicParsing="false" onAction="#rollbackOnClick" prefHeight="46.0" prefWidth="209.0" text="Rollback Update" />
+            <Label alignment="CENTER" layoutY="35.0" prefHeight="46.0" prefWidth="574.0" text="Manage Application Updates" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="109.0" layoutY="242.0" text="Release Date">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="releaseDateLabel" layoutX="307.0" layoutY="242.0" prefHeight="35.0" prefWidth="209.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane8" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <TableView fx:id="backupTableView" layoutX="24.0" layoutY="90.0" prefHeight="409.0" prefWidth="526.0">
+               <columns>
+                  <TableColumn fx:id="backupFileCount" prefWidth="124.0" text="No. of Files" />
+                  <TableColumn fx:id="backupSize" prefWidth="152.0" text="Size" />
+                  <TableColumn fx:id="backupTimestamp" prefWidth="252.0" text="Timestamp" />
+               </columns>
+            </TableView>
+            <Button layoutX="24.0" layoutY="511.0" mnemonicParsing="false" onAction="#backupOnClick" prefHeight="26.0" prefWidth="154.0" text="Perform Backup" />
+            <Button layoutX="216.0" layoutY="511.0" mnemonicParsing="false" onAction="#deleteBackupOnClick" prefHeight="26.0" prefWidth="154.0" text="Delete Backup" />
+            <Button layoutX="395.0" layoutY="511.0" mnemonicParsing="false" onAction="#restoreOnClick" prefHeight="26.0" prefWidth="154.0" text="Restore Backup" />
+            <Label alignment="CENTER" layoutX="-20.0" layoutY="17.0" prefHeight="46.0" prefWidth="601.0" text="Manage Account" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <TableView fx:id="logTableView" layoutX="8.0" layoutY="88.0" prefHeight="449.0" prefWidth="559.0">
+               <columns>
+                  <TableColumn fx:id="logUserID" prefWidth="164.0" text="User ID" />
+                  <TableColumn fx:id="logTime" prefWidth="197.0" text="Time" />
+                  <TableColumn fx:id="logDate" prefWidth="192.0" text="Date" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" layoutX="-14.0" layoutY="18.0" prefHeight="46.0" prefWidth="601.0" text="Activity Logs" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane3" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <Button layoutX="114.0" layoutY="84.0" mnemonicParsing="false" onAction="#viewThisYearUsage" text="View This Year's Usage" />
+            <Button layoutX="367.0" layoutY="84.0" mnemonicParsing="false" onAction="#viewAllYearUsage" text="View All Usage" />
+            <Label alignment="CENTER" layoutY="23.0" prefHeight="46.0" prefWidth="574.0" text="Energy Usage" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <LineChart fx:id="usageChart" layoutX="-10.0" layoutY="122.0" prefHeight="427.0" prefWidth="574.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
          </children>
       </Pane>
     </children>

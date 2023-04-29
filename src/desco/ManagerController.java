@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import modelClass.Complaint;
@@ -150,6 +151,10 @@ public class ManagerController implements Initializable {
             "Human Resources", "Manager", "Technician", "System Administrator"
     );
     private String filePath;
+    @FXML
+    private TextField targetTextField;
+    @FXML
+    private TextField descriptionTextField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -260,8 +265,9 @@ public class ManagerController implements Initializable {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void viewProfile(ActionEvent event) {
+    
+    @FXML
+    private void viewProfileOnClick(ActionEvent event) {
         switchPane(1);
     }
 
@@ -324,7 +330,6 @@ public class ManagerController implements Initializable {
                 }
             };
         });
-
         inventoryTable.setItems(loadInventory());
     }
 
@@ -419,10 +424,6 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void updateOnClick(ActionEvent event) {
-    }
-
-    @FXML
-    private void viewProfileOnClick(ActionEvent event) {
     }
 
     @FXML

@@ -335,7 +335,7 @@ public class technicianController implements Initializable {
             }
         }
 
-// Combine the data from both classes
+        // Combine the data from both classes
         ObservableList<CustomerComplaint> combinedList = FXCollections.observableArrayList(new ArrayList<>());
         for (Customer customer : customerList) {
             for (Complaint complaint : complaintList) {
