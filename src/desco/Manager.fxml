@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
             <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="46.0" prefWidth="192.0" text="Performance &amp; Attendance" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="46.0" prefWidth="192.0" text="Employee Attendance" />
             <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Complaints" />
             <Button mnemonicParsing="false" onAction="#viewContractsOnClick" prefHeight="46.0" prefWidth="211.0" text="Contracts &amp; Agreements" />
             <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkInvOnClick" prefHeight="47.0" prefWidth="210.0" text="Inventory" />
@@ -40,33 +40,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
-         <children>
-            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Performance &amp; Attendance" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="31.0" layoutY="191.0" text="Employee Performance" />
-            <Label layoutX="35.0" layoutY="378.0" text="Employee Attendance" />
-            <Label layoutX="32.0" layoutY="97.0" text="Employee Department" />
-            <Label layoutX="35.0" layoutY="150.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
-            <ComboBox fx:id="attendEmpDeptComboBox" layoutX="159.0" layoutY="93.0" prefHeight="26.0" prefWidth="392.0" />
-            <TableView fx:id="performanceTable" layoutX="32.0" layoutY="208.0" prefHeight="153.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="goalColumn" prefWidth="346.0" text="Goal" />
-                  <TableColumn fx:id="completionColumn" prefWidth="173.0" text="Completion" />
-               </columns>
-            </TableView>
-            <TableView fx:id="attendanceColumn" layoutX="32.0" layoutY="395.0" prefHeight="139.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="daysColumn" prefWidth="269.59996032714844" text="Days" />
-                  <TableColumn fx:id="percentageColumn" prefWidth="250.4000244140625" text="Percentage" />
-               </columns>
-            </TableView>
-            <TextField fx:id="attendEmpIDTextField" layoutX="159.0" layoutY="138.0" prefHeight="26.0" prefWidth="392.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane3" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
             <TableView fx:id="complaintTable" layoutX="20.0" layoutY="70.0" prefHeight="453.0" prefWidth="541.0">
@@ -211,13 +184,32 @@
             <Label layoutX="315.0" layoutY="60.0" text="Employee ID" />
             <TextField fx:id="perfEmployeeIDTextField" layoutX="414.0" layoutY="56.0" prefHeight="25.0" prefWidth="150.0" />
             <Label layoutX="16.0" layoutY="60.0" text="Employee Type" />
-            <ComboBox fx:id="perfEmployeeTypeComboBox" layoutX="114.0" layoutY="56.0" prefHeight="25.0" prefWidth="174.0" />
-            <Button layoutX="414.0" layoutY="89.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="150.0" text="Load Employee Target" />
+            <ComboBox fx:id="perfEmpTypeCombo" layoutX="114.0" layoutY="56.0" prefHeight="25.0" prefWidth="174.0" />
+            <Button layoutX="414.0" layoutY="89.0" mnemonicParsing="false" onAction="#loadTargetOnClick" prefHeight="25.0" prefWidth="150.0" text="Load Employee Target" />
             <Label layoutX="14.0" layoutY="473.0" text="Title" />
             <Label layoutX="14.0" layoutY="506.0" text="Description" />
             <TextField fx:id="targetTextField" layoutX="56.0" layoutY="469.0" prefHeight="25.0" prefWidth="392.0" />
-            <Button layoutX="459.0" layoutY="469.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="108.0" text="Set Target" />
+            <Button layoutX="459.0" layoutY="469.0" mnemonicParsing="false" onAction="#setTargetOnClick" prefHeight="25.0" prefWidth="108.0" text="Set Target" />
             <TextField fx:id="descriptionTextField" layoutX="88.0" layoutY="501.0" prefHeight="25.0" prefWidth="478.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
+            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Performance &amp; Attendance" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="97.0" text="Employee Department" />
+            <Label layoutX="35.0" layoutY="150.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
+            <ComboBox fx:id="attendEmpDeptComboBox" layoutX="159.0" layoutY="93.0" prefHeight="26.0" prefWidth="392.0" />
+            <TableView fx:id="attendanceColumn" layoutX="32.0" layoutY="183.0" prefHeight="356.0" prefWidth="520.0">
+               <columns>
+                  <TableColumn fx:id="daysColumn" prefWidth="269.59996032714844" text="Days" />
+                  <TableColumn fx:id="percentageColumn" prefWidth="250.4000244140625" text="Percentage" />
+               </columns>
+            </TableView>
+            <TextField fx:id="attendEmpIDTextField" layoutX="159.0" layoutY="138.0" prefHeight="26.0" prefWidth="392.0" />
          </children>
       </Pane>
    </children>

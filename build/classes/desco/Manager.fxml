@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.ManagerController">
    <children>
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -211,12 +211,12 @@
             <Label layoutX="315.0" layoutY="60.0" text="Employee ID" />
             <TextField fx:id="perfEmployeeIDTextField" layoutX="414.0" layoutY="56.0" prefHeight="25.0" prefWidth="150.0" />
             <Label layoutX="16.0" layoutY="60.0" text="Employee Type" />
-            <ComboBox fx:id="perfEmployeeTypeComboBox" layoutX="114.0" layoutY="56.0" prefHeight="25.0" prefWidth="174.0" />
-            <Button layoutX="414.0" layoutY="89.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="150.0" text="Load Employee Target" />
+            <ComboBox fx:id="perfEmpTypeCombo" layoutX="114.0" layoutY="56.0" prefHeight="25.0" prefWidth="174.0" />
+            <Button layoutX="414.0" layoutY="89.0" mnemonicParsing="false" onAction="#loadTargetOnClick" prefHeight="25.0" prefWidth="150.0" text="Load Employee Target" />
             <Label layoutX="14.0" layoutY="473.0" text="Title" />
             <Label layoutX="14.0" layoutY="506.0" text="Description" />
             <TextField fx:id="targetTextField" layoutX="56.0" layoutY="469.0" prefHeight="25.0" prefWidth="392.0" />
-            <Button layoutX="459.0" layoutY="469.0" mnemonicParsing="false" onAction="#updateTargetOnClick" prefHeight="25.0" prefWidth="108.0" text="Set Target" />
+            <Button layoutX="459.0" layoutY="469.0" mnemonicParsing="false" onAction="#setTargetOnClick" prefHeight="25.0" prefWidth="108.0" text="Set Target" />
             <TextField fx:id="descriptionTextField" layoutX="88.0" layoutY="501.0" prefHeight="25.0" prefWidth="478.0" />
          </children>
       </Pane>

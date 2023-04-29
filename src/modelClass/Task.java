@@ -24,6 +24,7 @@ import java.util.List;
 public class Task implements Serializable {
 
     public String taskID;
+    public String title;
     public String employeeID;
     public String description;
     public LocalDate date;
@@ -31,12 +32,20 @@ public class Task implements Serializable {
     
     private static String FILENAME = "tasks.bin";
 
-    public Task(String employeeID, String description, LocalDate date) {
+    public Task(String employeeID, String title, String description, LocalDate date) {
         this.taskID = generateTaskID();
         this.employeeID = employeeID;
         this.description = description;
         this.date = date;
         this.Status = false;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTaskID() {

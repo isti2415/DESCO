@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,6 +40,7 @@ import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.Inventory;
+import modelClass.Task;
 
 /**
  * FXML Controller class
@@ -65,12 +67,6 @@ public class ManagerController implements Initializable {
     private Pane pane2;
     @FXML
     private ComboBox<String> attendEmpDeptComboBox;
-    @FXML
-    private TableView<?> performanceTable;
-    @FXML
-    private TableColumn<?, ?> goalColumn;
-    @FXML
-    private TableColumn<?, ?> completionColumn;
     @FXML
     private TableView<?> attendanceColumn;
     @FXML
@@ -130,8 +126,6 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField perfEmployeeIDTextField;
     @FXML
-    private ComboBox<String> perfEmployeeTypeComboBox;
-    @FXML
     private Pane pane8;
     @FXML
     private TextField profileUserIDTextField;
@@ -155,6 +149,8 @@ public class ManagerController implements Initializable {
     private TextField targetTextField;
     @FXML
     private TextField descriptionTextField;
+    @FXML
+    private ComboBox<String> perfEmpTypeCombo;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -336,7 +332,7 @@ public class ManagerController implements Initializable {
     @FXML
     private void viewTargetsOnClick(ActionEvent event) {
         switchPane(6);
-        perfEmployeeTypeComboBox.setItems(departments);
+        perfEmpTypeCombo.setItems(departments);
     }
 
     @FXML
@@ -426,9 +422,6 @@ public class ManagerController implements Initializable {
     private void updateOnClick(ActionEvent event) {
     }
 
-    @FXML
-    private void updateTargetOnClick(ActionEvent event) {
-    }
 
     @FXML
     private void updateCompanyPolicyOnClick(ActionEvent event) {
@@ -438,5 +431,17 @@ public class ManagerController implements Initializable {
             } catch (IOException ex) {
                 System.out.println("Error saving file: " + ex.getMessage());
             }
+    }
+
+    @FXML
+    private void loadTargetOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void setTargetOnClick(ActionEvent event) {
+        String id = perfEmployeeIDTextField.getText();
+        String title = targetTextField.getText();
+        String description=descriptionTextField.getText();
+        Task task = new Task(id,title,description,LocalDate.now());
     }
 }
