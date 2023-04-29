@@ -28,9 +28,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.CurrUserID;
 import modelClass.Employee;
+import modelClass.User;
 
 /**
  * FXML Controller class
@@ -42,21 +44,11 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane2;
     @FXML
-    private TableView<?> employeeInfoTable;
+    private TableView<Employee> employeeInfoTable;
     @FXML
     private Pane pane3;
     @FXML
     private TableView<?> attendanceTable;
-    @FXML
-    private TableColumn<?, ?> idColumn2;
-    @FXML
-    private TableColumn<?, ?> nameColumn2;
-    @FXML
-    private TableColumn<?, ?> presenceColumn2;
-    @FXML
-    private TableColumn<?, ?> reasonColumn2;
-    @FXML
-    private DatePicker datePicker2;
     @FXML
     private Pane pane4;
     @FXML
@@ -67,16 +59,7 @@ public class humanResourceController implements Initializable {
     private Pane pane5;
     @FXML
     private TableView<?> performanceTable;
-    @FXML
-    private TableColumn<?, ?> taskColumn4;
-    @FXML
-    private TableColumn<?, ?> completionColumn4;
-    @FXML
     private ComboBox<String> deptComboBox4;
-    @FXML
-    private TextField idTextField4;
-    @FXML
-    private TextField nameTextField4;
     @FXML
     private Pane pane7;
     @FXML
@@ -116,15 +99,11 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane9;
     @FXML
-    private TableColumn<?, ?> IDInfoColumn;
+    private TableColumn<Employee, String> IDInfoColumn;
     @FXML
-    private TableColumn<?, ?> NameIndoColumn;
+    private TableColumn<Employee, String> NameIndoColumn;
     @FXML
-    private TableColumn<?, ?> DeptInfoColumn;
-    @FXML
-    private TableColumn<?, ?> InfoTypeInfoColumn;
-    @FXML
-    private TableColumn<?, ?> detailsinfoColumn;
+    private TableColumn<Employee, String> DeptInfoColumn;
     @FXML
     private DatePicker dobPicker6;
     @FXML
@@ -145,9 +124,25 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableColumn<?, ?> deptColumn3;
     @FXML
-    private TableColumn<?, ?> monthColumn3;
+    private TableColumn<Employee, String> ContactInfoColumn;
     @FXML
-    private TableColumn<?, ?> yearColumn3;
+    private TableColumn<?, ?> idAttendanceColumn;
+    @FXML
+    private TableColumn<?, ?> presentAttdColumn;
+    @FXML
+    private TableColumn<?, ?> reasonAttdColumn;
+    @FXML
+    private TableColumn<?, ?> performanceIDColumn;
+    @FXML
+    private TableColumn<?, ?> performanceTaskColumn;
+    @FXML
+    private TableColumn<?, ?> perfCompleteColumn;
+    @FXML
+    private ComboBox<?> perfDeptComboBox;
+    @FXML
+    private TableColumn<Employee, String> SalaryInfoColumn;
+    @FXML
+    private TextField salaryTxtField;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -260,6 +255,28 @@ public class humanResourceController implements Initializable {
     @FXML
     private void employeeInfoOnClick(ActionEvent event) {
         switchPane(2);
+        employeeInfoTable.refresh();
+        
+        IDInfoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameIndoColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        DeptInfoColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        SalaryInfoColumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        ContactInfoColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        ObservableList<Employee> emps = FXCollections.observableList(new ArrayList<>());
+
+        try {
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
+                emps.addAll((List<Employee>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            // Handle exceptions as needed
+        }
+
+        employeeInfoTable.setItems((ObservableList<Employee>) emps);
     }
 
     @FXML
@@ -270,7 +287,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private void payrollOnClick(ActionEvent event) {
         switchPane(4);
-        deptComboBox4.setItems(departments);
+        
     }
 
     @FXML
@@ -309,21 +326,16 @@ public class humanResourceController implements Initializable {
         getCurrUser().logout(event);
     }
 
-    @FXML
-    private void saveS2OnClick(ActionEvent event) {
-    }
 
-    @FXML
-    private void saveS4OnClick(ActionEvent event) {
-    }
 
     @FXML
     private void saveS6OnClick(ActionEvent event) {
         String id = idTextField6.getText();
         String pass = passwordTextField6.getText();
         String type = deptComboBox6.getValue();
-        String name = idTextField6.getText();
-        Employee e = new Employee(id, pass, type, name);
+        String name = nameTextField6.getText();
+        String salary = salaryTxtField.getText();
+        Employee e = new Employee(id, pass, type, name, salary);
         e.setEmail(emailTextField6.getText());
         e.setContact(numberField6.getText());
         e.setDoB(dobPicker6.getValue());
@@ -344,13 +356,17 @@ public class humanResourceController implements Initializable {
         }
     }
 
-    @FXML
-    private void saveInfoOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-
-    }
 
     @FXML
     private void paySalaryOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void saveAttdOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void savePerformanceOnClick(ActionEvent event) {
     }
 
 

@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -36,6 +36,7 @@ public class Employee extends User {
 
     public void setSalary(String salary) {
         this.salary = salary;
+        updateEmployee();        
     }
 
     // Add any additional relevant information as needed
@@ -76,10 +77,11 @@ public class Employee extends User {
         updateEmployee();
     }
 
-    public Employee(String id, String password, String type, String name) {
+    public Employee(String id, String password, String type, String name, String salary) {
         super(id, password);
         this.type = type;
         this.name = name;
+        this.salary = salary;
         saveEmployee();
     }
 
