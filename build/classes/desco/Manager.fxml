@@ -20,12 +20,12 @@
       <VBox layoutX="18.0" layoutY="120.0" prefHeight="414.0" prefWidth="192.0" spacing="6.0">
          <children>
             <Button mnemonicParsing="false" onAction="#viewProfileOnClick" prefHeight="47.0" prefWidth="211.0" text="Profile" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="46.0" prefWidth="192.0" text="Performance &amp; Attendance" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewPerformAttendOnClick" prefHeight="46.0" prefWidth="192.0" text="Employee Attendance" />
             <Button layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#viewCustomerComplaintOnClick" prefHeight="47.0" prefWidth="211.0" text="Customer Complaints" />
             <Button mnemonicParsing="false" onAction="#viewContractsOnClick" prefHeight="46.0" prefWidth="211.0" text="Contracts &amp; Agreements" />
             <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkInvOnClick" prefHeight="47.0" prefWidth="210.0" text="Inventory" />
             <Button mnemonicParsing="false" onAction="#viewTargetsOnClick" prefHeight="46.0" prefWidth="209.0" text="Set Targets &amp; Performance" />
-            <Button mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Reports" />
+            <Button mnemonicParsing="false" onAction="#viewReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Real-time Reports" />
             <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
             <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
          </children>
@@ -40,33 +40,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
-         <children>
-            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Performance &amp; Attendance" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="31.0" layoutY="191.0" text="Employee Performance" />
-            <Label layoutX="35.0" layoutY="378.0" text="Employee Attendance" />
-            <Label layoutX="32.0" layoutY="97.0" text="Employee Department" />
-            <Label layoutX="35.0" layoutY="150.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
-            <ComboBox fx:id="attendEmpDeptComboBox" layoutX="159.0" layoutY="93.0" prefHeight="26.0" prefWidth="392.0" />
-            <TableView fx:id="performanceTable" layoutX="32.0" layoutY="208.0" prefHeight="153.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="goalColumn" prefWidth="346.0" text="Goal" />
-                  <TableColumn fx:id="completionColumn" prefWidth="173.0" text="Completion" />
-               </columns>
-            </TableView>
-            <TableView fx:id="attendanceColumn" layoutX="32.0" layoutY="395.0" prefHeight="139.0" prefWidth="520.0">
-               <columns>
-                  <TableColumn fx:id="daysColumn" prefWidth="269.59996032714844" text="Days" />
-                  <TableColumn fx:id="percentageColumn" prefWidth="250.4000244140625" text="Percentage" />
-               </columns>
-            </TableView>
-            <TextField fx:id="attendEmpIDTextField" layoutX="159.0" layoutY="138.0" prefHeight="26.0" prefWidth="392.0" />
-         </children>
-      </Pane>
       <Pane fx:id="pane3" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
             <TableView fx:id="complaintTable" layoutX="20.0" layoutY="70.0" prefHeight="453.0" prefWidth="541.0">
@@ -94,6 +67,25 @@
             <Button layoutX="20.0" layoutY="77.0" mnemonicParsing="false" onAction="#openContractOnClick" prefHeight="44.0" prefWidth="200.0" text="Open Contract / Agrement" />
             <Button layoutX="367.0" layoutY="77.0" mnemonicParsing="false" onAction="#saveContractOnClick" prefHeight="44.0" prefWidth="200.0" text="Save Contract / Agreement" />
             <TextArea fx:id="contractTextArea" layoutX="18.0" layoutY="132.0" prefHeight="401.0" prefWidth="546.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane7" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Real-time Reports" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="100.0" text="Department" />
+            <ComboBox fx:id="deptComboBox" layoutX="85.0" layoutY="96.0" prefHeight="25.0" prefWidth="192.0" />
+            <TableView fx:id="reportTable" layoutX="14.0" layoutY="133.0" prefHeight="396.0" prefWidth="552.0">
+               <columns>
+                  <TableColumn fx:id="taskColumn" prefWidth="160.0" text="Task" />
+                  <TableColumn fx:id="reportColumn" prefWidth="260.0" text="Report" />
+                  <TableColumn fx:id="employeeColumn" prefWidth="125.0" text="Employee In Charge" />
+               </columns>
+            </TableView>
+            <Button layoutX="466.0" layoutY="96.0" mnemonicParsing="false" onAction="#updateOnClick" text="Request Update" />
          </children>
       </Pane>
       <Pane fx:id="pane1" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
@@ -201,24 +193,23 @@
             <TextField fx:id="descriptionTextField" layoutX="88.0" layoutY="501.0" prefHeight="25.0" prefWidth="478.0" />
          </children>
       </Pane>
-      <Pane fx:id="pane7" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+      <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
          <children>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Reports" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Performance &amp; Attendance" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="64.0" text="Department" />
-            <ComboBox fx:id="deptComboBox" layoutX="85.0" layoutY="60.0" onAction="#reportComboOnClick" prefHeight="25.0" prefWidth="192.0" />
-            <TableView fx:id="reportTable" layoutX="14.0" layoutY="93.0" prefHeight="436.0" prefWidth="552.0">
+            <Label layoutX="32.0" layoutY="97.0" text="Employee Department" />
+            <Label layoutX="35.0" layoutY="150.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
+            <ComboBox fx:id="attendEmpDeptComboBox" layoutX="159.0" layoutY="93.0" prefHeight="26.0" prefWidth="392.0" />
+            <TableView fx:id="attendanceColumn" layoutX="32.0" layoutY="183.0" prefHeight="356.0" prefWidth="520.0">
                <columns>
-                  <TableColumn fx:id="reportEmployeeID" editable="false" text="Employee ID" />
-                  <TableColumn fx:id="reportSubject" editable="false" prefWidth="134.0" text="Subject" />
-                  <TableColumn fx:id="reportDetails" editable="false" prefWidth="201.0" text="Details" />
-                  <TableColumn fx:id="reportDate" editable="false" prefWidth="136.0" text="Date" />
+                  <TableColumn fx:id="daysColumn" prefWidth="269.59996032714844" text="Days" />
+                  <TableColumn fx:id="percentageColumn" prefWidth="250.4000244140625" text="Percentage" />
                </columns>
             </TableView>
-            <Button layoutX="466.0" layoutY="60.0" mnemonicParsing="false" onAction="#updateOnClick" text="Request Update" />
+            <TextField fx:id="attendEmpIDTextField" layoutX="159.0" layoutY="138.0" prefHeight="26.0" prefWidth="392.0" />
          </children>
       </Pane>
    </children>

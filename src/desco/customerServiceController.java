@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,8 +30,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import modelClass.Complaint;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 import modelClass.Notification;
@@ -69,17 +73,17 @@ public class customerServiceController implements Initializable {
     @FXML
     private TextField CustomerIDTextField;
     @FXML
-    private TableView<?> ViewCustomerAccountTable;
+     private TableView<Complaint> ViewCustomerAccountTable;
     @FXML
-    private TableColumn<?, ?> ViewCustomerIDColumn;
+    private TableColumn<Complaint, String> ViewCustomerIDColumn;
     @FXML
-    private TableColumn<?, ?> ViewComplainIDColumn;
+    private TableColumn<Complaint, String> ViewComplainIDColumn;
     @FXML
-    private TableColumn<?, ?> ViewCustomerComplaintColumn;
+    private TableColumn<Complaint, String> ViewCustomerComplaintColumn;
     @FXML
-    private TableColumn<?, ?> ViewDateColumn;
+    private TableColumn<Complaint, LocalDate> ViewDateColumn;
     @FXML
-    private TableColumn<?, ?> viewFeedback;
+    private TableColumn<Complaint, String> viewFeedback;
     @FXML
     private TextField subjectTextField;
     @FXML
@@ -189,6 +193,24 @@ public class customerServiceController implements Initializable {
     @FXML
     private void viewCustomerComplaintsOnClick(ActionEvent event) {
         switchPane(2);
+        ViewCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        ViewComplainIDColumn.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
+        ViewDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        viewFeedback.setCellValueFactory(new PropertyValueFactory<>("feedback"));
+        ViewCustomerComplaintColumn.setCellValueFactory(new PropertyValueFactory<>("details"));
+
+        ObservableList<Complaint> complaintList = FXCollections.observableList(new ArrayList<>());
+
+        try {
+            try ( // Read the list of complaints from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
+                complaintList.addAll((List<Complaint>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        ViewCustomerAccountTable.setItems((ObservableList<Complaint>)complaintList);
     }
 
     @FXML
