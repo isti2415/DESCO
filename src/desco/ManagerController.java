@@ -33,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import modelClass.Complaint;
@@ -105,6 +106,12 @@ public class ManagerController implements Initializable {
     @FXML
     private TableView<?> reportTable;
     @FXML
+    private TableColumn<?, ?> taskColumn;
+    @FXML
+    private TableColumn<?, ?> reportColumn;
+    @FXML
+    private TableColumn<?, ?> employeeColumn;
+    @FXML
     private Pane pane7;
     @FXML
     private TextArea policyTextArea;
@@ -143,17 +150,7 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField descriptionTextField;
     @FXML
-<<<<<<< HEAD
-    private TableColumn<?, ?> reportEmployeeID;
-    @FXML
-    private TableColumn<?, ?> reportSubject;
-    @FXML
-    private TableColumn<?, ?> reportDetails;
-    @FXML
-    private TableColumn<?, ?> reportDate;
-=======
     private ComboBox<String> perfEmpTypeCombo;
->>>>>>> 9ec55ce2610e4a950d7246f1ed47736fc2c4ae6c
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -341,7 +338,6 @@ public class ManagerController implements Initializable {
     @FXML
     private void viewReportsOnClick(ActionEvent event) {
         switchPane(7);
-        deptComboBox.setItems(departments);
     }
 
     @FXML
@@ -438,9 +434,6 @@ public class ManagerController implements Initializable {
     }
 
     @FXML
-<<<<<<< HEAD
-    private void reportComboOnClick(ActionEvent event) {
-=======
     private void loadTargetOnClick(ActionEvent event) {
     }
 
@@ -450,6 +443,5 @@ public class ManagerController implements Initializable {
         String title = targetTextField.getText();
         String description=descriptionTextField.getText();
         Task task = new Task(id,title,description,LocalDate.now());
->>>>>>> 9ec55ce2610e4a950d7246f1ed47736fc2c4ae6c
     }
 }

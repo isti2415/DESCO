@@ -5,6 +5,7 @@
  */
 package modelClass;
 
+import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,9 +30,9 @@ public class Report {
 
     private static final String FILENAME = "reports.bin";
 
-    public Report(String employeeID, String subject, String details, String filePath) {
+    public Report(String employeeID, LocalDate date, String subject, String details, String filePath) {
         this.employeeID = employeeID;
-        this.date = LocalDate.now();
+        this.date = date;
         this.subject = subject;
         this.details = details;
         this.filePath = filePath;
@@ -106,7 +107,7 @@ public class Report {
                 reportList = (List<Report>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
-    // Ignore the exception if the file does not exist yet
+// Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading reports from file");
         }
