@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,7 +39,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import modelClass.Bill;
 import modelClass.CurrUserID;
 import modelClass.Employee;
 
@@ -78,15 +82,15 @@ public class billingAdminController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> ViewCustomerBillsTable;
+   private TableView<Bill> ViewCustomerBillsTable;
     @FXML
-    private TableColumn<?, ?> ViewBillNumberCustomerColumn;
+    private TableColumn<Bill, String> ViewBillNumberCustomerColumn;
     @FXML
-    private TableColumn<?, ?> ViewMonthCustomerColumn;
+    private TableColumn<Bill, String> ViewMonthCustomerColumn;
     @FXML
-    private TableColumn<?, ?> ViewYearCustomerColumn;
+    private TableColumn<Bill, String> ViewYearCustomerColumn;
     @FXML
-    private TableColumn<?, ?> ViewBillAmountCustomerColumn;
+    private TableColumn<Bill, Float> ViewBillAmountCustomerColumn;
     @FXML
     private TextField CustomerIDTextField;
     @FXML
@@ -193,6 +197,26 @@ public class billingAdminController implements Initializable {
     @FXML
     private void ViewCustomerBillPaneButtononClick(ActionEvent event) {
         switchPane(2);
+        ViewMonthCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("billMonth"));
+        ViewYearCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("billYear"));
+        ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        ViewUsageColumn.setCellValueFactory(new PropertyValueFactory<>("usuage"));
+        ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        
+        ObservableList<Bill> CustomerBill  = FXCollections.observableList(new ArrayList<>());
+        
+        try {
+            try ( // Read the list of users from the file
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bills.bin"))) {
+                CustomerBill.addAll((List<Bill>) inputStream.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            // Ignore the exception if the file does not exist yet
+        } catch (IOException | ClassNotFoundException e) {
+    }
+
+        ViewCustomerBillsTable.setItems((ObservableList<Bill>) CustomerBill);
+    
     }
 
     @FXML

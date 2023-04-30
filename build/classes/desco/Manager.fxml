@@ -212,5 +212,27 @@
             <TextField fx:id="descriptionTextField" layoutX="88.0" layoutY="501.0" prefHeight="25.0" prefWidth="478.0" />
          </children>
       </Pane>
+<<<<<<< HEAD
+=======
+      <Pane fx:id="pane2" layoutX="217.0" layoutY="5.0" prefHeight="547.0" prefWidth="581.0">
+         <children>
+            <Label alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Performance &amp; Attendance" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="97.0" text="Employee Department" />
+            <Label layoutX="35.0" layoutY="150.0" prefHeight="17.0" prefWidth="67.0" text="Employee ID" />
+            <ComboBox fx:id="attendEmpDeptComboBox" layoutX="159.0" layoutY="93.0" prefHeight="26.0" prefWidth="392.0" />
+            <TableView fx:id="attendanceColumn" layoutX="32.0" layoutY="183.0" prefHeight="356.0" prefWidth="520.0">
+               <columns>
+                  <TableColumn fx:id="daysColumn" prefWidth="269.59996032714844" text="Days" />
+                  <TableColumn fx:id="percentageColumn" prefWidth="250.4000244140625" text="Percentage" />
+               </columns>
+            </TableView>
+            <TextField fx:id="attendEmpIDTextField" layoutX="159.0" layoutY="138.0" prefHeight="26.0" prefWidth="392.0" />
+         </children>
+      </Pane>
+>>>>>>> e1e21a456499f5290df1228d948951dc589200ec
    </children>
 </AnchorPane>
