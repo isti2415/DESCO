@@ -433,9 +433,6 @@ public class ManagerController implements Initializable {
             }
     }
 
-    @FXML
-    private void loadTargetOnClick(ActionEvent event) {
-    }
 
     @FXML
     private void setTargetOnClick(ActionEvent event) {
@@ -443,5 +440,9 @@ public class ManagerController implements Initializable {
         String title = targetTextField.getText();
         String description=descriptionTextField.getText();
         Task task = new Task(id,title,description,LocalDate.now());
+    }
+
+    @FXML
+    private void loadEmplTargetOnClick(ActionEvent event) {
     }
 }
