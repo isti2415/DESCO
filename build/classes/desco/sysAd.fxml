@@ -4,7 +4,6 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.sysAdController">
     <children>
         <VBox layoutX="18.0" layoutY="117.0" prefHeight="417.0" prefWidth="192.0" spacing="6.0">
             <children>
@@ -44,23 +43,6 @@
             <Image url="@../images/desco.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane5" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <ToggleButton layoutX="48.0" layoutY="94.0" mnemonicParsing="false" onAction="#billDueToggle" prefHeight="26.0" prefWidth="151.0" text="Bill Due" />
-            <CheckBox fx:id="pushTickBox" layoutX="49.0" layoutY="367.0" mnemonicParsing="false" text="Allow User To Customize Push Notifications" />
-            <CheckBox fx:id="emailTickBox" layoutX="49.0" layoutY="429.0" mnemonicParsing="false" text="Allow User To Customize Email Notifications" />
-            <ToggleButton layoutX="400.0" layoutY="178.0" mnemonicParsing="false" onAction="#promoToggle" prefHeight="26.0" prefWidth="151.0" text="Promotional Texts" />
-            <ToggleButton layoutX="400.0" layoutY="94.0" mnemonicParsing="false" onAction="#outageToggle" prefHeight="26.0" prefWidth="151.0" text="Outage/Service Notices" />
-            <ToggleButton layoutX="48.0" layoutY="259.0" mnemonicParsing="false" onAction="#accountToggle" prefHeight="26.0" prefWidth="151.0" text="Account Notices" />
-            <ToggleButton layoutX="400.0" layoutY="259.0" mnemonicParsing="false" onAction="#energySaveToggle" prefHeight="26.0" prefWidth="151.0" text="Energy Save Notices" />
-            <ToggleButton layoutX="48.0" layoutY="178.0" mnemonicParsing="false" onAction="#emergencyToggle" prefHeight="26.0" prefWidth="151.0" text="Natural Emergency" />
-            <Label alignment="CENTER" layoutY="25.0" prefHeight="46.0" prefWidth="574.0" text="Customize Notifications" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane2" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <Label alignment="CENTER" layoutX="-13.0" layoutY="17.0" prefHeight="46.0" prefWidth="601.0" text="Manage Account" textAlignment="CENTER">
@@ -210,6 +192,23 @@
                </font>
             </Label>
             <Button layoutX="465.0" layoutY="517.0" mnemonicParsing="false" onAction="#downloadLogOnClick" text="Download PDF" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <ToggleButton layoutX="48.0" layoutY="94.0" mnemonicParsing="false" onAction="#billDueToggle" prefHeight="26.0" prefWidth="151.0" text="Bill Due" />
+            <ToggleButton layoutX="400.0" layoutY="178.0" mnemonicParsing="false" onAction="#promoToggle" prefHeight="26.0" prefWidth="151.0" text="Promotional Texts" />
+            <ToggleButton layoutX="400.0" layoutY="94.0" mnemonicParsing="false" onAction="#outageToggle" prefHeight="26.0" prefWidth="151.0" text="Outage/Service Notices" />
+            <ToggleButton layoutX="48.0" layoutY="259.0" mnemonicParsing="false" onAction="#accountToggle" prefHeight="26.0" prefWidth="151.0" text="Account Notices" />
+            <ToggleButton layoutX="400.0" layoutY="259.0" mnemonicParsing="false" onAction="#energySaveToggle" prefHeight="26.0" prefWidth="151.0" text="Energy Save Notices" />
+            <ToggleButton layoutX="48.0" layoutY="178.0" mnemonicParsing="false" onAction="#emergencyToggle" prefHeight="26.0" prefWidth="151.0" text="Natural Emergency" />
+            <Label alignment="CENTER" layoutY="25.0" prefHeight="46.0" prefWidth="574.0" text="Customize Notifications" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="48.0" layoutY="366.0" mnemonicParsing="false" onAction="#sendPushNotificationOnClick" text="Send to User as Push Notification" />
+            <Button layoutX="46.0" layoutY="425.0" mnemonicParsing="false" onAction="#sendEmailNotificationOnClick" text="Send to User as Email Notification" />
          </children>
       </Pane>
     </children>

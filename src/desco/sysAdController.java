@@ -87,10 +87,6 @@ public class sysAdController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private CheckBox pushTickBox;
-    @FXML
-    private CheckBox emailTickBox;
-    @FXML
     private Pane pane6;
     @FXML
     private Label currentVersionLabel;
@@ -563,5 +559,13 @@ public class sysAdController implements Initializable {
 
         // Close the document
         document.close();
+    }
+
+    @FXML
+    private void sendPushNotificationOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void sendEmailNotificationOnClick(ActionEvent event) {
     }
 }
