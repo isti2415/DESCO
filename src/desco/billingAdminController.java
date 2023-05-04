@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,9 +37,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import modelClass.Bill;
 import modelClass.CurrUser;
 import modelClass.Employee;
+import modelClass.Report;
 
 public class billingAdminController implements Initializable {
 
@@ -60,6 +63,7 @@ public class billingAdminController implements Initializable {
     private Pane pane1;
     @FXML
     private Pane pane2;
+    @FXML
     private Pane pane3;
     @FXML
     private Pane pane4;
@@ -97,10 +101,17 @@ public class billingAdminController implements Initializable {
     private TableColumn<?, ?> disputeAmountColumn;
     @FXML
     private TextField newAmountColumn;
+    @FXML
+    private TextField feedbackSubjectTextField;
+    @FXML
+    private TextArea feedbackEmailTextArea;
+    
+    private String feedbackPath;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
+        pane3.setVisible(false);
         pane4.setVisible(false);
         pane5.setVisible(false);
 
@@ -110,6 +121,9 @@ public class billingAdminController implements Initializable {
                 break;
             case 2:
                 pane2.setVisible(true);
+                break;
+            case 3:
+                pane3.setVisible(true);
                 break;
             case 4:
                 pane4.setVisible(true);
@@ -244,6 +258,31 @@ public class billingAdminController implements Initializable {
 
     @FXML
     private void SearchBillButtononClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void viewSubmitFeedbackOnClick(ActionEvent event) {
+        switchPane(3);
+    }
+
+    @FXML
+    private void sendtoManagerOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
+        String subject = feedbackSubjectTextField.getText();
+        String details = feedbackEmailTextArea.getText();
+        LocalDate date = LocalDate.now();
+        Report report = new Report(CurrUser.getEmployee().getId(), date, subject, details, feedbackPath);
+        System.out.println(report.getFilePath());
+    }
+
+    @FXML
+    private void attachFilesOnClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            feedbackPath = selectedFile.getAbsolutePath();
+        }
+        System.out.println("File uploaded from " + feedbackPath);
     }
 
 }

@@ -43,6 +43,11 @@ import modelClass.Report;
 import modelClass.Service;
 import modelClass.Task;
 
+/**
+ * FXML Controller class
+ *
+ * @author Istiaqs-PC
+ */
 public class technicianController implements Initializable {
 
     @FXML

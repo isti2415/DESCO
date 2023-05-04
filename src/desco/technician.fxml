@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.technicianController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.technicianController">
    <children>
       <VBox layoutX="18.0" layoutY="102.0" prefHeight="438.0" prefWidth="192.0" spacing="6.0">
          <children>
@@ -24,7 +24,7 @@
             <Button mnemonicParsing="false" onAction="#viewComplaintsOnClick" prefHeight="46.0" prefWidth="211.0" text="Complaints" />
             <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onAction="#checkFaultyEquipmentOnClick" prefHeight="47.0" prefWidth="210.0" text="Faulty Equipments" />
             <Button mnemonicParsing="false" onAction="#checkInventoryEquipmentOnClick" prefHeight="46.0" prefWidth="209.0" text="Inventory" />
-            <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Submit Work Reports" />
+            <Button mnemonicParsing="false" onAction="#viewSubmitReportsOnClick" prefHeight="47.0" prefWidth="211.0" text="Submit Feedback and Reports" />
             <Button mnemonicParsing="false" onAction="#viewPolicyOnClick" prefHeight="47.0" prefWidth="210.0" text="Company Policy" />
             <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
          </children>
