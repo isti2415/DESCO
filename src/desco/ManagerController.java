@@ -395,6 +395,7 @@ public class ManagerController implements Initializable {
     @FXML
     private void viewPolicyOnClick(ActionEvent event) {
         switchPane(8);
+        policyTextArea.clear();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
             policyTextArea.setWrapText(true);
@@ -467,7 +468,19 @@ public class ManagerController implements Initializable {
         String name = itemNameTextField.getText();
         String quantity = itemQuantityTextField.getText();
         String department = itemDeptCombo.getValue();
-        Inventory i = new Inventory(name, quantity, department);
+        List<Inventory> inventoryList = Inventory.loadInventory();
+        Boolean exist = false;
+        for(Inventory i : inventoryList){
+            if(i.getName().equals(name)&&i.getDepartment().equals(department)){
+                i.setQuantity(String.valueOf(Integer.parseInt(i.getQuantity())+Integer.parseInt(quantity)));
+                i.setRestock(false);
+                exist = true;
+                break;
+            }
+        }
+        if(exist.equals(false)){
+            Inventory i = new Inventory(name, quantity, department);
+        }
         inventoryTable.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));
     }
 

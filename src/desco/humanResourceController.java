@@ -167,7 +167,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableColumn<Task, String> performaneDescriptionColumn;
     @FXML
-    private TableColumn<?, ?> payrollYearMonthColumn;
+    private TableColumn<Payroll, YearMonth> payrollYearMonthColumn;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -429,6 +429,7 @@ public class humanResourceController implements Initializable {
     private void viewPolicyOnClick(ActionEvent event
     ) {
         switchPane(9);
+        policyTextArea.clear();
         try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
                 policyTextArea.setWrapText(true);

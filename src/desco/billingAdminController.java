@@ -187,6 +187,7 @@ public class billingAdminController implements Initializable {
     @FXML
     private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
         switchPane(5);
+        policyTextArea.clear();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"));
             policyTextArea.setWrapText(true);

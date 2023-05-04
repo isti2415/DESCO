@@ -22,10 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Istiaqs-PC
- */
 public class Backup implements Serializable {
 
     private LocalDateTime timestamp;

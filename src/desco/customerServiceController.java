@@ -173,6 +173,7 @@ public class customerServiceController implements Initializable {
     @FXML
     private void ViewCompanyPolicyButtonsOnclick(ActionEvent event) {
         switchPane(5);
+        policyTextArea.clear();
         try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
                 policyTextArea.setWrapText(true);
