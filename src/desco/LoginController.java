@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package desco;
 
 import java.io.IOException;
@@ -16,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -60,8 +57,10 @@ public class LoginController implements Initializable {
         String userID = useridfield.getText(); // get the entered user ID
         String password = passwordfield.getText(); // get the entered password
         List<User> users = User.loadUser();
+        Boolean match = false;
         for (User p : users) {
             if (p.verification(userID, password)) {
+                match=true;
                 CurrUser c = new CurrUser(userID);
                 if (p instanceof Customer) {
                     // redirect to customer dashboard
@@ -77,8 +76,8 @@ public class LoginController implements Initializable {
                     }
                 } else if (p instanceof Employee) {
                     String userType = "";
-                    for(Employee employee : Employee.loadEmployee()){
-                        if(p.getId().equals(employee.getId())){
+                    for (Employee employee : Employee.loadEmployee()) {
+                        if (p.getId().equals(employee.getId())) {
                             userType = employee.getType();
                             break;
                         }
@@ -174,6 +173,13 @@ public class LoginController implements Initializable {
                     }
                 }
             }
+        }
+        if(match.equals(false)){
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Login Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Either id or password is wrong");
+                alert.showAndWait();
         }
     }
 }

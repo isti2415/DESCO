@@ -242,6 +242,7 @@ public class customerController implements Initializable {
             curr.setContact(profileConNumTextField.getText());
             curr.setAddress(profileAddressTextField.getText());
         }
+        
     }
 
     @FXML

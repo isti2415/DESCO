@@ -12,7 +12,6 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Comparator;
-import static java.util.stream.IntStream.generate;
 
 public class Bill implements Serializable {
 
@@ -38,7 +37,6 @@ public class Bill implements Serializable {
         this.dueDate = LocalDate.of(year, month, 1).plusMonths(1);
         this.status = false;
         this.billID = generateBillID();
-
         saveBill();
     }
 
@@ -224,5 +222,4 @@ public class Bill implements Serializable {
             System.out.println("Error saving bill to file: " + e.getMessage());
         }
     }
-
 }
