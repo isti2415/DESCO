@@ -49,10 +49,8 @@ import modelClass.Bill;
 import modelClass.Complaint;
 import modelClass.CurrUser;
 import modelClass.Customer;
-import modelClass.Inventory;
 import modelClass.Notification;
 import modelClass.Service;
-import modelClass.Task;
 
 public class customerController implements Initializable {
 

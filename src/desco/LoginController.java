@@ -103,7 +103,7 @@ public class LoginController implements Initializable {
                             } catch (IOException ex) {
                             }
                             break;
-                        case "Customer Service Representative":
+                        case "Customer Service Represantative":
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("customerServiceRep.fxml"));
                                 Parent root = loader.load();
@@ -115,7 +115,7 @@ public class LoginController implements Initializable {
                             } catch (IOException ex) {
                             }
                             break;
-                        case "Field Technician":
+                        case "Technician":
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("technician.fxml"));
                                 Parent root = loader.load();

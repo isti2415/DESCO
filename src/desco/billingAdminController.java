@@ -5,23 +5,13 @@
  */
 package desco;
 
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.TextAlignment;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,9 +70,7 @@ public class billingAdminController implements Initializable {
     @FXML
     private TableColumn<Bill, String> ViewBillNumberCustomerColumn;
     @FXML
-    private TableColumn<Bill, String> ViewMonthCustomerColumn;
-    @FXML
-    private TableColumn<Bill, String> ViewYearCustomerColumn;
+    private TableColumn<Bill, YearMonth> ViewMonthCustomerColumn;
     @FXML
     private TableColumn<Bill, Float> ViewBillAmountCustomerColumn;
     @FXML
@@ -165,8 +153,8 @@ public class billingAdminController implements Initializable {
     @FXML
     private void ViewCustomerBillPaneButtononClick(ActionEvent event) {
         switchPane(2);
-        ViewMonthCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("billMonth"));
-        ViewYearCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("billYear"));
+        
+        ViewMonthCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("yearMonth"));
         ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         ViewUsageColumn.setCellValueFactory(new PropertyValueFactory<>("usuage"));
         ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
@@ -271,7 +259,6 @@ public class billingAdminController implements Initializable {
         String details = feedbackEmailTextArea.getText();
         LocalDate date = LocalDate.now();
         Report report = new Report(CurrUser.getEmployee().getId(), date, subject, details, feedbackPath);
-        System.out.println(report.getFilePath());
     }
 
     @FXML
@@ -282,7 +269,6 @@ public class billingAdminController implements Initializable {
         if (selectedFile != null) {
             feedbackPath = selectedFile.getAbsolutePath();
         }
-        System.out.println("File uploaded from " + feedbackPath);
     }
 
 }

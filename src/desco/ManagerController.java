@@ -507,7 +507,7 @@ public class ManagerController implements Initializable {
         if(exist.equals(false)){
             Inventory i = new Inventory(name, quantity, department);
         }
-        inventoryTable.refresh();
+        inventoryTable.setItems(FXCollections.observableList(Inventory.loadInventory()));
     }
 
     @FXML
@@ -580,7 +580,7 @@ public class ManagerController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateString = selectedDate.format(formatter);
         // Create a PDF document with set margins and add an image
-        PdfWriter writer = new PdfWriter("attendance_report_" + dateString + ".pdf");
+        PdfWriter writer = new PdfWriter("attendance_report " + dateString + ".pdf");
         PdfDocument pdfDocument = new PdfDocument(writer);
         Document document = new Document(pdfDocument, PageSize.A4);
         document.setMargins(10f, 10f, 10f, 10f);
