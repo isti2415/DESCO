@@ -23,11 +23,6 @@ import modelClass.Employee;
 import modelClass.User;
 import modelClass.Version;
 
-/**
- * FXML Controller class
- *
- * @author Istiaqs-PC
- */
 public class LoginController implements Initializable {
 
     @FXML

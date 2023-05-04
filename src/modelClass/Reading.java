@@ -1,7 +1,17 @@
 package modelClass;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Reading implements Serializable {
 
@@ -27,11 +37,19 @@ public class Reading implements Serializable {
         MONTHS_MAP.put("december", 12);
     }
 
-    public Reading(String month, String year, float value, String meterID) {
+    public Reading(String month, String year, float value, String meterID, float prevValue) {
         this.month = convertMonth(month);
         this.year = convertYear(year);
         this.value = value;
-        this.meterID = meterID;
+        this.meterID = meterID;;
+        String userID = "";
+        for(Meter meter : Meter.loadMeter()){
+            if(meter.getMeterID().equals(meterID)){
+                userID = meter.getUserID();
+            }
+        }
+        YearMonth yearMonth = YearMonth.of(this.year, this.month);
+        Bill bill = new Bill(userID,value-prevValue,yearMonth);
         saveReadings();
     }
 

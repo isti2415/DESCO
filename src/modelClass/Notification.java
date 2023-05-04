@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelClass;
 
 import java.io.FileInputStream;
@@ -11,15 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Istiaqs-PC
- */
-public class Notification {
+public class Notification implements Serializable {
     
     private LocalDate date;
     private String subject;
@@ -32,6 +24,7 @@ public class Notification {
         this.subject = subject;
         this.details = details;
         this.type = type;
+        saveNotification();
     }
     
     public LocalDate getDate() {

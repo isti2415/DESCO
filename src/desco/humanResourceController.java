@@ -36,6 +36,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -49,17 +50,11 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.Attendance;
-import modelClass.Complaint;
 import modelClass.CurrUser;
 import modelClass.Employee;
 import modelClass.Payroll;
 import modelClass.Task;
 
-/**
- * FXML Controller class
- *
- * @author Istiaqs-PC
- */
 public class humanResourceController implements Initializable {
 
     @FXML
@@ -468,7 +463,7 @@ public class humanResourceController implements Initializable {
         TableView.TableViewSelectionModel<Employee> selectionModel = employeeOffboardTable.getSelectionModel();
         Employee selectedItem = selectionModel.getSelectedItem();
         selectedItem.deleteEmployee();
-        employeeOffboardTable.setItems(FXCollections.observableArrayList(Employee.loadEmployee()));
+        employeeOffboardTable.refresh();
     }
 
     @FXML
@@ -480,6 +475,36 @@ public class humanResourceController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -488,7 +513,7 @@ public class humanResourceController implements Initializable {
         TableView.TableViewSelectionModel<Payroll> selectionModel = payrollTable.getSelectionModel();
         Payroll selectedItem = selectionModel.getSelectedItem();
         selectedItem.setStatus(true);
-        payrollTable.setItems(FXCollections.observableArrayList(Payroll.loadPayroll()));
+        payrollTable.refresh();
     }
 
     @FXML

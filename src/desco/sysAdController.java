@@ -47,6 +47,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -63,11 +64,6 @@ import modelClass.Reading;
 import modelClass.User;
 import modelClass.Version;
 
-/**
- * FXML Controller class
- *
- * @author Istiaqs-PC
- */
 public class sysAdController implements Initializable {
 
     @FXML
@@ -332,6 +328,36 @@ public class sysAdController implements Initializable {
             curr.setDoB(profileDOBdatepicker.getValue());
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
+        }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
         }
     }
 

@@ -5,17 +5,35 @@
  */
 package desco;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.TextAlignment;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -31,21 +49,15 @@ import modelClass.Bill;
 import modelClass.Complaint;
 import modelClass.CurrUser;
 import modelClass.Customer;
+import modelClass.Inventory;
+import modelClass.Notification;
 import modelClass.Service;
+import modelClass.Task;
 
-/**
- * FXML Controller class
- *
- * @author Istiaqs-PC
- */
 public class customerController implements Initializable {
 
     @FXML
     private Pane pane2;
-    @FXML
-    private ComboBox billMonthComboBox;
-    @FXML
-    private ComboBox billYearComboBox;
     @FXML
     private Pane pane1;
     @FXML
@@ -75,13 +87,13 @@ public class customerController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> notificationsTableViewOnClick;
+    private TableView<Notification> notificationsTableView;
     @FXML
-    private TableColumn<?, ?> dateCol;
+    private TableColumn<Notification, LocalDate> dateCol;
     @FXML
-    private TableColumn<?, ?> subjectCol;
+    private TableColumn<Notification, String> subjectCol;
     @FXML
-    private TableColumn<?, ?> detailsCol;
+    private TableColumn<Notification, String> detailsCol;
     @FXML
     private Pane pane6;
     @FXML
@@ -105,13 +117,19 @@ public class customerController implements Initializable {
     @FXML
     private TableColumn<Bill, String> billIDColumn;
     @FXML
-    private TableColumn<Bill, String> monthColumn;
-    @FXML
-    private TableColumn<Bill, String> yearColumn;
+    private TableColumn<Bill, YearMonth> monthColumn;
     @FXML
     private TableColumn<Bill, String> amountColumn;
     @FXML
-    private TableColumn<?, ?> statusColumn;
+    private TableColumn<Bill, Boolean> statusColumn;
+    
+    // Initialize month combo box
+    ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+    // Initialize year combo box
+    ObservableList<String> yearList = IntStream.rangeClosed(2000, LocalDate.now().getYear())
+            .mapToObj(Integer::toString)
+            .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -149,18 +167,6 @@ public class customerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-        ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-        billMonthComboBox.setItems(monthList);
-        energyUseMonthCombobox.setItems(monthList);
-
-        // Initialize year combo box
-        ObservableList<String> yearList = FXCollections.observableArrayList();
-        for (int i = 2023; i >= 2000; i--) {
-            yearList.add(Integer.toString(i));
-        }
-        billYearComboBox.setItems(yearList);
-        energyUseYearCombobox.setItems(yearList);
-
         Customer curr;
         try {
             curr = CurrUser.getCustomer();
@@ -183,19 +189,26 @@ public class customerController implements Initializable {
     }
 
     @FXML
-    private void viewMyBillsOnClick(ActionEvent event) {
+    private void viewMyBillsOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         switchPane(2);
         billIDColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
-        monthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-        billTableView.setItems(FXCollections.observableList(Bill.loadBill()));
+        monthColumn.setCellValueFactory(new PropertyValueFactory<>("yearMonth"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
+        List<Bill> bills = Bill.loadBill(); // Load all tasks
+        String id = CurrUser.getCustomer().getId();
+        List<Bill> filteredBills = bills.stream()
+                .filter(bill -> bill.getUserID().equals(id))
+                .collect(Collectors.toList()); // Filter tasks by employeeID
+        billTableView.setItems(FXCollections.observableList(filteredBills));
     }
 
     @FXML
     private void viewEnergyUsageOnClick(ActionEvent event) {
         switchPane(3);
+        energyUseMonthCombobox.setItems(monthList);
+        energyUseYearCombobox.setItems(yearList);
     }
 
     private ToggleGroup serviceToggle;
@@ -212,6 +225,11 @@ public class customerController implements Initializable {
     @FXML
     private void viewNotificationsOnClick(ActionEvent event) {
         switchPane(5);
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        subjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        detailsCol.setCellValueFactory(new PropertyValueFactory<>("details"));
+        
+        notificationsTableView.setItems(FXCollections.observableList(Notification.loadNotifications()));
     }
 
     @FXML
@@ -225,11 +243,115 @@ public class customerController implements Initializable {
     }
 
     @FXML
-    private void viewBillOnClick(ActionEvent event) {
+    private void viewBillOnClick(ActionEvent event) throws ClassNotFoundException {
+        TableView.TableViewSelectionModel<Bill> selectionModel = billTableView.getSelectionModel();
+        Bill selectedItem = selectionModel.getSelectedItem();
+        File f = new File("bill "+selectedItem.getYearMonth().toString()+".pdf");
+        try {
+            if (f != null) {
+                PdfWriter pw = new PdfWriter(new FileOutputStream(f));
+                PdfDocument pdf = new PdfDocument(pw);
+                pdf.setDefaultPageSize(PageSize.A5);
+                pdf.addNewPage();
+                Document doc = new Document(pdf);
+
+                doc.setMargins(10f, 10f, 10f, 10f);
+
+                String imagepath = "src/images/desco.png";
+                ImageData data = ImageDataFactory.create(imagepath);
+                Image image = new Image(data);
+                image.setAutoScale(true);
+                doc.add(image);
+
+                String newline = "\n";
+                Paragraph lineSpace = new Paragraph(newline);
+                lineSpace.setHeight(10);
+
+                Text title = new Text("Customer Bill "+selectedItem.getYearMonth().toString());
+                title.setFontSize(18f);
+                Paragraph pageTitle = new Paragraph(title);
+                pageTitle.setBold();
+                pageTitle.setTextAlignment(TextAlignment.CENTER);
+                doc.add(lineSpace);
+                doc.add(pageTitle);
+                doc.add(lineSpace);
+
+                String id = "Customer ID: ";
+                Text custId = new Text(id);
+                Paragraph cusid = new Paragraph(custId);
+                cusid.setBold();
+                cusid.add(selectedItem.getUserID());
+                doc.add(cusid);
+                doc.add(lineSpace);
+
+                String bill = "Bill Number: ";
+                Text billId = new Text(bill);
+                Paragraph bills = new Paragraph(billId);
+                bills.setBold();
+                bills.add(selectedItem.getBillID());
+                doc.add(bills);
+                doc.add(lineSpace);
+
+                String month = "Month: ";
+                Text mont = new Text(month);
+                Paragraph mon = new Paragraph(mont);
+                mon.setBold();
+                mon.add(selectedItem.getYearMonth().getMonth().toString());
+                doc.add(mon);
+                doc.add(lineSpace);
+
+                String year = "Year: ";
+                Text yea = new Text(year);
+                Paragraph yr = new Paragraph(yea);
+                yr.setBold();
+                yr.add(String.valueOf(selectedItem.getYearMonth().getYear()));
+                doc.add(yr);
+                doc.add(lineSpace);
+
+                String usage = "Usage: ";
+                Text usee = new Text(usage);
+                Paragraph use = new Paragraph(usee);
+                use.setBold();
+                use.add(String.valueOf(selectedItem.getUsage()));
+                doc.add(use);
+                doc.add(lineSpace);
+
+                String billAmnt = "Bill Amount: ";
+                Text billAmt = new Text(billAmnt);
+                Paragraph billAt = new Paragraph(billAmt);
+                billAt.setBold();
+                billAt.add(String.valueOf(selectedItem.getTotal()));
+                doc.add(billAt);
+                doc.add(lineSpace);
+
+                String dueDate = "Due Date: ";
+                Text dueDat = new Text(dueDate);
+                Paragraph dueDt = new Paragraph(dueDat);
+                dueDt.setBold();
+                dueDt.add(selectedItem.getDueDate().toString());
+                doc.add(dueDt);
+                doc.add(lineSpace);
+
+                String paid = "Paid: ";
+                Text padd = new Text(paid);
+                Paragraph paidd = new Paragraph(padd);
+                paidd.setBold();
+                paidd.add(selectedItem.getStatus()? "Paid":"Unpaid");
+                doc.add(paidd);
+
+                doc.close();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(billingAdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void makePaymentOnClick(ActionEvent event) {
+        TableView.TableViewSelectionModel<Bill> selectionModel = billTableView.getSelectionModel();
+        Bill selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setStatus(true);
+        billTableView.refresh();
     }
 
     @FXML
@@ -242,7 +364,36 @@ public class customerController implements Initializable {
             curr.setContact(profileConNumTextField.getText());
             curr.setAddress(profileAddressTextField.getText());
         }
-        
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -279,6 +430,9 @@ public class customerController implements Initializable {
 
     @FXML
     private void disputeBillOnClick(ActionEvent event) {
+        TableView.TableViewSelectionModel<Bill> selectionModel = billTableView.getSelectionModel();
+        Bill selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setDispute(true);
     }
 
 }

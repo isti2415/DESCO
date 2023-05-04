@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package desco;
 
 import java.io.BufferedReader;
@@ -16,6 +11,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,14 +35,10 @@ import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.Inventory;
 import modelClass.Meter;
-import modelClass.Notification;
 import modelClass.Reading;
+import modelClass.Report;
+import modelClass.Task;
 
-/**
- * FXML Controller class
- *
- * @author Dell
- */
 public class meterReaderController implements Initializable {
 
     @FXML
@@ -75,7 +68,7 @@ public class meterReaderController implements Initializable {
     @FXML
     private TableView<Inventory> inventoryTableView;
     @FXML
-    private TableColumn<?, ?> qntCol;
+    private TableColumn<Inventory, String> qntCol;
     @FXML
     private Pane pane4;
     @FXML
@@ -83,13 +76,13 @@ public class meterReaderController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> performanceTableView;
+    private TableView<Task> performanceTableView;
     @FXML
-    private TableColumn<?, ?> perDateCol;
+    private TableColumn<Task, LocalDate> perDateCol;
     @FXML
-    private TableColumn<?, ?> perTitleCol;
+    private TableColumn<Task, String> perTitleCol;
     @FXML
-    private TableColumn<?, ?> perDescriptionCol;
+    private TableColumn<Task, String> perDescriptionCol;
     @FXML
     private Pane pane6;
     @FXML
@@ -122,15 +115,26 @@ public class meterReaderController implements Initializable {
     private TextField currPassTextField;
     @FXML
     private TextField subjectTextField;
-
-    private String filePath;
     @FXML
-    private TableColumn<?, ?> deptuseCol;
+    private TableColumn<Inventory, String> deptuseCol;
     @FXML
-    private TableColumn<?, ?> invIdCol;
+    private TableColumn<Inventory, String> invIdCol;
     @FXML
-    private TableColumn<?, ?> nameCol;
+    private TableColumn<Inventory, String> nameCol;
+    @FXML
+    private TableColumn<Task, Boolean> perStatusCol;
     
+    private String filePath;
+
+    // Initialize month combo box
+    ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+    // Initialize year combo box
+    ObservableList<String> yearList = IntStream.rangeClosed(2000, LocalDate.now().getYear())
+            .mapToObj(Integer::toString)
+            .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    
+
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
         pane2.setVisible(false);
@@ -175,19 +179,6 @@ public class meterReaderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-        // Initialize month combo box
-        ObservableList<String> monthList = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-        usageMonthCombo.setItems(monthList);
-        monthCombo.setItems(monthList);
-
-        // Initialize year combo box
-        ObservableList<String> yearList = FXCollections.observableArrayList();
-        for (int i = LocalDate.now().getYear(); i >= 2000; i--) {
-            yearList.add(Integer.toString(i));
-        }
-        usageYearCombo.setItems(yearList);
-        yearCombo.setItems(yearList);
-        customerMeterIDGen();
 
         Employee curr;
         try {
@@ -212,6 +203,8 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewEnergyUsageOnClick(ActionEvent event) {
         switchPane(2);
+        usageYearCombo.setItems(yearList);
+        usageMonthCombo.setItems(monthList);
     }
 
     @FXML
@@ -221,8 +214,8 @@ public class meterReaderController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         qntCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         deptuseCol.setCellValueFactory(new PropertyValueFactory<>("department"));
-        
-        inventoryTableView.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));        
+
+        inventoryTableView.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));
     }
 
     @FXML
@@ -231,8 +224,19 @@ public class meterReaderController implements Initializable {
     }
 
     @FXML
-    private void viewPerformaneTargetOnClick(ActionEvent event) {
+    private void viewPerformaneTargetOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         switchPane(5);
+        perTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        perDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        perDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        perStatusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        List<Task> tasks = Task.loadTask(); // Load all tasks
+        String id = CurrUser.getEmployee().getId();
+        List<Task> filteredTasks = tasks.stream()
+                .filter(task -> task.getEmployeeID().equals(id))
+                .collect(Collectors.toList()); // Filter tasks by employeeID
+        performanceTableView.setItems(FXCollections.observableArrayList(filteredTasks)); // Set filtered tasks in table view
     }
 
     @FXML
@@ -255,7 +259,10 @@ public class meterReaderController implements Initializable {
     @FXML
     private void viewMeterReordsOnClick(ActionEvent event) {
         switchPane(7);
-       
+        monthCombo.setItems(monthList);
+        yearCombo.setItems(yearList);
+        customerMeterIDGen();
+
     }
 
     @FXML
@@ -282,7 +289,7 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
-        Meter meter = new Meter(meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
+        Meter meter = new Meter(cusIDTextField.getText(),meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
         Customer customer = new Customer(cusIDTextField.getText(), passwordField.getText(), meter, cusNameTextField.getText(), cusAddressTextField.getText());
         for (Inventory i : Inventory.loadInventory()) {
             if (i.getName().equals("Meter")) {
@@ -291,6 +298,14 @@ public class meterReaderController implements Initializable {
                 i.setQuantity(String.valueOf(quantity));
             }
         }
+        meterIDTextField2.clear();
+        monthCombo.setValue(null);
+        yearCombo.setValue(null);
+        cusIDTextField.clear();
+        passwordField.clear();
+        cusNameTextField.clear();
+        cusAddressTextField.clear();
+        customerMeterIDGen();
     }
 
     @FXML
@@ -299,7 +314,7 @@ public class meterReaderController implements Initializable {
         int latestYear = 0;
         int latestMonth = 0;
         float latestValue = 0.0f;
-        boolean found = true;
+        boolean found = false;
         for (Reading r : Reading.loadReadings()) {
             if (r.getMeterID().equals(meterID)) {
                 if (r.getYear() > latestYear || (r.getYear() == latestYear && r.getMonth() > latestMonth)) {
@@ -307,18 +322,14 @@ public class meterReaderController implements Initializable {
                     latestMonth = r.getMonth();
                     latestValue = r.getValue();
                     found = true;
+                    energyUsePrevReadingTextField.setText(Float.toString(latestValue));
                 }
-            } else {
-                found = false;
             }
         }
-        if (found == true) {
-            energyUsePrevReadingTextField.setText(Float.toString(latestValue));
-        } else {
+        if (found == false) {
             Alert alert = new Alert(AlertType.ERROR, "No valid readings found for the given meter ID.");
             alert.showAndWait();
         }
-
     }
 
     private void customerMeterIDGen() {
@@ -344,7 +355,8 @@ public class meterReaderController implements Initializable {
         String month = usageMonthCombo.getValue();
         String year = usageYearCombo.getValue();
         float value = Float.parseFloat(energyUseCurrReadingTextField.getText());
-        Reading r = new Reading(month, year, value, meterID);
+        float prevValue = Float.parseFloat(energyUsePrevReadingTextField.getText());
+        Reading r = new Reading(month, year, value, meterID,prevValue);
     }
 
     @FXML
@@ -353,23 +365,24 @@ public class meterReaderController implements Initializable {
         TableView.TableViewSelectionModel<Inventory> selectionModel = inventoryTableView.getSelectionModel();
         Inventory selectedItem = selectionModel.getSelectedItem();
         selectedItem.setRestock(true);
-        inventoryTableView.refresh();            
     }
 
     @FXML
     private void reportOnClick(ActionEvent event
-    ) {
+    ) throws IOException, ClassNotFoundException {
         String subject = subjectTextField.getText();
         String details = reportNoteTextArea.getText();
-        String type = "Reports";
         LocalDate date = LocalDate.now();
-        Notification notification = new Notification(date, subject, details, type);
-        notification.setFilepath(filePath);        
+        Report report = new Report(CurrUser.getEmployee().getId(), date, subject, details, filePath);
     }
 
     @FXML
     private void markAsDoneOnClick(ActionEvent event
     ) {
+        TableView.TableViewSelectionModel<Task> selectionModel = performanceTableView.getSelectionModel();
+        Task selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setStatus(true);
+        performanceTableView.refresh();
     }
 
     @FXML
@@ -381,6 +394,36 @@ public class meterReaderController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -391,8 +434,6 @@ public class meterReaderController implements Initializable {
         if (selectedFile != null) {
             filePath = selectedFile.getAbsolutePath();
         }
-        System.out.println("File uploaded from "+filePath);
-    }        
+        System.out.println("File uploaded from " + filePath);
     }
-
-
+}

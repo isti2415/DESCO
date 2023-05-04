@@ -28,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,11 +40,6 @@ import modelClass.Bill;
 import modelClass.CurrUser;
 import modelClass.Employee;
 
-/**
- * FXML Controller class
- *
- * @author Dell
- */
 public class billingAdminController implements Initializable {
 
     @FXML
@@ -162,7 +158,6 @@ public class billingAdminController implements Initializable {
         ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         ViewCustomerBillsTable.setItems(FXCollections.observableList(Bill.loadBill()));
-
     }
 
     @FXML
@@ -201,6 +196,36 @@ public class billingAdminController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -209,98 +234,7 @@ public class billingAdminController implements Initializable {
 
     @FXML
     private void DownloadBillButtononClick(ActionEvent event) {
-        File f = new File("bill.pdf");
-        try {
-            if (f != null) {
-                PdfWriter pw = new PdfWriter(new FileOutputStream(f));
-                PdfDocument pdf = new PdfDocument(pw);
-                pdf.setDefaultPageSize(PageSize.A5);
-                pdf.addNewPage();
-                Document doc = new Document(pdf);
-
-                doc.setMargins(10f, 10f, 10f, 10f);
-
-                String imagepath = "src/images/desco.png";
-                ImageData data = ImageDataFactory.create(imagepath);
-                Image image = new Image(data);
-                image.setAutoScale(true);
-                doc.add(image);
-
-                String newline = "\n";
-                Paragraph lineSpace = new Paragraph(newline);
-                lineSpace.setHeight(10);
-
-                Text title = new Text("Customer Bill");
-                title.setFontSize(18f);
-                Paragraph pageTitle = new Paragraph(title);
-                pageTitle.setBold();
-                pageTitle.setTextAlignment(TextAlignment.CENTER);
-                doc.add(lineSpace);
-                doc.add(pageTitle);
-                doc.add(lineSpace);
-
-                String id = "Customer ID: ";
-                Text custId = new Text(id);
-                Paragraph cusid = new Paragraph(custId);
-                cusid.setBold();
-                cusid.add(CustomerIDTextField.getText());
-                doc.add(cusid);
-                doc.add(lineSpace);
-
-                String bil = "Bill Number: ";
-                Text billId = new Text(bil);
-                Paragraph bill = new Paragraph(billId);
-                bill.setBold();
-                doc.add(bill);
-                doc.add(lineSpace);
-
-                String month = "Month: ";
-                Text mont = new Text(month);
-                Paragraph mon = new Paragraph(mont);
-                mon.setBold();
-                doc.add(mon);
-                doc.add(lineSpace);
-
-                String year = "Year: ";
-                Text yea = new Text(year);
-                Paragraph yr = new Paragraph(yea);
-                yr.setBold();
-                doc.add(yr);
-                doc.add(lineSpace);
-
-                String usage = "Usage: ";
-                Text usee = new Text(usage);
-                Paragraph use = new Paragraph(usee);
-                use.setBold();
-                doc.add(use);
-                doc.add(lineSpace);
-
-                String billAmnt = "Bill Amount: ";
-                Text billAmt = new Text(billAmnt);
-                Paragraph billAt = new Paragraph(billAmt);
-                billAt.setBold();
-                doc.add(billAt);
-                doc.add(lineSpace);
-
-                String dueDate = "Due Date: ";
-                Text dueDat = new Text(dueDate);
-                Paragraph dueDt = new Paragraph(dueDat);
-                dueDt.setBold();
-                doc.add(dueDt);
-                doc.add(lineSpace);
-
-                String paid = "Paid: ";
-                Text padd = new Text(paid);
-                Paragraph paidd = new Paragraph(padd);
-                paidd.setBold();
-                doc.add(paidd);
-                doc.add(lineSpace);
-
-                doc.close();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(billingAdminController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     @FXML

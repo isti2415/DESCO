@@ -12,9 +12,10 @@ public class Meter implements Serializable {
     private Float lastReading;
     private String FILENAME = "meters.bin";
 
-    public Meter(String meterID, String month, String year) {
+    public Meter(String userID,String meterID, String month, String year) {
         this.meterID = meterID;
-        readings = new Reading(month,year,0f,meterID);
+        this.userID = userID;
+        readings = new Reading(month,year,0f,meterID,0f);
         saveMeter();
     }
 

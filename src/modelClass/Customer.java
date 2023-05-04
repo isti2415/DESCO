@@ -103,7 +103,13 @@ public class Customer extends User implements Serializable {
         this.address = address;
         updateCustomer();
     }
-
+    
+    @Override
+    public void setPassword(String password){
+        super.setPassword(password);
+        updateCustomer();
+    }
+    
     private void updateCustomer() {
         List<Customer> customerList = loadCustomer();
         Boolean found = false;

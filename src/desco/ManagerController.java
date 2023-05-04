@@ -40,6 +40,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -63,11 +64,6 @@ import modelClass.Inventory;
 import modelClass.Report;
 import modelClass.Task;
 
-/**
- * FXML Controller class
- *
- * @author Dell
- */
 public class ManagerController implements Initializable {
 
     @FXML
@@ -423,6 +419,36 @@ public class ManagerController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -481,7 +507,7 @@ public class ManagerController implements Initializable {
         if(exist.equals(false)){
             Inventory i = new Inventory(name, quantity, department);
         }
-        inventoryTable.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));
+        inventoryTable.refresh();
     }
 
     @FXML
@@ -506,6 +532,12 @@ public class ManagerController implements Initializable {
 
     @FXML
     private void loadEmplTargetOnClick(ActionEvent event) {
+        List<Task> tasks = Task.loadTask(); // Load all tasks
+        String id = perfEmployeeIDTextField.getText();
+        List<Task> filteredTasks = tasks.stream()
+                .filter(task -> task.getEmployeeID().equals(id))
+                .collect(Collectors.toList());
+        performanceTableView.setItems(FXCollections.observableList(filteredTasks));
     }
 
     @FXML

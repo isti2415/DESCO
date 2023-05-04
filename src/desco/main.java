@@ -16,9 +16,8 @@ public class main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Manager.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MeterReader.fxml"));
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
     }
@@ -29,5 +28,4 @@ public class main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }

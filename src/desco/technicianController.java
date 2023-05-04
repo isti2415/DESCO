@@ -16,11 +16,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -41,11 +43,6 @@ import modelClass.Report;
 import modelClass.Service;
 import modelClass.Task;
 
-/**
- * FXML Controller class
- *
- * @author Istiaqs-PC
- */
 public class technicianController implements Initializable {
 
     @FXML
@@ -207,7 +204,7 @@ public class technicianController implements Initializable {
     }
 
     @FXML
-    private void viewTaskListOnClick(ActionEvent event) {
+    private void viewTaskListOnClick(ActionEvent event) throws IOException, ClassNotFoundException  {
         switchPane(2);
 
         taskId.setCellValueFactory(new PropertyValueFactory<>("taskID"));
@@ -215,7 +212,13 @@ public class technicianController implements Initializable {
         taskDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         taskStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
-        taskListViewTable.setItems(FXCollections.observableArrayList(Task.loadTask()));
+        List<Task> tasks = Task.loadTask(); // Load all tasks
+        String id = CurrUser.getEmployee().getId();
+        List<Task> filteredTasks = tasks.stream()
+                .filter(task -> task.getEmployeeID().equals(id))
+                .collect(Collectors.toList()); // Filter tasks by employeeID
+        taskListViewTable.setItems(FXCollections.observableArrayList(filteredTasks)); // Set filtered tasks in table view
+
     }
 
     @FXML
@@ -284,7 +287,6 @@ public class technicianController implements Initializable {
     }
 
     @FXML
-
     private void checkInventoryEquipmentOnClick(ActionEvent event) {
         switchPane(6);
 
@@ -329,7 +331,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Task> selectionModel = taskListViewTable.getSelectionModel();
         Task selectedItem = selectionModel.getSelectedItem();
         selectedItem.setStatus(true);
-        taskListViewTable.setItems(FXCollections.observableArrayList(Task.loadTask()));
+        taskListViewTable.refresh();
     }
 
     @FXML
@@ -337,7 +339,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Complaint> selectionModel = ComplainListViewTable.getSelectionModel();
         Complaint selectedItem = selectionModel.getSelectedItem();
         selectedItem.setResolved(true);
-        ComplainListViewTable.setItems(FXCollections.observableArrayList(Complaint.loadComplaint()));
+        ComplainListViewTable.refresh();
     }
 
     @FXML
@@ -345,7 +347,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Service> selectionModel = faultyEquipmentViewTable.getSelectionModel();
         Service selectedItem = selectionModel.getSelectedItem();
         selectedItem.setStatus(true);
-        faultyEquipmentViewTable.setItems(FXCollections.observableArrayList(Service.loadService()));
+        faultyEquipmentViewTable.refresh();
     }
 
     @FXML
@@ -357,6 +359,36 @@ public class technicianController implements Initializable {
             curr.setEmail(profileEmailTextField.getText());
             curr.setContact(profileConNumTextField.getText());
         }
+        if (!(currPassTextField.getText().equals("") && newPassTextField.getText().equals(""))) {
+            if (currPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Your current password is incorrect. Please try again.");
+                alert.showAndWait();
+            } else if (newPassTextField.getText().equals("")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Password Change Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Enter new password and try again.");
+                alert.showAndWait();
+            } else {
+                if (curr.getPassword().equals(currPassTextField.getText())) {
+                    curr.setPassword(newPassTextField.getText());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Password Changed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your password has been changed successfully.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Password Change Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your current password is incorrect. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -364,6 +396,7 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Inventory> selectionModel = inventoryEquipmentViewTable.getSelectionModel();
         Inventory selectedItem = selectionModel.getSelectedItem();
         selectedItem.setRestock(true);
+        inventoryEquipmentViewTable.refresh();
     }
 
     @FXML

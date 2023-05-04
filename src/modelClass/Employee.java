@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelClass;
 
 import java.io.FileInputStream;
@@ -19,10 +14,6 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- *
- * @author Istiaqs-PC
- */
 public class Employee extends User implements Serializable {
 
     private static final String FILENAME = "employees.bin";
@@ -80,6 +71,12 @@ public class Employee extends User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        updateEmployee();
+    }
+    
+    @Override
+    public void setPassword(String password){
+        super.setPassword(password);
         updateEmployee();
     }
 

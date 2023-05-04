@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.meterReaderController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desco.meterReaderController">
    <children>
       <Pane fx:id="pane4" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
          <children>
@@ -55,23 +55,6 @@
             <Button mnemonicParsing="false" onAction="#logOutOnClick" prefHeight="46.0" prefWidth="210.0" text="Log Out" />
          </children>
       </VBox>
-      <Pane fx:id="pane5" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
-         <children>
-            <Label alignment="CENTER" layoutX="10.0" layoutY="22.0" prefHeight="46.0" prefWidth="572.0" text="Performance Target" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TableView fx:id="performanceTableView" layoutX="22.0" layoutY="126.0" prefHeight="414.0" prefWidth="548.0">
-               <columns>
-                  <TableColumn fx:id="perDateCol" prefWidth="101.0" text="Date" />
-                  <TableColumn fx:id="perTitleCol" prefWidth="184.0" text="Title" />
-                  <TableColumn fx:id="perDescriptionCol" prefWidth="262.0" text="Descriptions" />
-               </columns>
-            </TableView>
-            <Button layoutX="378.0" layoutY="87.0" mnemonicParsing="false" onAction="#markAsDoneOnClick" prefHeight="25.0" prefWidth="192.0" text="Mark as done" />
-         </children>
-      </Pane>
       <Pane fx:id="pane7" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
          <children>
             <Label alignment="CENTER" layoutX="22.0" layoutY="45.0" prefHeight="46.0" prefWidth="572.0" text="Meter Records" textAlignment="CENTER">
@@ -200,6 +183,24 @@
                </font>
             </Label>
             <ListView fx:id="safetyProceduresTextArea" layoutX="14.0" layoutY="81.0" prefHeight="450.0" prefWidth="564.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane5" layoutX="210.0" layoutY="5.0" prefHeight="558.0" prefWidth="594.0">
+         <children>
+            <Label alignment="CENTER" layoutX="10.0" layoutY="22.0" prefHeight="46.0" prefWidth="572.0" text="Performance Target" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="performanceTableView" layoutX="22.0" layoutY="126.0" prefHeight="414.0" prefWidth="548.0">
+               <columns>
+                  <TableColumn fx:id="perDateCol" prefWidth="59.0" text="Date" />
+                  <TableColumn fx:id="perTitleCol" prefWidth="159.0" text="Title" />
+                  <TableColumn fx:id="perDescriptionCol" prefWidth="268.0" text="Descriptions" />
+                  <TableColumn fx:id="perStatusCol" prefWidth="61.0" text="Status" />
+               </columns>
+            </TableView>
+            <Button layoutX="378.0" layoutY="87.0" mnemonicParsing="false" onAction="#markAsDoneOnClick" prefHeight="25.0" prefWidth="192.0" text="Mark as done" />
          </children>
       </Pane>
    </children>

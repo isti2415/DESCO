@@ -10,13 +10,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.YearMonth;
 import java.util.Comparator;
 
 public class Bill implements Serializable {
 
-    private String billMonth;
-    private String billYear;
+    private YearMonth yearMonth;
     private float usage;
     private float rate = 4.14f;
     private float total;
@@ -26,16 +25,14 @@ public class Bill implements Serializable {
     private String billID;
     private Boolean status;
 
-    public Bill(String userID, String billMonth, String billYear, float usage, LocalDate date) {
+    public Bill(String userID, float usage,YearMonth yearmonth) {
         this.userID = userID;
-        this.billMonth = billMonth;
-        this.billYear = billYear;
+        this.yearMonth = yearmonth;
         this.usage = usage;
         this.dispute = false;
-        int year = Integer.parseInt(billYear);
-        Month month = Month.valueOf(billMonth.toUpperCase());
-        this.dueDate = LocalDate.of(year, month, 1).plusMonths(1);
+        this.dueDate = this.yearMonth.atEndOfMonth();
         this.status = false;
+        this.total = this.usage*rate;
         this.billID = generateBillID();
         saveBill();
     }
@@ -67,21 +64,12 @@ public class Bill implements Serializable {
         updateBill();
     }
 
-    public String getBillMonth() {
-        return billMonth;
+    public YearMonth getYearMonth() {
+        return yearMonth;
     }
 
-    public void setBillMonth(String billMonth) {
-        this.billMonth = billMonth;
-        updateBill();
-    }
-
-    public String getBillYear() {
-        return billYear;
-    }
-
-    public void setBillYear(String billYear) {
-        this.billYear = billYear;
+    public void setYearMonth(YearMonth yearMonth) {
+        this.yearMonth = yearMonth;
         updateBill();
     }
 
@@ -100,15 +88,6 @@ public class Bill implements Serializable {
 
     public void setRate(float rate) {
         this.rate = rate;
-        updateBill();
-    }
-
-    public float getNetBill() {
-        return total;
-    }
-
-    public void setNetBill(float total) {
-        this.total = total;
         updateBill();
     }
 
@@ -167,7 +146,7 @@ public class Bill implements Serializable {
         // Check if the user ID of the current user already exists in the list
         boolean exists = false;
         for (Bill bill : billList) {
-            if (bill.getUserID().equals(this.getUserID()) && bill.getBillMonth().equals(this.getBillMonth()) && bill.getBillYear().equals(this.getBillYear())) {
+            if (bill.getUserID().equals(this.getUserID()) && bill.getYearMonth().equals(this.getYearMonth())) {
                 exists = true;
                 break;
             }
@@ -205,7 +184,7 @@ public class Bill implements Serializable {
         List<Bill> billList = loadBill();
         boolean updated = false;
         for (int i = 0; i < billList.size(); i++) {
-            if (billList.get(i).getBillID().equals(this.billID)&& billList.get(i).getBillMonth().equals(this.billMonth) && billList.get(i).getBillYear().equals(this.billYear)) {
+            if (billList.get(i).getUserID().equals(this.getUserID())&& billList.get(i).getYearMonth().equals(this.getYearMonth())) {
                 billList.set(i, this);
                 updated = true;
                 break;

@@ -115,25 +115,6 @@
             <Label layoutX="28.0" layoutY="370.0" prefHeight="17.0" prefWidth="40.0" text="Salary" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
-         <children>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Employee Information" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <TableView fx:id="employeeInfoTable" layoutX="25.0" layoutY="60.0" prefHeight="466.0" prefWidth="536.0">
-               <columns>
-                  <TableColumn fx:id="IDInfoColumn" prefWidth="38.0" text="ID" />
-                  <TableColumn fx:id="NameInfoColumn" prefWidth="131.0" text="Name" />
-                  <TableColumn fx:id="DeptInfoColumn" prefWidth="111.0" text="Department" />
-                  <TableColumn fx:id="SalaryInfoColumn" minWidth="5.0" prefWidth="71.0" text="Salary" />
-                  <TableColumn fx:id="ContactInfoColumn" text="Contact" />
-                  <TableColumn fx:id="servicePeriodColumn" prefWidth="104.0" text="Period of Service" />
-               </columns>
-            </TableView>
-         </children>
-      </Pane>
       <Pane fx:id="pane8" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
          <children>
             <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Employee Offboarding" textAlignment="CENTER">
@@ -211,6 +192,25 @@
             <TextField fx:id="payrollIDField" layoutX="94.0" layoutY="498.0" />
             <Button layoutX="254.0" layoutY="498.0" mnemonicParsing="false" onAction="#payrollSearchOnClick" text="Search" />
             <Label layoutX="16.0" layoutY="502.0" text="Employee ID" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutX="220.0" layoutY="4.0" prefHeight="546.0" prefWidth="583.0">
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="572.0" text="Employee Information" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TableView fx:id="employeeInfoTable" layoutX="25.0" layoutY="60.0" prefHeight="466.0" prefWidth="536.0">
+               <columns>
+                  <TableColumn fx:id="IDInfoColumn" prefWidth="38.0" text="ID" />
+                  <TableColumn fx:id="NameInfoColumn" prefWidth="131.0" text="Name" />
+                  <TableColumn fx:id="DeptInfoColumn" prefWidth="102.0" text="Department" />
+                  <TableColumn fx:id="SalaryInfoColumn" minWidth="5.0" prefWidth="49.0" text="Salary" />
+                  <TableColumn fx:id="ContactInfoColumn" prefWidth="111.0" text="Contact" />
+                  <TableColumn fx:id="servicePeriodColumn" prefWidth="104.0" text="Period of Service" />
+               </columns>
+            </TableView>
          </children>
       </Pane>
    </children>
