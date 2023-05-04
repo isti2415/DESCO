@@ -28,7 +28,7 @@ public class Task implements Serializable {
     public String employeeID;
     public String description;
     public LocalDate date;
-    public Boolean Status;
+    public Boolean status;
     
     private static String FILENAME = "tasks.bin";
 
@@ -37,7 +37,9 @@ public class Task implements Serializable {
         this.employeeID = employeeID;
         this.description = description;
         this.date = date;
-        this.Status = false;
+        this.status = false;
+        this.title=title;
+        saveTask();
     }
 
     public String getTitle() {
@@ -81,11 +83,12 @@ public class Task implements Serializable {
     }
 
     public Boolean getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(Boolean Status) {
-        this.Status = Status;
+    public void setStatus(Boolean status) {
+        this.status = status;
+        updateTask();
     }
 
     private String generateTaskID() {
@@ -156,7 +159,7 @@ public class Task implements Serializable {
         }
     }
 
-    private static List<Task> loadTask() {
+    public static List<Task> loadTask() {
         List<Task> taskList = new ArrayList<>();
         try {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {

@@ -23,9 +23,9 @@
       </Label>
       <Label layoutX="195.0" layoutY="222.0" text="User ID " />
       <TextField fx:id="useridfield" layoutX="237.0" layoutY="218.0" />
-      <PasswordField fx:id="passwordfield" layoutX="249.0" layoutY="260.0" prefHeight="25.0" prefWidth="137.0" />
       <Label layoutX="195.0" layoutY="264.0" text="Password " />
       <Button layoutX="278.0" layoutY="309.0" mnemonicParsing="false" onAction="#loginOnClick" text="Login" />
       <Label fx:id="versionLabel" layoutX="449.0" layoutY="369.0" prefHeight="17.0" prefWidth="137.0" />
+      <PasswordField fx:id="passwordfield" layoutX="250.0" layoutY="260.0" prefHeight="25.0" prefWidth="137.0" />
    </children>
 </AnchorPane>

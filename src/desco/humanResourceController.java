@@ -5,34 +5,55 @@
  */
 package desco;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.layout.property.VerticalAlignment;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import modelClass.CurrUserID;
+import modelClass.Attendance;
+import modelClass.Complaint;
+import modelClass.CurrUser;
 import modelClass.Employee;
-import modelClass.User;
+import modelClass.Payroll;
+import modelClass.Task;
 
 /**
  * FXML Controller class
@@ -48,18 +69,15 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane3;
     @FXML
-    private TableView<?> attendanceTable;
+    private TableView<Attendance> attendanceTable;
     @FXML
     private Pane pane4;
     @FXML
-    private TableView<?> payrollTable;
-    @FXML
-    private TableColumn<?, ?> amountColumn3;
+    private TableView<Payroll> payrollTable;
     @FXML
     private Pane pane5;
     @FXML
-    private TableView<?> performanceTable;
-    private ComboBox<String> deptComboBox4;
+    private TableView<Task> performanceTable;
     @FXML
     private Pane pane7;
     @FXML
@@ -71,15 +89,13 @@ public class humanResourceController implements Initializable {
     @FXML
     private Pane pane8;
     @FXML
-    private TableView<?> employeeOffboardTable;
+    private TableView<Employee> employeeOffboardTable;
     @FXML
-    private TableColumn<?, ?> idColumn7;
+    private TableColumn<Employee, String> idColumn7;
     @FXML
-    private TableColumn<?, ?> nameColumn7;
+    private TableColumn<Employee, String> nameColumn7;
     @FXML
-    private TableColumn<?, ?> departmentColumn7;
-    @FXML
-    private TableColumn<?, ?> positionColumn7;
+    private TableColumn<Employee, String> departmentColumn7;
     @FXML
     private Pane pane1;
     @FXML
@@ -101,7 +117,7 @@ public class humanResourceController implements Initializable {
     @FXML
     private TableColumn<Employee, String> IDInfoColumn;
     @FXML
-    private TableColumn<Employee, String> NameIndoColumn;
+    private TableColumn<Employee, String> NameInfoColumn;
     @FXML
     private TableColumn<Employee, String> DeptInfoColumn;
     @FXML
@@ -114,35 +130,44 @@ public class humanResourceController implements Initializable {
     private TextField emailTextField6;
     @FXML
     private TextArea policyTextArea;
-
-    ObservableList<String> departments = FXCollections.observableArrayList(
-            "Meter Reader", "Billing Administrator", "Customer Service Represantative",
-            "Human Resources", "Manager", "Technician", "System Administrator"
-    );
-    @FXML
-    private TableColumn<?, ?> idColumn3;
-    @FXML
-    private TableColumn<?, ?> deptColumn3;
     @FXML
     private TableColumn<Employee, String> ContactInfoColumn;
     @FXML
-    private TableColumn<?, ?> idAttendanceColumn;
+    private TableColumn<Attendance, Boolean> presentAttdColumn;
     @FXML
-    private TableColumn<?, ?> presentAttdColumn;
+    private TableColumn<Attendance, String> reasonAttdColumn;
     @FXML
-    private TableColumn<?, ?> reasonAttdColumn;
+    private TableColumn<Task, String> performanceIDColumn;
     @FXML
-    private TableColumn<?, ?> performanceIDColumn;
-    @FXML
-    private TableColumn<?, ?> performanceTaskColumn;
-    @FXML
-    private TableColumn<?, ?> perfCompleteColumn;
-    @FXML
-    private ComboBox<?> perfDeptComboBox;
+    private TableColumn<Task, String> performanceTaskColumn;
     @FXML
     private TableColumn<Employee, String> SalaryInfoColumn;
     @FXML
     private TextField salaryTxtField;
+    @FXML
+    private TableColumn<Employee, String> servicePeriodColumn;
+    @FXML
+    private TextField perfIDField;
+    @FXML
+    private TableColumn<Attendance, String> IDAttdColumn;
+    @FXML
+    private TableColumn<Attendance, Integer> absentTableColumn;
+    @FXML
+    private DatePicker attendanceDatePicker;
+    @FXML
+    private TableColumn<Payroll, String> payrollIDColumn;
+    @FXML
+    private TableColumn<Payroll, String> payrollDeptColumn;
+    @FXML
+    private TableColumn<Payroll, String> payrollAmountColumn;
+    @FXML
+    private TextField payrollIDField;
+    @FXML
+    private TableColumn<Task, LocalDate> performanceDateColumn;
+    @FXML
+    private TableColumn<Task, String> performaneDescriptionColumn;
+    @FXML
+    private TableColumn<?, ?> payrollYearMonthColumn;
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -182,42 +207,6 @@ public class humanResourceController implements Initializable {
         }
     }
 
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Look for a matching customer in the customers file
-        Employee currUser = null;
-        List<Employee> employees = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                employees = (List<Employee>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Employee employee : employees) {
-            if (employee.getId().equals(userID)) {
-                currUser = employee;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      *
@@ -227,10 +216,10 @@ public class humanResourceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         switchPane(1);
-        deptComboBox6.setItems(departments);
-        Employee curr;
+        deptComboBox6.setItems(Employee.getDepartments());
+        Employee curr = null;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getEmployee();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUserIDTextField.setText(curr.getId());
@@ -238,75 +227,207 @@ public class humanResourceController implements Initializable {
                 profileEmailTextField.setText(curr.getEmail());
                 profileConNumTextField.setText(curr.getContact());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+
+        Boolean exist = false;
+        for (Payroll p : Payroll.loadPayroll()) {
+            if (YearMonth.now().equals(p.getYearMonth())) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist == false) {
+            for (Employee e : Employee.loadEmployee()) {
+                Payroll payroll = new Payroll(e.getId(), e.getType(), e.getSalary(), false);
+            }
         }
     }
 
     @FXML
     private void viewProfileOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         switchPane(1);
-        Employee curr = getCurrUser();
-        profileNameTextField.setText(curr.getName());
     }
 
     @FXML
     private void employeeInfoOnClick(ActionEvent event) {
         switchPane(2);
-        employeeInfoTable.refresh();
-        
+
         IDInfoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        NameIndoColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        NameInfoColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         DeptInfoColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         SalaryInfoColumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
         ContactInfoColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
-
-        ObservableList<Employee> emps = FXCollections.observableList(new ArrayList<>());
-
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                emps.addAll((List<Employee>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            // Handle exceptions as needed
+        servicePeriodColumn.setCellValueFactory(new PropertyValueFactory<>("period"));
+        ObservableList<Employee> employees = FXCollections.observableArrayList(Employee.loadEmployee());
+        for (Employee e : employees) {
+            e.setPeriod();
         }
-
-        employeeInfoTable.setItems((ObservableList<Employee>) emps);
+        employeeInfoTable.setItems(employees);
     }
 
     @FXML
     private void employeeAttendanceOnClick(ActionEvent event) {
         switchPane(3);
+        attendanceDatePicker.setValue(LocalDate.now());
+        IDAttdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+
+        // Set the cell factory for the presentAttdColumn
+        presentAttdColumn.setCellFactory(column -> {
+            return new CheckBoxTableCell<Attendance, Boolean>() {
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        CheckBox checkBox = new CheckBox();
+                        checkBox.setSelected(item);
+                        setGraphic(checkBox);
+
+                        // Add a listener to the checkbox
+                        checkBox.setOnAction(event -> {
+                            Attendance attendance = getTableView().getItems().get(getIndex());
+                            attendance.setPresent(checkBox.isSelected());
+                        });
+                    }
+                    attendanceTable.refresh();
+                }
+            };
+        });
+
+        presentAttdColumn.setCellValueFactory(new PropertyValueFactory<>("present"));
+        reasonAttdColumn.setCellValueFactory(new PropertyValueFactory<>("reason"));
+
+        // Set the cell factory for the reasonAttdColumn to allow editing
+        reasonAttdColumn.setCellFactory(column -> {
+            return new TableCell<Attendance, String>() {
+                private TextField textField;
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        if (textField == null) {
+                            textField = new TextField();
+                            textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                                if (!isNowFocused) {
+                                    commitEdit(textField.getText());
+                                }
+                            });
+                        }
+                        textField.setText(item);
+                        setGraphic(textField);
+                    }
+                }
+
+                @Override
+                public void commitEdit(String newValue) {
+                    Attendance attendance = getTableView().getItems().get(getIndex());
+                    attendance.setReason(newValue);
+                    super.commitEdit(newValue);
+                }
+            };
+        });
+
+        absentTableColumn.setCellValueFactory(new PropertyValueFactory<>("absence"));
+
+        // Load the attendance data for today
+        ObservableList<Attendance> attendanceList = FXCollections.observableArrayList();
+        LocalDate today = LocalDate.now();
+        List<Attendance> todayAttendanceList = Attendance.loadAttendance()
+                .stream()
+                .filter(a -> a.getDate().equals(today))
+                .collect(Collectors.toList());
+        if (!todayAttendanceList.isEmpty()) {
+            attendanceList.addAll(todayAttendanceList);
+        } else {
+            for (Employee employee : Employee.loadEmployee()) {
+                attendanceList.add(new Attendance(employee.getId(), today, false));
+            }
+        }
+
+        // Set the attendance data to the table
+        attendanceTable.setItems(attendanceList);
     }
 
     @FXML
-    private void payrollOnClick(ActionEvent event) {
+    private void payrollOnClick(ActionEvent event
+    ) {
         switchPane(4);
-        
+        payrollIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        payrollDeptColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
+        payrollAmountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        payrollYearMonthColumn.setCellValueFactory(new PropertyValueFactory<>("yearMonth"));
+        payrollTable.setRowFactory(tv -> new TableRow<Payroll>() {
+            @Override
+            protected void updateItem(Payroll item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setStyle("");
+                } else if (item.getYearMonth().atEndOfMonth().isBefore(LocalDate.now())) {
+                    if (!item.getStatus()) {
+                        setStyle("-fx-background-color: red;");
+                    }
+                } else if (item.getStatus()) {
+                    setStyle("-fx-background-color: green;");
+                }
+            }
+        });
+        payrollTable.setItems(FXCollections.observableArrayList(Payroll.loadPayroll()));
     }
 
     @FXML
-    private void employeePerformanceOnClick(ActionEvent event) {
+    private void employeePerformanceOnClick(ActionEvent event
+    ) {
         switchPane(5);
+        performanceDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        performanceTaskColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        performaneDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        performanceIDColumn.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+        performanceTable.setRowFactory(tv -> new TableRow<Task>() {
+            @Override
+            protected void updateItem(Task item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setStyle("");
+                } else if (item.getDate().isBefore(LocalDate.now())) {
+                    if (!item.getStatus()) {
+                        setStyle("-fx-background-color: red;");
+                    }
+                } else if (item.getStatus()) {
+                    setStyle("-fx-background-color: green;");
+                }
+            }
+        });
+        performanceTable.setItems(FXCollections.observableArrayList(Task.loadTask()));
     }
 
     @FXML
-    private void employeeOnboardOnClick(ActionEvent event) {
+    private void employeeOnboardOnClick(ActionEvent event
+    ) {
         switchPane(7);
     }
 
     @FXML
-    private void employeeOffOnClick(ActionEvent event) {
+    private void employeeOffOnClick(ActionEvent event
+    ) {
         switchPane(8);
+        idColumn7.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn7.setCellValueFactory(new PropertyValueFactory<>("name"));
+        departmentColumn7.setCellValueFactory(new PropertyValueFactory<>("type"));
+        employeeOffboardTable.setItems(FXCollections.observableArrayList(Employee.loadEmployee()));
     }
 
     @FXML
-    private void viewPolicyOnClick(ActionEvent event) {
+    private void viewPolicyOnClick(ActionEvent event
+    ) {
         switchPane(9);
         try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("companypolicy.txt"))) {
@@ -323,31 +444,35 @@ public class humanResourceController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getEmployee().logout(event);
     }
 
-
-
     @FXML
-    private void saveS6OnClick(ActionEvent event) {
+    private void saveS6OnClick(ActionEvent event
+    ) {
         String id = idTextField6.getText();
         String pass = passwordTextField6.getText();
         String type = deptComboBox6.getValue();
         String name = nameTextField6.getText();
         String salary = salaryTxtField.getText();
-        Employee e = new Employee(id, pass, type, name, salary);
-        e.setEmail(emailTextField6.getText());
-        e.setContact(numberField6.getText());
-        e.setDoB(dobPicker6.getValue());
+        String email = emailTextField6.getText();
+        String contact = numberField6.getText();
+        LocalDate DoB = dobPicker6.getValue();
+        Employee e = new Employee(id, pass, type, name, email, contact, DoB, salary);
     }
 
     @FXML
-    private void offboardS7OnClick(ActionEvent event) {
+    private void offboardS7OnClick(ActionEvent event
+    ) throws IOException {
+        TableView.TableViewSelectionModel<Employee> selectionModel = employeeOffboardTable.getSelectionModel();
+        Employee selectedItem = selectionModel.getSelectedItem();
+        selectedItem.deleteEmployee();
+        employeeOffboardTable.setItems(FXCollections.observableArrayList(Employee.loadEmployee()));
     }
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Employee curr = getCurrUser();
+        Employee curr = CurrUser.getEmployee();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());
@@ -356,18 +481,158 @@ public class humanResourceController implements Initializable {
         }
     }
 
-
     @FXML
-    private void paySalaryOnClick(ActionEvent event) {
+    private void paySalaryOnClick(ActionEvent event
+    ) {
+        TableView.TableViewSelectionModel<Payroll> selectionModel = payrollTable.getSelectionModel();
+        Payroll selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setStatus(true);
+        payrollTable.setItems(FXCollections.observableArrayList(Payroll.loadPayroll()));
     }
 
     @FXML
-    private void saveAttdOnClick(ActionEvent event) {
+    private void loadAttdOnClick(ActionEvent event
+    ) {// Set the cell factory for the presentAttdColumn
+        presentAttdColumn.setCellFactory(column -> {
+            return new CheckBoxTableCell<Attendance, Boolean>() {
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        CheckBox checkBox = new CheckBox();
+                        checkBox.setSelected(item);
+                        setGraphic(checkBox);
+
+                        // Add a listener to the checkbox
+                        checkBox.setOnAction(event -> {
+                            Attendance attendance = getTableView().getItems().get(getIndex());
+                            attendance.setPresent(checkBox.isSelected());
+                        });
+                    }
+                }
+            };
+        });
+
+        // Set the cell factory for the reasonAttdColumn to allow editing
+        reasonAttdColumn.setCellFactory(column -> {
+            return new TableCell<Attendance, String>() {
+                private TextField textField;
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        if (textField == null) {
+                            textField = new TextField();
+                            textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                                if (!isNowFocused) {
+                                    commitEdit(textField.getText());
+                                }
+                            });
+                        }
+                        textField.setText(item);
+                        setGraphic(textField);
+                    }
+                }
+
+                @Override
+                public void commitEdit(String newValue) {
+                    Attendance attendance = getTableView().getItems().get(getIndex());
+                    attendance.setReason(newValue);
+                    super.commitEdit(newValue);
+                }
+            };
+        });
+
+        // Load the attendance data for today
+        ObservableList<Attendance> attendanceList = FXCollections.observableArrayList();
+        LocalDate today = attendanceDatePicker.getValue();
+        List<Attendance> todayAttendanceList = Attendance.loadAttendance()
+                .stream()
+                .filter(a -> a.getDate().equals(today))
+                .collect(Collectors.toList());
+        if (!todayAttendanceList.isEmpty()) {
+            attendanceList.addAll(todayAttendanceList);
+        } else {
+            for (Employee employee : Employee.loadEmployee()) {
+                attendanceList.add(new Attendance(employee.getId(), today, false));
+            }
+        }
+
+        // Set the attendance data to the table
+        attendanceTable.setItems(attendanceList);
     }
 
     @FXML
-    private void savePerformanceOnClick(ActionEvent event) {
+    private void downloadAttendanceOnClick(ActionEvent event) throws FileNotFoundException, MalformedURLException {
+        // Get the selected date and format it for report title
+        LocalDate selectedDate = attendanceDatePicker.getValue();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateString = selectedDate.format(formatter);
+        // Create a PDF document with set margins and add an image
+        PdfWriter writer = new PdfWriter("attendance_report_" + dateString + ".pdf");
+        PdfDocument pdfDocument = new PdfDocument(writer);
+        Document document = new Document(pdfDocument, PageSize.A4);
+        document.setMargins(10f, 10f, 10f, 10f);
+        String imagePath = "src/images/desco.png";
+        ImageData imageData = ImageDataFactory.create(imagePath);
+        Image image = new Image(imageData);
+        image.setAutoScale(true);
+        document.add(image);
+        // Add title with selected date
+        String newline = "\n";
+        Paragraph lineSpace = new Paragraph(newline);
+        lineSpace.setHeight(10);
+        Text titleText = new Text("Attendance Report of " + dateString);
+        titleText.setFontSize(18f);
+        Paragraph titleParagraph = new Paragraph(titleText);
+        titleParagraph.setBold();
+        titleParagraph.setTextAlignment(TextAlignment.CENTER);
+        document.add(lineSpace);
+        document.add(titleParagraph);
+        document.add(lineSpace);
+        // Create a table with headers and set alignment
+        Table attendanceView = new Table(4);
+        attendanceView.setWidth(UnitValue.createPercentValue(100));
+        attendanceView.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        attendanceView.setVerticalAlignment(VerticalAlignment.MIDDLE);
+        // Add headers to the table
+        attendanceView.addHeaderCell(new com.itextpdf.layout.element.Cell().add("Employee ID"));
+        attendanceView.addHeaderCell(new com.itextpdf.layout.element.Cell().add("Present"));
+        attendanceView.addHeaderCell(new com.itextpdf.layout.element.Cell().add("Reason"));
+        attendanceView.addHeaderCell(new com.itextpdf.layout.element.Cell().add("Absent Days"));
+        // Add attendance data to the table
+        for (Attendance attendance : attendanceTable.getItems()) {
+            attendanceView.addCell(new com.itextpdf.layout.element.Cell().add(attendance.getEmployeeID()));
+            attendanceView.addCell(new com.itextpdf.layout.element.Cell().add(attendance.getPresent() ? "Yes" : "No"));
+            attendanceView.addCell(new com.itextpdf.layout.element.Cell().add(attendance.getReason()));
+            attendanceView.addCell(new com.itextpdf.layout.element.Cell().add(String.valueOf(attendance.getAbsence())));
+        }
+        // Add the attendance table to the document
+        document.add(attendanceView);
+        // Close the document
+        document.close();
     }
 
+    @FXML
+    private void payrollSearchOnClick(ActionEvent event) {
+        List<Payroll> payrollList = Payroll.loadPayroll().stream()
+                .filter(payroll -> payroll.getEmployeeID().equals(payrollIDField.getText()))
+                .collect(Collectors.toList());
+        payrollTable.setItems(FXCollections.observableArrayList(payrollList));
+    }
 
+    @FXML
+    private void searchTaskOnClick(ActionEvent event) {
+        List<Task> Tasks = Task.loadTask().stream()
+                .filter(task -> task.getEmployeeID().equals(perfIDField.getText()))
+                .collect(Collectors.toList());
+        performanceTable.setItems(FXCollections.observableArrayList(Tasks));
+    }
 }

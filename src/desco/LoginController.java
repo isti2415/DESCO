@@ -5,12 +5,8 @@
  */
 package desco;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,7 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.User;
@@ -53,35 +49,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        List<Version> versionList = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("versions.bin"))) {
-            versionList = (List<Version>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading version from file: " + e.getMessage());
+        List<Version> versionList = Version.loadVersion();
+        if (!versionList.isEmpty()) {
+            versionLabel.setText("Current version: v" + versionList.get(versionList.size() - 1).getVersion());
         }
-        versionLabel.setText("Current version: v" + versionList.get(versionList.size() - 1).getVersion());
     }
 
     @FXML
     private void loginOnClick(ActionEvent event) throws IOException {
         String userID = useridfield.getText(); // get the entered user ID
         String password = passwordfield.getText(); // get the entered password
-        List<User> users = new ArrayList<>();
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
-                users = (List<User>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
+        List<User> users = User.loadUser();
         for (User p : users) {
             if (p.verification(userID, password)) {
-                CurrUserID c = new CurrUserID();
-                c.setCurrUserID(userID);
+                CurrUser c = new CurrUser(userID);
                 if (p instanceof Customer) {
                     // redirect to customer dashboard
                     try {
@@ -95,8 +76,13 @@ public class LoginController implements Initializable {
                     } catch (IOException ex) {
                     }
                 } else if (p instanceof Employee) {
-                    Employee employee = (Employee) p;
-                    String userType = employee.getType();
+                    String userType = "";
+                    for(Employee employee : Employee.loadEmployee()){
+                        if(p.getId().equals(employee.getId())){
+                            userType = employee.getType();
+                            break;
+                        }
+                    }
                     // redirect to appropriate dashboard based on employee type
                     switch (userType) {
                         case "Meter Reader":
@@ -173,9 +159,9 @@ public class LoginController implements Initializable {
                             break;
                         case "Human Resources":
                             try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/desco/humanResource.fxml"));
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("humanResource.fxml"));
                                 Parent root = loader.load();
-                                desco.humanResourceController humanResourcesController = loader.getController();
+                                humanResourceController humanResourcesController = loader.getController();
                                 Scene scene = new Scene(root);
                                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                                 stage.setScene(scene);

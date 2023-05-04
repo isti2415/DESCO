@@ -174,7 +174,7 @@ public class Complaint implements Serializable {
         }
     }
 
-    private static List<Complaint> loadComplaint() {
+    public static List<Complaint> loadComplaint() {
         List<Complaint> complaints = new ArrayList<>();
         try {
             try ( // Read the list of complaints from the file

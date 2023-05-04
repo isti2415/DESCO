@@ -5,7 +5,6 @@
  */
 package modelClass;
 
-import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -120,7 +119,7 @@ public class Service implements Serializable {
     }
 
     private void updateService() {
-        ObservableList<Service> serviceList = (ObservableList<Service>) loadService();
+        List<Service> serviceList = loadService();
         Boolean found = false;
         for (Service service : serviceList) {
             if (service.getComplaintID().equals(this.getComplaintID())) {
@@ -167,7 +166,7 @@ public class Service implements Serializable {
         }
     }
 
-    private static List<Service> loadService() {
+    public static List<Service> loadService() {
         List<Service> services = new ArrayList<>();
         try {
             try ( // Read the list of services from the file

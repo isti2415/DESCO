@@ -5,17 +5,12 @@
  */
 package desco;
 
-import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,8 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import modelClass.Bill;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Customer;
 import modelClass.Employee;
 import modelClass.Inventory;
@@ -175,42 +169,6 @@ public class meterReaderController implements Initializable {
         }
     }
 
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Look for a matching customer in the customers file
-        Employee currUser = null;
-        List<Employee> employees = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                employees = (List<Employee>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Employee employee : employees) {
-            if (employee.getId().equals(userID)) {
-                currUser = employee;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      */
@@ -233,7 +191,7 @@ public class meterReaderController implements Initializable {
 
         Employee curr;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getEmployee();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUserIDTextField.setText(curr.getId());
@@ -264,17 +222,7 @@ public class meterReaderController implements Initializable {
         qntCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         deptuseCol.setCellValueFactory(new PropertyValueFactory<>("department"));
         
-        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
-        
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList.addAll((List<Inventory>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-        
-        inventoryTableView.setItems((ObservableList<Inventory>) inventoryList);        
+        inventoryTableView.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));        
     }
 
     @FXML
@@ -328,22 +276,14 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getEmployee().logout(event);
     }
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) {
         Meter meter = new Meter(meterIDTextField2.getText(), monthCombo.getValue(), yearCombo.getValue());
         Customer customer = new Customer(cusIDTextField.getText(), passwordField.getText(), meter, cusNameTextField.getText(), cusAddressTextField.getText());
-        List<Inventory> inventoryList = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList = (List<Inventory>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-        for (Inventory i : inventoryList) {
+        for (Inventory i : Inventory.loadInventory()) {
             if (i.getName().equals("Meter")) {
                 int quantity = Integer.parseInt(i.getQuantity());
                 quantity--;
@@ -358,19 +298,8 @@ public class meterReaderController implements Initializable {
         int latestYear = 0;
         int latestMonth = 0;
         float latestValue = 0.0f;
-
-        List<Reading> readings = new ArrayList<>();
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
-                readings = (List<Reading>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
         boolean found = true;
-        for (Reading r : readings) {
+        for (Reading r : Reading.loadReadings()) {
             if (r.getMeterID().equals(meterID)) {
                 if (r.getYear() > latestYear || (r.getYear() == latestYear && r.getMonth() > latestMonth)) {
                     latestYear = r.getYear();
@@ -392,17 +321,8 @@ public class meterReaderController implements Initializable {
     }
 
     private void customerMeterIDGen() {
-        List<Customer> customers = new ArrayList<>();
+        List<Customer> customers = Customer.loadCustomer();
         String startID = "1001";
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-                customers = (List<Customer>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
         customers.sort(Comparator.comparing(Customer::getId, String.CASE_INSENSITIVE_ORDER));
         for (Customer c : customers) {
             if (startID.equals(c.getId())) {
@@ -453,7 +373,7 @@ public class meterReaderController implements Initializable {
 
     @FXML
     private void saveProfileOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Employee curr = getCurrUser();
+        Employee curr = CurrUser.getEmployee();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());

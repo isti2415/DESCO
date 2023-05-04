@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,15 +11,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author Istiaqs-PC
  */
-public class Employee extends User {
+public class Employee extends User implements Serializable {
 
     private static final String FILENAME = "employees.bin";
 
@@ -29,6 +33,8 @@ public class Employee extends User {
     private String contact;
     private LocalDate DoB;
     private String salary;
+    private LocalDate DoJ;
+    private String period;
 
     public String getSalary() {
         return salary;
@@ -36,7 +42,7 @@ public class Employee extends User {
 
     public void setSalary(String salary) {
         this.salary = salary;
-        updateEmployee();        
+        updateEmployee();
     }
 
     // Add any additional relevant information as needed
@@ -77,12 +83,25 @@ public class Employee extends User {
         updateEmployee();
     }
 
-    public Employee(String id, String password, String type, String name, String salary) {
+    public Employee(String id, String password, String type, String name, String email, String contact, LocalDate DoB, String salary) {
         super(id, password);
         this.type = type;
         this.name = name;
+        this.email = email;
+        this.contact = contact;
+        this.DoB = DoB;
         this.salary = salary;
+        this.DoJ = LocalDate.now();
         saveEmployee();
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod() {
+        this.period = (Period.between(this.DoJ,LocalDate.now()).getYears())+" Years "+(Period.between(this.DoJ,LocalDate.now()).getMonths())+" Months";
+        updateEmployee();
     }
 
     public String getType() {
@@ -118,7 +137,15 @@ public class Employee extends User {
         }
     }
 
-    private static List<Employee> loadEmployee() {
+    public static ObservableList<String> getDepartments() {
+        ObservableList<String> departments = FXCollections.observableArrayList(
+                "Meter Reader", "Billing Administrator", "Customer Service Represantative",
+                "Human Resources", "Manager", "Technician", "System Administrator"
+        );
+        return departments;
+    }
+
+    public static List<Employee> loadEmployee() {
         List<Employee> employees = new ArrayList<>();
         try {
             try ( // Read the list of employees from the file
@@ -152,6 +179,33 @@ public class Employee extends User {
                 System.out.println("Employee updated and saved to employees.bin file");
             } catch (IOException e) {
                 System.out.println("Error updating employee");
+            }
+        }
+    }
+
+    public void deleteEmployee() throws FileNotFoundException, IOException {
+        List<Employee> employeeList = Employee.loadEmployee();
+
+        for (Employee e : employeeList) {
+            if (e.getId().equals(this.getId())) {
+                employeeList.remove(e);
+                break; // exit the loop after removing the employee
+            }
+        }
+
+        if (employeeList.isEmpty()) {
+            try (FileOutputStream fileOut = new FileOutputStream("employees.bin"); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(new ArrayList<>());
+                System.out.println("Empty binary file created successfully");
+            } catch (IOException e) {
+                System.out.println("An error occurred while creating the empty binary file");
+                e.printStackTrace();
+            }
+        } else {
+            // write the updated employee list to the file
+            try (FileOutputStream fileOut = new FileOutputStream("employees.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(employeeList);
+                System.out.println("Employee deleted");
             }
         }
     }

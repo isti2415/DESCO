@@ -75,7 +75,7 @@ public class Meter implements Serializable {
         }
     }
 
-    private static List<Meter> loadMeter() {
+    public static List<Meter> loadMeter() {
         List<Meter> meters = new ArrayList<>();
         try {
             try ( // Read the list of meters from the file

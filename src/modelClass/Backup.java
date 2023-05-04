@@ -104,7 +104,7 @@ public class Backup implements Serializable {
         }
     }
 
-    private static List<Backup> loadBackup() {
+    public static List<Backup> loadBackup() {
         List<Backup> backups = new ArrayList<>();
         try {
             try ( // Read the list of backups from the file

@@ -5,13 +5,13 @@
  */
 package modelClass;
 
-import static com.itextpdf.kernel.pdf.collection.PdfCollectionField.FILENAME;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Istiaqs-PC
  */
-public class Report {
+public class Report implements Serializable {
 
     private String employeeID;
     private LocalDate date;
@@ -36,6 +36,7 @@ public class Report {
         this.subject = subject;
         this.details = details;
         this.filePath = filePath;
+        saveReport();
     }
 
     public String getEmployeeID() {
@@ -100,14 +101,14 @@ public class Report {
         }
     }
 
-    private static List<Report> loadReport() {
+    public static List<Report> loadReport() {
         List<Report> reportList = new ArrayList<>();
         try {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {
                 reportList = (List<Report>) inputStream.readObject();
             }
         } catch (FileNotFoundException e) {
-// Ignore the exception if the file does not exist yet
+        // Ignore the exception if the file does not exist yet
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading reports from file");
         }

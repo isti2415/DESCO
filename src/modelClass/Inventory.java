@@ -112,7 +112,7 @@ public class Inventory implements Serializable {
         return inventoryList;
     }
 
-    public void saveInventory() {
+    private void saveInventory() {
         List<Inventory> inventoryList = loadInventory();
         inventoryList.add(this);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
@@ -123,7 +123,7 @@ public class Inventory implements Serializable {
         }
     }
 
-    public void updateInventory() {
+    private void updateInventory() {
         List<Inventory> inventoryList = loadInventory();
         boolean updated = false;
         for (int i = 0; i < inventoryList.size(); i++) {

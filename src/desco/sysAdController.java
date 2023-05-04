@@ -5,21 +5,31 @@
  */
 package desco;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import static java.time.LocalDate.now;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,7 +57,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.Backup;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Employee;
 import modelClass.Reading;
 import modelClass.User;
@@ -92,6 +102,7 @@ public class sysAdController implements Initializable {
     private Pane pane1;
     @FXML
     private TextField profileNameTextField;
+    @FXML
     private TextField profileUserIDTextField;
     @FXML
     private DatePicker profileDOBdatepicker;
@@ -105,8 +116,6 @@ public class sysAdController implements Initializable {
     private TextField newPassTextField;
     @FXML
     private TextArea policyTextArea;
-    @FXML
-    private TextField profileUsernameTextField;
     @FXML
     private Label releaseDateLabel;
     @FXML
@@ -164,42 +173,6 @@ public class sysAdController implements Initializable {
         }
     }
 
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Look for a matching customer in the customers file
-        Employee currUser = null;
-        List<Employee> employees = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                employees = (List<Employee>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Employee employee : employees) {
-            if (employee.getId().equals(userID)) {
-                currUser = employee;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      *
@@ -214,7 +187,7 @@ public class sysAdController implements Initializable {
         // load the user list from the file and add it to the table view
         Employee curr;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getEmployee();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUserIDTextField.setText(curr.getId());
@@ -240,20 +213,7 @@ public class sysAdController implements Initializable {
         userIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         passwordTableColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
 
-        ObservableList<User> users = FXCollections.observableList(new ArrayList<>());
-
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
-                users.addAll((List<User>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            // Handle exceptions as needed
-        }
-
-        userListTableView.setItems((ObservableList<User>) users);
+        userListTableView.setItems(FXCollections.observableArrayList(User.loadUser()));
     }
 
     @FXML
@@ -266,20 +226,10 @@ public class sysAdController implements Initializable {
     private void viewActivtyLogOnClick(ActionEvent event) {
         switchPane(4);
         logUserID.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
-        logDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2]));
-        logTime.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1]));
+        logDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1]));
+        logTime.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2]));
 
-        try {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("log.bin"))) {
-                List<String[]> log = (List<String[]>) inputStream.readObject();
-                ObservableList<String[]> data = FXCollections.observableArrayList(log);
-                logTableView.setItems(data);
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error reading log from file");
-        }
+        logTableView.setItems(FXCollections.observableArrayList(CurrUser.loadLog()));
     }
 
     @FXML
@@ -290,14 +240,7 @@ public class sysAdController implements Initializable {
     @FXML
     private void viewAppUpdateOnScene(ActionEvent event) {
         switchPane(6);
-        List<Version> versionList = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("versions.bin"))) {
-            versionList = (List<Version>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading version from file: " + e.getMessage());
-        }
+        List<Version> versionList = Version.loadVersion();
         currentVersionLabel.setText(versionList.get(versionList.size() - 1).getVersion());
         releaseDateLabel.setText(versionList.get(versionList.size() - 1).getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
@@ -321,7 +264,7 @@ public class sysAdController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getEmployee().logout(event);
     }
 
     @FXML
@@ -364,18 +307,12 @@ public class sysAdController implements Initializable {
     private void pushOnCLick(ActionEvent event) {
         Version version = new Version();
         currentVersionLabel.setText(version.getVersion());
+        releaseDateLabel.setText(version.getDate().toString());
     }
 
     @FXML
     private void rollbackOnClick(ActionEvent event) {
-        List<Version> versionList = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("versions.bin"))) {
-            versionList = (List<Version>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading version from file: " + e.getMessage());
-        }
+        List<Version> versionList = Version.loadVersion();
         versionList.remove(versionList.size() - 1);
         try (FileOutputStream fileOut = new FileOutputStream("versions.bin", false); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(versionList);
@@ -384,11 +321,12 @@ public class sysAdController implements Initializable {
             System.out.println("Error saving reading to file");
         }
         currentVersionLabel.setText(versionList.get(versionList.size() - 1).getVersion());
+        releaseDateLabel.setText(versionList.get(versionList.size() - 1).getDate().toString());
     }
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Employee curr = getCurrUser();
+        Employee curr = CurrUser.getEmployee();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());
@@ -407,33 +345,13 @@ public class sysAdController implements Initializable {
         backupFileCount.setCellValueFactory(new PropertyValueFactory<>("fileCount"));
         backupTimestamp.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
         backupSize.setCellValueFactory(new PropertyValueFactory<>("size"));
-        ObservableList<Backup> backups = FXCollections.observableList(new ArrayList<>());
-        try {
-            try ( // Read the list of backups from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("backups.bin"))) {
-                backups.addAll((List<Backup>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        backupTableView.setItems((ObservableList<Backup>) backups);
+        backupTableView.setItems(FXCollections.observableArrayList(Backup.loadBackup()));
     }
 
     @FXML
     private void backupOnClick(ActionEvent event) throws IOException {
         Backup backup = new Backup();
-        ObservableList<Backup> backups = FXCollections.observableList(new ArrayList<>());
-        try {
-            try ( // Read the list of backups from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("backups.bin"))) {
-                backups.addAll((List<Backup>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        backupTableView.setItems((ObservableList<Backup>) backups);
+        backupTableView.setItems(FXCollections.observableArrayList(Backup.loadBackup()));
     }
 
     @FXML
@@ -525,17 +443,8 @@ public class sysAdController implements Initializable {
     @FXML
     private void viewThisYearUsage(ActionEvent event) {
         int selectedYear = LocalDate.now().getYear();
-        // Load all the readings for the selected year
-        List<Reading> readings = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
-            readings = (List<Reading>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         List<Reading> readingsForYear = new ArrayList<>();
-        for (Reading reading : readings) {
+        for (Reading reading : Reading.loadReadings()) {
             if (reading.getYear() == selectedYear) {
                 readingsForYear.add(reading);
             }
@@ -574,15 +483,7 @@ public class sysAdController implements Initializable {
     @FXML
     private void viewAllYearUsage(ActionEvent event) {
         // Load all the readings for the selected year
-        List<Reading> readings = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
-            readings = (List<Reading>) inputStream.readObject();
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        List<Reading> readings = Reading.loadReadings();
         // Sort the readings by month
         Collections.sort(readings, Comparator.comparingInt(Reading::getYear).reversed());
 
@@ -611,5 +512,56 @@ public class sysAdController implements Initializable {
 
         // Show the chart
         usageChart.setVisible(true);
+    }
+
+    @FXML
+    private void downloadLogOnClick(ActionEvent event) throws FileNotFoundException, MalformedURLException {
+        // Get the selected date and format it for report title
+        LocalDate selectedDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateString = selectedDate.format(formatter);
+        // Create a PDF document with set margins and add an image
+        PdfWriter writer = new PdfWriter("Activity Log" + dateString + ".pdf");
+        PdfDocument pdfDocument = new PdfDocument(writer);
+        Document document = new Document(pdfDocument, PageSize.A4);
+        document.setMargins(10f, 10f, 10f, 10f);
+        String imagePath = "src/images/desco.png";
+        ImageData imageData = ImageDataFactory.create(imagePath);
+        Image image = new Image(imageData);
+        image.setAutoScale(true);
+        document.add(image);
+
+        // Add title with selected date
+        String newline = "\n";
+        Paragraph lineSpace = new Paragraph(newline);
+        lineSpace.setHeight(10);
+        Text titleText = new Text("Activity Log till " + dateString);
+        titleText.setFontSize(18f);
+        Paragraph titleParagraph = new Paragraph(titleText);
+        titleParagraph.setBold();
+        titleParagraph.setTextAlignment(TextAlignment.CENTER);
+        document.add(lineSpace);
+        document.add(titleParagraph);
+        document.add(lineSpace);
+
+        // Create a PDF table with headers and data
+        Table logPdfTable = new Table(3);
+        logPdfTable.setWidth(UnitValue.createPercentValue(100));
+
+        logPdfTable.addCell("User ID");
+        logPdfTable.addCell("Date");
+        logPdfTable.addCell("Time");
+
+        for (String[] logData : logTableView.getItems()) {
+            logPdfTable.addCell(logData[0]);
+            logPdfTable.addCell(logData[1]);
+            logPdfTable.addCell(logData[2]);
+        }
+
+        // Add the PDF table to the document
+        document.add(logPdfTable);
+
+        // Close the document
+        document.close();
     }
 }

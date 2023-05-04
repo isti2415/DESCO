@@ -98,7 +98,7 @@ public class User implements Serializable {
         }
     }
 
-    private static List<User> loadUser() {
+    public static List<User> loadUser() {
         List<User> users = new ArrayList<>();
         try {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {

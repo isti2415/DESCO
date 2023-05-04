@@ -189,7 +189,7 @@ public class Bill implements Serializable {
         }
     }
 
-    private static List<Bill> loadBill() {
+    public static List<Bill> loadBill() {
         List<Bill> bills = new ArrayList<>();
         try {
             try ( // Read the list of users from the file

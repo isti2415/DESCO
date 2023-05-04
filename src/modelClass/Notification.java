@@ -99,7 +99,7 @@ public class Notification {
         }
     }
 
-    private static List<Notification> loadNotifications() {
+    public static List<Notification> loadNotifications() {
         List<Notification> notifications = new ArrayList<>();
         try {
             try ( // Read the list of notifications from the file

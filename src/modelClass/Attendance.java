@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Attendance implements Serializable {
@@ -17,12 +19,16 @@ public class Attendance implements Serializable {
     private LocalDate date;
     private Boolean present;
     private String reason;
+    private Integer absence;
     private static final String FILENAME = "attendance.bin";
 
     public Attendance(String employeeID, LocalDate date, Boolean present) {
         this.employeeID = employeeID;
-        this.date = LocalDate.now();
+        this.date = date;
         this.present = present;
+        this.absence = getPreviousAbsence()+1;
+        this.reason = "";
+        saveAttendance();
     }
 
     public String getReason() {
@@ -31,6 +37,7 @@ public class Attendance implements Serializable {
 
     public void setReason(String reason) {
         this.reason = reason;
+        updateAttendance();
     }
 
     public String getEmployeeID() {
@@ -57,6 +64,26 @@ public class Attendance implements Serializable {
 
     public void setPresent(Boolean present) {
         this.present = present;
+        int absence = 0;
+        if (present) {
+            absence = --this.absence;
+        } else {
+            absence = ++this.absence;
+        }
+        for (Attendance a : loadAttendance()) {
+            if (a.getDate().getYear() == this.getDate().getYear()) {
+                a.setAbsence(absence);
+            }
+        }
+        updateAttendance();
+    }
+
+    public Integer getAbsence() {
+        return absence;
+    }
+
+    public void setAbsence(Integer absence) {
+        this.absence = absence;
         updateAttendance();
     }
 
@@ -105,7 +132,7 @@ public class Attendance implements Serializable {
         }
     }
 
-    private static List<Attendance> loadAttendance() {
+    public static List<Attendance> loadAttendance() {
         List<Attendance> attendanceList = new ArrayList<>();
         try {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {
@@ -118,4 +145,32 @@ public class Attendance implements Serializable {
         }
         return attendanceList;
     }
+
+    private Integer getPreviousAbsence() {
+        List<Attendance> attendanceList = loadAttendance();
+        int totalAbsence = 0;
+        if (!attendanceList.isEmpty()) {
+            // Sort the attendance list in descending order of date
+            Collections.sort(attendanceList, Collections.reverseOrder(Comparator.comparing(Attendance::getDate)));
+
+            // Get the most recent attendance record
+            Attendance mostRecentRecord = attendanceList.get(0);
+
+            // Check if the most recent record is from a previous year
+            if (mostRecentRecord.getDate().getYear() < this.getDate().getYear()) {
+                return 1;
+            }
+
+            // Calculate total absence for the current year
+            for (Attendance a : attendanceList) {
+                if (a.getEmployeeID().equals(this.employeeID) && a.getDate().getYear() == this.getDate().getYear()) {
+                    totalAbsence = a.getAbsence();
+                    a.setAbsence(totalAbsence+1);
+                }
+            }
+        }
+
+        return totalAbsence;
+    }
+
 }

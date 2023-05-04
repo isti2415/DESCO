@@ -75,7 +75,7 @@ public class Version implements Serializable{
         }
     }
 
-    private List<Version> loadVersion() {
+    public static List<Version> loadVersion() {
         List<Version> versionList = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILENAME))) {
             versionList = (List<Version>) inputStream.readObject();

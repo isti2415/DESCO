@@ -6,11 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer extends User {
+public class Customer extends User implements Serializable {
 
     private static final String FILENAME = "customers.bin";
 
@@ -149,7 +150,7 @@ public class Customer extends User {
         }
     }
 
-    private static List<Customer> loadCustomer() {
+    public static List<Customer> loadCustomer() {
         List<Customer> customers = new ArrayList<>();
         try {
             try ( // Read the list of customers from the file

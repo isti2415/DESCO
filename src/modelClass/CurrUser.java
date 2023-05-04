@@ -21,17 +21,18 @@ import java.util.List;
  *
  * @author Istiaqs-PC
  */
-public class CurrUserID implements Serializable {
+public class CurrUser implements Serializable {
 
     public String userID;
 
-    public CurrUserID() {
+    public CurrUser(String userID) throws IOException {
+        this.userID = userID;
+        saveSession();
+        saveLog();
     }
 
     public void setCurrUserID(String userID) throws FileNotFoundException, IOException {
         this.userID = userID;
-        saveSession();
-        saveLog();
     }
 
     public String getCurrUserID() {
@@ -77,4 +78,48 @@ public class CurrUserID implements Serializable {
         }
     }
 
+    public static String loadSession() throws IOException, ClassNotFoundException {
+        CurrUser session = null;
+        try (FileInputStream fileIn = new FileInputStream("session.bin");
+                ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            session = (CurrUser) in.readObject();
+        } catch (FileNotFoundException e) {
+            // If session.bin file does not exist, return null
+        }
+        return session.getCurrUserID();
+    }
+
+    public static List<String[]> loadLog() {
+        List<String[]> sessions;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("log.bin"))) {
+            sessions = (List<String[]>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            // If log.bin file does not exist, return empty list
+            sessions = new ArrayList<>();
+        }
+        return sessions;
+    }
+
+    public static Customer getCustomer() throws IOException, ClassNotFoundException {
+        // Search for the userID in customers.bin
+        List<Customer> customers = Customer.loadCustomer();
+        for (Customer customer : customers) {
+            if (customer.getId().equals(loadSession())) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    
+    public static Employee getEmployee() throws IOException, ClassNotFoundException {
+        // If not found in customers.bin, search for the userID in employees.bin
+        List<Employee> employees = Employee.loadEmployee();
+        for (Employee employee : employees) {
+            if (employee.getId().equals(loadSession())) {
+                return employee;
+            }
+        }
+        return null;
+    }
+    
 }

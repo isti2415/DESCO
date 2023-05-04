@@ -18,19 +18,13 @@ import com.itextpdf.layout.property.TextAlignment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,7 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.Bill;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Employee;
 
 /**
@@ -82,7 +76,7 @@ public class billingAdminController implements Initializable {
     @FXML
     private Pane pane5;
     @FXML
-   private TableView<Bill> ViewCustomerBillsTable;
+    private TableView<Bill> ViewCustomerBillsTable;
     @FXML
     private TableColumn<Bill, String> ViewBillNumberCustomerColumn;
     @FXML
@@ -130,42 +124,6 @@ public class billingAdminController implements Initializable {
         }
     }
 
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Look for a matching customer in the customers file
-        Employee currUser = null;
-        List<Employee> employees = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                employees = (List<Employee>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Employee employee : employees) {
-            if (employee.getId().equals(userID)) {
-                currUser = employee;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      */
@@ -174,7 +132,7 @@ public class billingAdminController implements Initializable {
         switchPane(1);
         Employee curr;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getEmployee();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUserIDTextField.setText(curr.getId());
@@ -202,21 +160,9 @@ public class billingAdminController implements Initializable {
         ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         ViewUsageColumn.setCellValueFactory(new PropertyValueFactory<>("usuage"));
         ViewBillAmountCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
-        
-        ObservableList<Bill> CustomerBill  = FXCollections.observableList(new ArrayList<>());
-        
-        try {
-            try ( // Read the list of users from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bills.bin"))) {
-                CustomerBill.addAll((List<Bill>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-    }
 
-        ViewCustomerBillsTable.setItems((ObservableList<Bill>) CustomerBill);
-    
+        ViewCustomerBillsTable.setItems(FXCollections.observableList(Bill.loadBill()));
+
     }
 
     @FXML
@@ -242,12 +188,12 @@ public class billingAdminController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getEmployee().logout(event);
     }
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Employee curr = getCurrUser();
+        Employee curr = CurrUser.getEmployee();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());

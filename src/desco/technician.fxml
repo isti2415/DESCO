@@ -106,25 +106,6 @@
             <TextArea fx:id="policyViewTextArea" editable="false" layoutX="39.0" layoutY="79.0" prefHeight="443.0" prefWidth="506.0" wrapText="true" />
          </children>
       </Pane>
-      <Pane fx:id="pane3" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
-         <children>
-            <TableView fx:id="customerComplainListViewTable" layoutX="12.0" layoutY="82.0" prefHeight="420.0" prefWidth="557.0">
-               <columns>
-                  <TableColumn fx:id="complaintID" prefWidth="87.0" text="Complaint ID" />
-                  <TableColumn fx:id="customerID" prefWidth="110.66665649414062" text="Customer ID" />
-                  <TableColumn fx:id="customerAddress" prefWidth="131.33334350585938" text="Address" />
-                  <TableColumn fx:id="complainDate" minWidth="1.33331298828125" prefWidth="95.33331298828125" text="Date" />
-                  <TableColumn fx:id="contactInfo" prefWidth="129.0" text="Contact" />
-               </columns>
-            </TableView>
-            <Label alignment="CENTER" layoutY="15.0" prefHeight="46.0" prefWidth="583.0" text="Customer Complaints" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Button fx:id="resolvedOnClick" layoutX="460.0" layoutY="515.0" mnemonicParsing="false" text="Mark as Resolved" />
-         </children>
-      </Pane>
       <Pane fx:id="pane4" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
          <children>
             <TableView fx:id="ComplainListViewTable" layoutX="16.0" layoutY="100.0" prefHeight="403.0" prefWidth="552.0">
@@ -191,6 +172,24 @@
             <Button layoutX="405.0" layoutY="493.0" mnemonicParsing="false" onAction="#sendtoManagerOnClick" prefHeight="26.0" prefWidth="190.0" text="Send Email to Manager" />
             <Button layoutX="27.0" layoutY="493.0" mnemonicParsing="false" onAction="#attachFilesOnClick" prefHeight="19.0" prefWidth="166.0" text="Attach Files" />
             <TextArea fx:id="feedbackEmailTextArea" layoutX="27.0" layoutY="130.0" prefHeight="345.0" prefWidth="568.0" promptText="Write Feedback Email" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane3" layoutX="222.0" layoutY="2.0" prefHeight="554.0" prefWidth="583.0">
+         <children>
+            <TableView fx:id="customerComplainListViewTable" layoutX="12.0" layoutY="63.0" prefHeight="475.0" prefWidth="592.0">
+               <columns>
+                  <TableColumn fx:id="complaintID" prefWidth="87.0" text="Complaint ID" />
+                  <TableColumn fx:id="customerID" prefWidth="91.0" text="Customer ID" />
+                  <TableColumn fx:id="customerAddress" prefWidth="164.0" text="Address" />
+                  <TableColumn fx:id="complainDate" minWidth="1.33331298828125" prefWidth="111.0" text="Date" />
+                  <TableColumn fx:id="contactInfo" prefWidth="138.0" text="Contact" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" layoutY="15.0" prefHeight="46.0" prefWidth="583.0" text="Customer Complaints" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

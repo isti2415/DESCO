@@ -7,11 +7,8 @@ package desco;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,9 +21,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextArea;
@@ -35,12 +32,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import modelClass.Complaint;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Customer;
 import modelClass.CustomerComplaint;
 import modelClass.Employee;
 import modelClass.Inventory;
-import modelClass.Notification;
+import modelClass.Payroll;
+import modelClass.Report;
 import modelClass.Service;
 import modelClass.Task;
 
@@ -120,8 +118,6 @@ public class technicianController implements Initializable {
     @FXML
     private TextArea policyViewTextArea;
     @FXML
-    private Button resolvedOnClick;
-    @FXML
     private TableColumn<Inventory, String> inventoryID;
     @FXML
     private TableColumn<Inventory, String> invName;
@@ -141,42 +137,8 @@ public class technicianController implements Initializable {
     private TableColumn<Service, LocalDate> faultyDate;
     @FXML
     private TableColumn<Service, String> faultyProblem;
-    
+
     private String feedbackFilePath;
-
-    private ObservableList<Inventory> loadInventory() {
-        ObservableList<Inventory> inventoryList = FXCollections.observableList(new ArrayList<>());
-
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("inventory.bin"))) {
-            inventoryList.addAll((List<Inventory>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading inventory from file: " + e.getMessage());
-        }
-        return inventoryList;
-    }
-    
-    private ObservableList<Complaint> loadComplaints(){
-        ObservableList<Complaint> complaints = FXCollections.observableList(new ArrayList<>());
-        try {
-            try ( // Read the list of complaints from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
-                complaints.addAll((List<Complaint>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-
-        for (Complaint c : complaints) {
-            if (c.getResolved() == true) {
-                complaints.remove(c);
-            }
-        }
-        
-        return complaints;
-    } 
 
     private void switchPane(int paneNumber) {
         pane1.setVisible(false);
@@ -216,42 +178,6 @@ public class technicianController implements Initializable {
         }
     }
 
-    private Employee getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Look for a matching customer in the customers file
-        Employee currUser = null;
-        List<Employee> employees = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employees.bin"))) {
-                employees = (List<Employee>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Employee employee : employees) {
-            if (employee.getId().equals(userID)) {
-                currUser = employee;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      */
@@ -260,7 +186,7 @@ public class technicianController implements Initializable {
         switchPane(1);
         Employee curr;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getEmployee();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUserIDTextField.setText(curr.getId());
@@ -290,19 +216,7 @@ public class technicianController implements Initializable {
         taskDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         taskStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
-        ObservableList<Task> taskList = FXCollections.observableList(new ArrayList<>());
-
-        try {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tasks.bin"))) {
-                taskList.addAll((List<Task>) inputStream.readObject());
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading tasks from file");
-        }
-
-        taskListViewTable.setItems((ObservableList<Task>) taskList);
+        taskListViewTable.setItems(FXCollections.observableArrayList(Task.loadTask()));
     }
 
     @FXML
@@ -315,29 +229,14 @@ public class technicianController implements Initializable {
         complainDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         contactInfo.setCellValueFactory(new PropertyValueFactory<>("contact"));
 
-        List<Customer> customerList = new ArrayList<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-            customerList = (List<Customer>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Load the Complaint data
-        List<Complaint> complaintList = new ArrayList<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("complaints.bin"))) {
-            complaintList = (List<Complaint>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        List<Complaint> complaintList = Complaint.loadComplaint();
         for (Complaint c : complaintList) {
             if (c.getResolved() == true) {
                 complaintList.remove(c);
             }
         }
-
-        // Combine the data from both classes
         ObservableList<CustomerComplaint> combinedList = FXCollections.observableArrayList(new ArrayList<>());
-        for (Customer customer : customerList) {
+        for (Customer customer : Customer.loadCustomer()) {
             for (Complaint complaint : complaintList) {
                 if (customer.getId().equals(complaint.getCustomerID())) {
                     combinedList.add(new CustomerComplaint(customer.getId(), complaint.getComplaintID(), customer.getAddress(), complaint.getDate(), customer.getContact()));
@@ -355,7 +254,7 @@ public class technicianController implements Initializable {
         complainDate1.setCellValueFactory(new PropertyValueFactory<>("date"));
         complainStatus.setCellValueFactory(new PropertyValueFactory<>("resolved"));
 
-        ComplainListViewTable.setItems((ObservableList<Complaint>) loadComplaints());
+        ComplainListViewTable.setItems(FXCollections.observableArrayList(Complaint.loadComplaint()));
 
     }
 
@@ -367,23 +266,26 @@ public class technicianController implements Initializable {
         faultyMeterId.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         faultyDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         faultyProblem.setCellValueFactory(new PropertyValueFactory<>("details"));
+        faultyEquipmentViewTable.setRowFactory(tv -> new TableRow<Service>() {
+            @Override
+            protected void updateItem(Service item, boolean empty) {
+                super.updateItem(item, empty);
 
-        ObservableList<Service> services = FXCollections.observableList(new ArrayList<>());
-
-        try {
-            try ( // Read the list of services from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("services.bin"))) {
-                services.addAll((List<Service>) inputStream.readObject());
+                if (item == null || empty) {
+                    setStyle("");
+                } else {
+                    if (item.getStatus()) {
+                        setStyle("-fx-background-color: green;");
+                    }
+                }
             }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
+        });
 
-        faultyEquipmentViewTable.setItems((ObservableList<Service>) services);
+        faultyEquipmentViewTable.setItems(FXCollections.observableArrayList(Service.loadService()));
     }
 
     @FXML
+
     private void checkInventoryEquipmentOnClick(ActionEvent event) {
         switchPane(6);
 
@@ -392,7 +294,7 @@ public class technicianController implements Initializable {
         qtyInv.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         invDept.setCellValueFactory(new PropertyValueFactory<>("department"));
 
-        inventoryEquipmentViewTable.setItems((ObservableList<Inventory>) loadInventory());
+        inventoryEquipmentViewTable.setItems(FXCollections.observableArrayList(Inventory.loadInventory()));
     }
 
     @FXML
@@ -420,11 +322,15 @@ public class technicianController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getEmployee().logout(event);
     }
 
     @FXML
     private void selectTaskandMarkasDoneOnClick(ActionEvent event) {
+        TableViewSelectionModel<Task> selectionModel = taskListViewTable.getSelectionModel();
+        Task selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setStatus(true);
+        taskListViewTable.setItems(FXCollections.observableArrayList(Task.loadTask()));
     }
 
     @FXML
@@ -432,16 +338,20 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Complaint> selectionModel = ComplainListViewTable.getSelectionModel();
         Complaint selectedItem = selectionModel.getSelectedItem();
         selectedItem.setResolved(true);
-        ComplainListViewTable.setItems((ObservableList<Complaint>) loadComplaints());
+        ComplainListViewTable.setItems(FXCollections.observableArrayList(Complaint.loadComplaint()));
     }
 
     @FXML
     private void selectEquipmentAndMarkAsRepaired(ActionEvent event) {
+        TableViewSelectionModel<Service> selectionModel = faultyEquipmentViewTable.getSelectionModel();
+        Service selectedItem = selectionModel.getSelectedItem();
+        selectedItem.setStatus(true);
+        faultyEquipmentViewTable.setItems(FXCollections.observableArrayList(Service.loadService()));
     }
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Employee curr = getCurrUser();
+        Employee curr = CurrUser.getEmployee();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());
@@ -455,7 +365,6 @@ public class technicianController implements Initializable {
         TableViewSelectionModel<Inventory> selectionModel = inventoryEquipmentViewTable.getSelectionModel();
         Inventory selectedItem = selectionModel.getSelectedItem();
         selectedItem.setRestock(true);
-        System.out.println(selectedItem.getRestock());
     }
 
     @FXML
@@ -470,12 +379,11 @@ public class technicianController implements Initializable {
     }
 
     @FXML
-    private void sendtoManagerOnClick(ActionEvent event) {
+    private void sendtoManagerOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         String subject = feedbackSubjectTextField.getText();
         String details = feedbackEmailTextArea.getText();
-        String type = "Reports";
         LocalDate date = LocalDate.now();
-        Notification notification = new Notification(date, subject, details, type);
-        notification.setFilepath(feedbackFilePath);
+        Report report = new Report(CurrUser.getEmployee().getId(), date, subject, details, feedbackFilePath);
+        System.out.println(report.getFilePath());
     }
 }

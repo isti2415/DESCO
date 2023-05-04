@@ -118,7 +118,7 @@ public class Reading implements Serializable {
         }
     }
 
-    private static List<Reading> loadReadings() {
+    public static List<Reading> loadReadings() {
         List<Reading> readings = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("readings.bin"))) {
             readings = (List<Reading>) inputStream.readObject();

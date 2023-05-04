@@ -4,14 +4,10 @@
  * and open the template in the editor.
  */
 package desco;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,11 +29,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import modelClass.Bill;
 import modelClass.Complaint;
-import modelClass.CurrUserID;
+import modelClass.CurrUser;
 import modelClass.Customer;
-import modelClass.Inventory;
 import modelClass.Service;
-import modelClass.User;
 
 /**
  * FXML Controller class
@@ -150,42 +143,6 @@ public class customerController implements Initializable {
         }
     }
 
-    private Customer getCurrUser() throws IOException, ClassNotFoundException {
-        // Read the current user ID from the session file
-        String userID = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("session.bin"));
-            CurrUserID savedUser = (CurrUserID) in.readObject();
-            if (savedUser != null) {
-                userID = savedUser.getCurrUserID();
-            }
-            in.close();
-            System.out.println(userID);
-        } catch (IOException | ClassNotFoundException e) {
-        }
-
-        // Look for a matching customer in the customers file
-        Customer currUser = null;
-        List<Customer> customers = new ArrayList<>();
-        try {
-            try ( // Read the list of customers from the file
-                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("customers.bin"))) {
-                customers = (List<Customer>) inputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            // Ignore the exception if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        for (Customer customer : customers) {
-            if (customer.getId().equals(userID)) {
-                currUser = customer;
-                break;
-            }
-        }
-
-        return currUser;
-    }
-
     /**
      * Initializes the controller class.
      */
@@ -204,10 +161,9 @@ public class customerController implements Initializable {
         billYearComboBox.setItems(yearList);
         energyUseYearCombobox.setItems(yearList);
 
-        
         Customer curr;
         try {
-            curr = getCurrUser();
+            curr = CurrUser.getCustomer();
             if (curr != null) {
                 profileNameTextField.setText(curr.getName());
                 profileUseridTextField.setText(curr.getId());
@@ -216,9 +172,7 @@ public class customerController implements Initializable {
                 profileConNumTextField.setText(curr.getContact());
                 profileAddressTextField.setText(curr.getAddress());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(customerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -235,18 +189,8 @@ public class customerController implements Initializable {
         monthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        
-        ObservableList<Bill> billList = FXCollections.observableList(new ArrayList<>());
-        
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("bills.bin"))) {
-            billList.addAll((List<Bill>) inputStream.readObject());
-        } catch (FileNotFoundException e) {
-            // Ignore if the file does not exist yet
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading bill from file: " + e.getMessage());
-        }
-        
-        billTableView.setItems((ObservableList<Bill>) billList);         
+
+        billTableView.setItems(FXCollections.observableList(Bill.loadBill()));
     }
 
     @FXML
@@ -277,7 +221,7 @@ public class customerController implements Initializable {
 
     @FXML
     private void logOutOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        getCurrUser().logout(event);
+        CurrUser.getCustomer().logout(event);
     }
 
     @FXML
@@ -290,7 +234,7 @@ public class customerController implements Initializable {
 
     @FXML
     private void saveChangesOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
-        Customer curr = getCurrUser();
+        Customer curr = CurrUser.getCustomer();
         if (curr != null) {
             curr.setName(profileNameTextField.getText());
             curr.setDoB(profileDOBdatepicker.getValue());
@@ -311,7 +255,7 @@ public class customerController implements Initializable {
     @FXML
     private void submitOnClick(ActionEvent event) throws IOException, ClassNotFoundException {
         String details = detailsTextField.getText();
-        String cusID = getCurrUser().getId();
+        String cusID = CurrUser.getCustomer().getId();
         LocalDate date = LocalDate.now();
         final String[] type = new String[1];
         serviceToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -321,16 +265,15 @@ public class customerController implements Initializable {
 
             }
         });
-        Service service = new Service(type[0],details,cusID,date);
+        Service service = new Service(type[0], details, cusID, date);
     }
 
     @FXML
     private void submitComplaintButton(ActionEvent event) throws IOException, ClassNotFoundException {
         String details = complaintTextArea.getText();
-        String cusID = getCurrUser().getId();
+        String cusID = CurrUser.getCustomer().getId();
         LocalDate date = LocalDate.now();
-        Complaint complaint = new Complaint(cusID,details,date);
-        System.out.println("clicked");
+        Complaint complaint = new Complaint(cusID, details, date);
     }
 
     @FXML

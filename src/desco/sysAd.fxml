@@ -61,45 +61,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="pane1" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="38.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="25.0" layoutY="112.0" text="Personal Information">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="25.0" layoutY="147.0" text="Name" />
-            <Label layoutX="308.0" layoutY="147.0" text="Username" />
-            <TextField fx:id="profileNameTextField" layoutX="63.0" layoutY="143.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="profileUsernameTextField" layoutX="385.0" layoutY="143.0" />
-            <Label layoutX="23.0" layoutY="196.0" text="Date of Birth" />
-            <DatePicker fx:id="profileDOBdatepicker" layoutX="99.0" layoutY="192.0" />
-            <Label layoutX="23.0" layoutY="416.0" text="Current Password" />
-            <TextField fx:id="currPassTextField" layoutX="130.0" layoutY="412.0" />
-            <Label layoutX="23.0" layoutY="296.0" text="Email" />
-            <Label layoutX="287.0" layoutY="296.0" text="Contact Number" />
-            <TextField fx:id="profileEmailTextField" layoutX="61.0" layoutY="292.0" prefHeight="25.0" prefWidth="212.0" />
-            <TextField fx:id="profileConNumTextField" layoutX="385.0" layoutY="292.0" />
-            <Label layoutX="23.0" layoutY="253.0" text="Contact Information">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="23.0" layoutY="362.0" text="Change Password">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="296.0" layoutY="416.0" text="New Password" />
-            <TextField fx:id="newPassTextField" layoutX="385.0" layoutY="412.0" />
-            <Button layoutX="444.0" layoutY="469.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
-         </children>
-      </Pane>
       <Pane fx:id="pane2" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <Label alignment="CENTER" layoutX="-13.0" layoutY="17.0" prefHeight="46.0" prefWidth="601.0" text="Manage Account" textAlignment="CENTER">
@@ -176,22 +137,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="pane4" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
-         <children>
-            <TableView fx:id="logTableView" layoutX="8.0" layoutY="88.0" prefHeight="449.0" prefWidth="559.0">
-               <columns>
-                  <TableColumn fx:id="logUserID" prefWidth="164.0" text="User ID" />
-                  <TableColumn fx:id="logTime" prefWidth="197.0" text="Time" />
-                  <TableColumn fx:id="logDate" prefWidth="192.0" text="Date" />
-               </columns>
-            </TableView>
-            <Label alignment="CENTER" layoutX="-14.0" layoutY="18.0" prefHeight="46.0" prefWidth="601.0" text="Activity Logs" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="pane3" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
          <children>
             <Button layoutX="114.0" layoutY="84.0" mnemonicParsing="false" onAction="#viewThisYearUsage" text="View This Year's Usage" />
@@ -209,6 +154,62 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
+         </children>
+      </Pane>
+      <Pane fx:id="pane1" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="38.0" prefHeight="46.0" prefWidth="572.0" text="Profile Settings" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="112.0" text="Personal Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="147.0" text="Name" />
+            <Label layoutX="308.0" layoutY="147.0" text="Username" />
+            <TextField fx:id="profileNameTextField" layoutX="63.0" layoutY="143.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileUserIDTextField" layoutX="385.0" layoutY="143.0" />
+            <Label layoutX="23.0" layoutY="196.0" text="Date of Birth" />
+            <DatePicker fx:id="profileDOBdatepicker" layoutX="99.0" layoutY="192.0" />
+            <Label layoutX="23.0" layoutY="416.0" text="Current Password" />
+            <TextField fx:id="currPassTextField" layoutX="130.0" layoutY="412.0" />
+            <Label layoutX="23.0" layoutY="296.0" text="Email" />
+            <Label layoutX="287.0" layoutY="296.0" text="Contact Number" />
+            <TextField fx:id="profileEmailTextField" layoutX="61.0" layoutY="292.0" prefHeight="25.0" prefWidth="212.0" />
+            <TextField fx:id="profileConNumTextField" layoutX="385.0" layoutY="292.0" />
+            <Label layoutX="23.0" layoutY="253.0" text="Contact Information">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="23.0" layoutY="362.0" text="Change Password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="296.0" layoutY="416.0" text="New Password" />
+            <TextField fx:id="newPassTextField" layoutX="385.0" layoutY="412.0" />
+            <Button layoutX="444.0" layoutY="469.0" mnemonicParsing="false" onAction="#saveChangesOnClick" text="Save Changes" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane4" layoutX="231.0" layoutY="2.0" prefHeight="554.0" prefWidth="574.0">
+         <children>
+            <TableView fx:id="logTableView" layoutY="74.0" prefHeight="438.0" prefWidth="559.0">
+               <columns>
+                  <TableColumn fx:id="logUserID" prefWidth="164.0" text="User ID" />
+                  <TableColumn fx:id="logTime" prefWidth="197.0" text="Time" />
+                  <TableColumn fx:id="logDate" prefWidth="192.0" text="Date" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" layoutX="-14.0" layoutY="18.0" prefHeight="46.0" prefWidth="601.0" text="Activity Logs" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button layoutX="465.0" layoutY="517.0" mnemonicParsing="false" onAction="#downloadLogOnClick" text="Download PDF" />
          </children>
       </Pane>
     </children>
