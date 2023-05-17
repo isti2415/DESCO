@@ -1,6 +1,6 @@
 # DESCO Java Application
 
-This repository contains the code for a DESCO application, written in Java and designed in JavaFX. It was developed as a project for an object-oriented programming course.
+This repository contains the code for a DESCO application, written in Java and designed in JavaFX. It was developed as a project for an object-oriented programming (OOP) (CSE213) course.
 
 ![Screenshot 1](/screenshots/screenshot1.png)
 ![Screenshot 2](/screenshots/screenshot2.png)
